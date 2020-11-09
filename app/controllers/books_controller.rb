@@ -12,8 +12,9 @@ class BooksController < ApplicationController
   end
 
   def create
+    params = parse_by_isbn(params[:ISBN]) if params[:title].nil?
     params[:user_id] = current_user
-    @book = Book.create(book_params)
+    @book = Book.new(book_params)
     if @book.save
       redirect_to book_path(@book)
     else
@@ -43,7 +44,7 @@ class BooksController < ApplicationController
     result[:publisher] = json[:items][0][:volumeInfo][:publisher]
     result[:year] = json[:items][0][:volumeInfo][:publishedDate]
     result[:description] = json[:items][0][:volumeInfo][:description]
-    result[:cover] = json[:items][0][:volumeInfo][:imageLinks][:thumbnail]
+    result[:image_url] = json[:items][0][:volumeInfo][:imageLinks][:thumbnail]
     ## returning the result hash
     result
   end
