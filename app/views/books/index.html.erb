@@ -1,0 +1,11 @@
+<h1>The books!</h1>
+<div class="cards">
+  <% @books.each do |book| %>
+
+    <%= link_to book_path(book) do %>
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://images-na.ssl-images-amazon.com/images/I/71EwgGuAS9L._AC_SL1000_.jpg)">
+        <%= book.title %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
