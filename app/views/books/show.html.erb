@@ -1,5 +1,5 @@
 <div class="picture-and-info d-flex justify-content-between">
-  <img src="<%= @book.image_url %>" alt=""> <!-- need to replace this with image tag -->
+  <img src="<%= cl_image_path @book.cover.key %>" alt=""> <!-- need to replace this with image tag -->
 
   <div class="info flex-grow-1 px-4">
     <h1><%= @book.title %></h1>
