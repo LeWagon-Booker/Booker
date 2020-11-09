@@ -1,3 +1,5 @@
+require 'json'
+require 'rest-client'
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
@@ -12,9 +14,12 @@ class BooksController < ApplicationController
   end
 
   def create
-    params[:user_id] = current_user
-    @book = Book.create(book_params)
-    if @book.save
+    new_params = parse_by_isbn(params[:book][:ISBN], params) if params[:book][:title].nil?
+    puts new_params
+    params[:book][:ISBN] = ""
+    @book = Book.new(book_params)
+    @book.user = current_user
+    if @book.save!
       redirect_to book_path(@book)
     else
       render :new
@@ -34,27 +39,30 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :year, :month, :category, :description, :user_id, :image_url, :cover)
+    params.require(:book).permit(:title, :author, :year, :month, :category, :description, :image_url, :user_id, :cover, :ISBN)
   end
 
   def set_book
     @book = Book.find(params[:id])
   end
 
-  def parse_by_isbn(isbn)
+  def parse_by_isbn(isbn, params)
     ## Empty hash to store the result
-    result = {}
     ## parsing link, supplying ISBN, and GOOGLE KEY from .env file
     source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{GOOGLEKEY}"
-    json = JSON.parse(open(source).read, symbolize_names: true)
+    response = RestClient.get source
+    json = JSON.parse(response)
     ## adding require results in the result hash
-    result[:title] = json[:items][0][:volumeInfo][:title]
-    result[:author] = json[:items][0][:volumeInfo][:authors][0]
-    result[:publisher] = json[:items][0][:volumeInfo][:publisher]
-    result[:year] = json[:items][0][:volumeInfo][:publishedDate]
-    result[:description] = json[:items][0][:volumeInfo][:description]
-    result[:image_url] = json[:items][0][:volumeInfo][:imageLinks][:thumbnail]
+    params[:book][:title] = json["items"][0]["volumeInfo"]["title"]
+    params[:book][:author] = json["items"][0]["volumeInfo"]["authors"][0]
+    params[:book][:year] = json["items"][0]["volumeInfo"]["publishedDate"]
+    params[:book][:description] = json["items"][0]["volumeInfo"]["description"]
+    unless json["items"][0]["volumeInfo"]["imageLinks"].nil?
+      params[:book][:image_url] = json["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
+    else
+      params[:book][:image_url] = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+    end
     ## returning the result hash
-    result
+    params
   end
 end
