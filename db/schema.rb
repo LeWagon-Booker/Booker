@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_08_232402) do
+ActiveRecord::Schema.define(version: 2020_11_09_115049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,30 +33,14 @@ ActiveRecord::Schema.define(version: 2020_11_08_232402) do
     t.integer "year"
     t.integer "month"
     t.string "category"
-  end
-
-  create_table "books_wishlists", force: :cascade do |t|
-    t.bigint "wishlist_id", null: false
-    t.bigint "book_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id"], name: "index_books_wishlists_on_book_id"
-    t.index ["wishlist_id"], name: "index_books_wishlists_on_wishlist_id"
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "families", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "ownerships", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "book_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["book_id"], name: "index_ownerships_on_book_id"
-    t.index ["user_id"], name: "index_ownerships_on_user_id"
   end
 
   create_table "reservations", force: :cascade do |t|
@@ -93,18 +77,18 @@ ActiveRecord::Schema.define(version: 2020_11_08_232402) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "book_id"
+    t.index ["book_id"], name: "index_wishlists_on_book_id"
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
   add_foreign_key "adhesions", "families"
   add_foreign_key "adhesions", "users"
-  add_foreign_key "books_wishlists", "books"
-  add_foreign_key "books_wishlists", "wishlists"
-  add_foreign_key "ownerships", "books"
-  add_foreign_key "ownerships", "users"
+  add_foreign_key "books", "users"
   add_foreign_key "reservations", "books"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
+  add_foreign_key "wishlists", "books"
   add_foreign_key "wishlists", "users"
 end
