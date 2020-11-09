@@ -3,9 +3,10 @@
 
   <div class="info flex-grow-1 px-4">
     <h1><%= @book.title %></h1>
-    <h2><%= @book.author %></h2>
-    <h2><%= @book.year %></h2>
-    <h2><%= @book.month %></h2>
+    <h2>by <%= @book.author %></h2>
+    <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
+    <h3>Belongs to <%= @book.user.user_name %></h3>
+    <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn btn-primary" %>
   </div>
   <div class="actions">
     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#EditModal">Edit Book</button>
