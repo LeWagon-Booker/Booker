@@ -49,7 +49,7 @@ class BooksController < ApplicationController
   def parse_by_isbn(isbn, params)
     ## Empty hash to store the result
     ## parsing link, supplying ISBN, and GOOGLE KEY from .env file
-    source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=AIzaSyBxdETxGjGx8uFm8zq7NokQa1WcXfJ7VeI"
+    source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{GOOGLEKEY}"
     response = RestClient.get source
     json = JSON.parse(response)
     ## adding require results in the result hash
