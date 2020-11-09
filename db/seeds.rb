@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
+puts "Cleaning database..."
+Book.destroy_all
+Family.destroy_all
+
 puts 'Creating 20 fake books...'
 20.times do
   book = Book.new(
@@ -16,6 +20,7 @@ puts 'Creating 20 fake books...'
     category: Faker::Book.genre,
     year: rand(1995..2020),
     month: rand(1..12),
+    image_url: 'https://images-na.ssl-images-amazon.com/images/I/71EwgGuAS9L._AC_SL1000_.jpg',
   )
   book.save!
 end

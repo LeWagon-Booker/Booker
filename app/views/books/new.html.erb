@@ -1,12 +1,19 @@
+<h1>Manual input</h1>
+
 <%= simple_form_for @book do |f| %>
   <%= f.input :title %>
   <%= f.input :author %>
   <%= f.input :year %>
   <%= f.input :month %>
   <%= f.input :category %>
-  <<%= f.rich_text_area :description %>
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<%= f.button :submit, class: "btn btn-primary" %>
+  <%= f.input :image_url %>
+  <%= f.rich_text_area :description %>
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>
+<br>
+<h2>Rapid intrance with ISBN</h2>
+<p>Look at the back of your book you will find a 9 digits number</p>
+<%= simple_form_for @book do |f| %>
+  <%= f.input :ISBN %>
+  <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>

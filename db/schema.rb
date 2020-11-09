@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_09_115049) do
+ActiveRecord::Schema.define(version: 2020_11_09_142550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 2020_11_09_115049) do
     t.integer "month"
     t.string "category"
     t.bigint "user_id"
+    t.string "image_url"
+    t.integer "ISBN"
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
