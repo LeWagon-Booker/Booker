@@ -33,14 +33,19 @@ class BooksController < ApplicationController
   end
 
   def parse_by_isbn(isbn)
+    ## Empty hash to store the result
     result = {}
+    ## parsing link, supplying ISBN, and GOOGLE KEY from .env file
     source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{GOOGLEKEY}"
     json = JSON.parse(open(source).read, symbolize_names: true)
+    ## adding require results in the result hash
     result[:title] = json[:items][0][:volumeInfo][:title]
     result[:author] = json[:items][0][:volumeInfo][:authors][0]
     result[:publisher] = json[:items][0][:volumeInfo][:publisher]
     result[:year] = json[:items][0][:volumeInfo][:publishedDate]
     result[:description] = json[:items][0][:volumeInfo][:description]
+    result[:cover] = json[:items][0][:volumeInfo][:imageLinks][:thumbnail]
+    ## returning the result hash
     result
   end
 end
