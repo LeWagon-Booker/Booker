@@ -1,24 +1,12 @@
 <div class="picture-and-info d-flex justify-content-between">
   <img src="https://images-na.ssl-images-amazon.com/images/I/71EwgGuAS9L._AC_SL1000_.jpg" alt="">
   <div class="info flex-grow-1 px-4">
-    <h1><%= @book.title %> </h1>
-    <h3>Ingredients</h3>
-      <h3>Reviews</h3>
-      <ul>
-        <% @book.reviews.each do |review| %>
-          <li><%= review.content %>  <%= review.rating %>/5</li>
-        <% end %>
-      </ul>
+    <h1><%= @book.title %></h1>
+    <h2><%= @book.author %></h2>
+    <h2><%= @book.year %></h2>
+    <h2><%= @book.month %></h2>
+    <h2><%= @book.user_id %></h2>
+    <h2><%= @book.isbn %></h2>
+
   </div>
 </div>
-<br>
-<br>
-<!-- <p>
-  <h3>Add an rating for this book!! </h3>
-  <%= simple_form_for [@book, @review] do |f| %>
-    <%= f.input :author, :label => 'Who is talking?' %>
-    <%= f.input :rating, :label => 'On five what is this book worth?' %>
-    <%= f.input :content, :label => 'Tell us more about it' %>
-    <%= f.button :submit, 'Add!', class:"btn btn-primary"%>
-  <% end %>
-</p> -->
