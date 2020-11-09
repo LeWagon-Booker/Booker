@@ -28,14 +28,6 @@ puts 'Creating 20 fake books...'
 end
 puts 'Books Finished!'
 
-
-
-
-
-
-
-
-
 puts 'Creating 2 families'
 Family.create(name: "Let's read!")
 Family.create(name: "Bxl's old ladies")
