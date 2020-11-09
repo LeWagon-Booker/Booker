@@ -3,7 +3,7 @@
   <% @books.each do |book| %>
 
     <%= link_to book_path(book) do %>
-      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= book.image_url %>)">
+      <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path book.cover.key %>)">
         <%= book.title %>
       </div>
     <% end %>

@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
+require "open-uri"
 
 puts "Cleaning database..."
 Book.destroy_all
@@ -20,8 +21,10 @@ puts 'Creating 20 fake books...'
     category: Faker::Book.genre,
     year: rand(1995..2020),
     month: rand(1..12),
-    image_url: 'https://images-na.ssl-images-amazon.com/images/I/71EwgGuAS9L._AC_SL1000_.jpg',
+    user_id: User.last
   )
+  file = URI.open("https://picsum.photos/200/300")
+  book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
   book.save!
 end
 puts 'Books Finished!'
