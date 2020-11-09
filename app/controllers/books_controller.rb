@@ -26,6 +26,11 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  def update
+    @book.update(book_params)
+    redirect_to book_path(@book)
+  end
+
   private
 
   def book_params
