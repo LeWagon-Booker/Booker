@@ -21,6 +21,7 @@ puts 'Creating 20 fake books...'
     category: Faker::Book.genre,
     year: rand(1995..2020),
     month: rand(1..12),
+    user_id: User.last
   )
   file = URI.open("https://picsum.photos/200/300")
   book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
