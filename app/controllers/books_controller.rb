@@ -1,6 +1,7 @@
 require 'json'
 require 'rest-client'
 class BooksController < ApplicationController
+  GOOGLEKEY = 'AIzaSyBxdETxGjGx8uFm8zq7NokQa1WcXfJ7VeI'
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     @books = Book.all
@@ -17,7 +18,9 @@ class BooksController < ApplicationController
     new_params = parse_by_isbn(params[:book][:ISBN], params) if params[:book][:title].nil?
     puts new_params
     params[:book][:ISBN] = ""
+    file = URI.open(new_params[:book][:image_url])
     @book = Book.new(book_params)
+    @book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
     @book.user = current_user
     if @book.save!
       redirect_to book_path(@book)
@@ -66,3 +69,6 @@ class BooksController < ApplicationController
     params
   end
 end
+
+
+
