@@ -12,8 +12,9 @@ class BooksController < ApplicationController
   end
 
   def create
+    params = parse_by_isbn(params[:ISBN]) if params[:title].nil?
     params[:user_id] = current_user
-    @book = Book.create(book_params)
+    @book = Book.new(book_params)
     if @book.save
       redirect_to book_path(@book)
     else
