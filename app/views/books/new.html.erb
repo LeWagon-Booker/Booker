@@ -1,0 +1,12 @@
+<%= simple_form_for @book do |f| %>
+  <%= f.input :title %>
+  <%= f.input :author %>
+  <%= f.input :year %>
+  <%= f.input :month %>
+  <%= f.input :category %>
+  <<%= f.rich_text_area :description %>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<%= f.button :submit, class: "btn btn-primary" %>
+<% end %>
