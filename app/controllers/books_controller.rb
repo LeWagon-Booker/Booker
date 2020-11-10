@@ -1,7 +1,6 @@
 require 'json'
 require 'rest-client'
 class BooksController < ApplicationController
- # GOOGLEKEY = 'AIzaSyBxdETxGjGx8uFm8zq7NokQa1WcXfJ7VeI'
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     @books = Book.all
@@ -53,7 +52,7 @@ class BooksController < ApplicationController
   def parse_by_isbn(isbn, params)
     ## Empty hash to store the result
     ## parsing link, supplying ISBN, and GOOGLE KEY from .env file
-    source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{GOOGLEKEY}"
+    source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{ENV['GOOGLEKEY']}"
     response = RestClient.get source
     json = JSON.parse(response)
     ## adding require results in the result hash
@@ -65,12 +64,8 @@ class BooksController < ApplicationController
       params[:book][:image_url] = json["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
     else
       params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg"
-      # params[:book][:image_url] = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
     end
     ## returning the result hash
     params
   end
 end
-
-
-
