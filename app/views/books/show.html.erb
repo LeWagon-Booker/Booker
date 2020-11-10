@@ -1,11 +1,12 @@
 <div class="picture-and-info d-flex justify-content-between">
-  <img src="<%= cl_image_path @book.cover.key %>" alt=""> <!-- need to replace this with image tag -->
+  <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show">
 
   <div class="info flex-grow-1 px-4">
     <h1><%= @book.title %></h1>
     <h2>by <%= @book.author %></h2>
     <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
     <h3>Belongs to <%= @book.user.user_name %></h3>
+    <p><%= @book.description %></p>
     <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn btn-primary" %>
   </div>
   <div class="actions">
