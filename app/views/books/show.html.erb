@@ -12,18 +12,20 @@
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
       <div class="info flex-grow-1 px-4">
         <h2>by <%= @book.author %></h2>
-        <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
-
         <p><%= @book.description %></p>
-        <h4>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h4>
+        <p>Published on <%= @book.month %>/<%= @book.year %></p>
+        <h5>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h5>
       </div>
-      <div class="actions">
-        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#EditModal">Edit Book</button>
-        <%= link_to 'Delete',
-        book_path(@book.id),
-        method: :delete,
-        data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
-      </div>
+      <ul class="actions list-inline">
+        <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="far fa-edit"></i></li>
+        <li>
+          <%= link_to book_path(@book.id),
+            method: :delete,
+            data: { confirm: "Are you sure?" }, class: "font-awesome list-inline-item" do %>
+            <i class="fas fa-trash"></i>
+          <% end %>
+        </li>
+      </ul>
     </div>
 
     <p>

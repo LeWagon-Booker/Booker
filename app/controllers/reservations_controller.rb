@@ -2,7 +2,11 @@ class ReservationsController < ApplicationController
 
 
   def index
-    @reservations = Reservation.where(user_id: current_user.id)
+    @my_reservations = Reservation.where(user_id: current_user.id)
+    mybooks_id = Book.where(user_id: current_user.id).map do |book|
+      book.id
+    end
+    @book_reserved = Reservation.where(book_id: mybooks_id )
   end
 
   def create
