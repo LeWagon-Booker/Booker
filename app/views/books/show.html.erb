@@ -1,63 +1,79 @@
-<dic class="title-add d-flex justify-content-between align-items-center">
-  <h1 class="flex-grow-1 p-3 "><%= @book.title %></h1>
-  <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn-booker" %>
-</dic>
-<div class="picture-and-info d-flex justify-content-between">
-  <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
-  <div class="info flex-grow-1 px-4">
-    <h2>by <%= @book.author %></h2>
-    <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
-
-    <p><%= @book.description %></p>
-    <h4>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h4>
-  </div>
-  <div class="actions">
-    <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#EditModal">Edit Book</button>
-    <%= link_to 'Delete',
-    book_path(@book.id),
-    method: :delete,
-    data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
-  </div>
-</div>
-
-<p>
-  <h3>You read this book? Give a review! </h3>
-  <%= simple_form_for [@book, @review] do |f| %>
-    <%= f.input :rating, :label => 'On a scale of five what is this book worth?' %>
-    <%= f.input :content, :label => 'Tell us more about it' %>
-    <%= f.button :submit, 'Add!', class:"btn-booker"%>
+<div class="row">
+  <% if @book.reviews.empty? {size = "col-md-12"}%>
+  <% else size = "col-md-9"%>
   <% end %>
-</p>
 
-<h3>Reviews</h3>
-<ul>
-  <% @book.reviews.each do |review| %>
-    <li><%= review.content %>  <%= review.rating %>/5 <%= review.user.user_name %></li>
-  <% end %>
-</ul>
+  <div class="col-12 <%= size %> ">
+    <dic class="title-add d-flex justify-content-between align-items-center">
+      <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %></h1>
+      <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn-booker" %>
+    </dic>
+    <div class="picture-and-info d-flex justify-content-between">
+      <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
+      <div class="info flex-grow-1 px-4">
+        <h2>by <%= @book.author %></h2>
+        <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <p><%= @book.description %></p>
+        <h4>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h4>
       </div>
-      <div class="modal-body">
-        <%= simple_form_for @book do |f| %>
-          <%= f.input :title %>
-          <%= f.input :author %>
-          <%= f.input :year %>
-          <%= f.input :month %>
-          <%= f.input :category %>
-          <%= f.input :image_url %>
-          <%= f.input :description %>
-          <%= f.button :submit, class: "btn-booker" %>
-        <% end %>
+      <div class="actions">
+        <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#EditModal">Edit Book</button>
+        <%= link_to 'Delete',
+        book_path(@book.id),
+        method: :delete,
+        data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
       </div>
     </div>
+
+    <p>
+      <h3>You read this book? Give a review! </h3>
+      <%= simple_form_for [@book, @review] do |f| %>
+        <%= f.input :rating, :label => 'On a scale of five what is this book worth?' %>
+        <%= f.input :content, :label => 'Tell us more about it' %>
+        <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
+      <% end %>
+    </p>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <%= simple_form_for @book do |f| %>
+              <%= f.input :title %>
+              <%= f.input :author %>
+              <%= f.input :year %>
+              <%= f.input :month %>
+              <%= f.input :category %>
+              <%= f.input :image_url %>
+              <%= f.input :description %>
+              <%= f.button :submit, class: "btn-booker" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-12 col-md-3 reviews">
+    <% unless @book.reviews.empty?%>
+      <h3 class = "py-3 pr-3">Reviews</h3>
+      <% @book.reviews.each do |review| %>
+      <div class="review">
+        <div class="avatar-rating d-flex justify-content-between">
+          <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
+          <%= cl_image_tag tag, class: "avatar"%>
+          <p class="rating-text"><%= review.rating %>/5 by <strong><%= review.user.username %></strong></p>
+        </div>
+        <p><%= review.content %></p>
+      </div>
+      <% end %>
+    <% end %>
   </div>
 </div>

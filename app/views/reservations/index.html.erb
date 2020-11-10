@@ -2,5 +2,5 @@
 <p>Dear <strong><%= current_user.first_name %></strong></p>
 <br>
 <% @reservations.each do |reservation| %>
-  <p>You have booked <strong><%= reservation.book.title %></strong> from <strong><%= reservation.book.user.user_name %>.</strong></p>
+  <p>You have booked <strong><%= reservation.book.title %></strong> from <strong><%= reservation.book.user.username %>.</strong></p>
 <% end %>
