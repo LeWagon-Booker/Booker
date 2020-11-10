@@ -1,6 +1,14 @@
 <h1>My reservations</h1>
 <p>Dear <strong><%= current_user.first_name %></strong></p>
 <br>
-<% @reservations.each do |reservation| %>
+<% @my_reservations.each do |reservation| %>
   <p>You have booked <strong><%= reservation.book.title %></strong> from <strong><%= reservation.book.user.username %>.</strong></p>
+<% end %>
+
+<br>
+<% @book_reserved.each do |reservation| %>
+<div class="resevation-accepte d-flex justify-content-between w-70">
+  <p class="flex-grow-1">Pierre would like to rent your book</p>
+  <div class="accept d-flex justify-content-center align-items-center">GO</div>
+</div>
 <% end %>

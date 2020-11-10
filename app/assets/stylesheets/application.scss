@@ -20,3 +20,10 @@ h1 {
 body {
   background-color: #e8e8e8;
 }
+
+.font-awesome {
+  color: black;
+  &:hover{
+    color: black;
+  }
+}
