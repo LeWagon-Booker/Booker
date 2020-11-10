@@ -1,7 +1,7 @@
 require 'json'
 require 'rest-client'
 class BooksController < ApplicationController
-  GOOGLEKEY = 'AIzaSyBxdETxGjGx8uFm8zq7NokQa1WcXfJ7VeI'
+ # GOOGLEKEY = 'AIzaSyBxdETxGjGx8uFm8zq7NokQa1WcXfJ7VeI'
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     @books = Book.all
