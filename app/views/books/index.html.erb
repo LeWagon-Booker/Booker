@@ -1,32 +1,11 @@
 <h1>Welcome to our book collection</h1>
 <div class="cards">
   <% @books.each do |book| %>
-    <div class="card-container">
-        <div class="book">
-          <div class="owner avatar"><%= cl_image_tag book.cover.key, class: "avatar-bordered" %></div>
-          <div class="book-img" style="background-image: url(<%= cl_image_path book.cover.key %>)"></div>
-          <div class="text-book-cont">
-            <div class="mr-grid col1">
-                <h1><%= book.title %></h1>
-              <div class="mr-grid author-row">
-                <p class="book-author"><%= book.author %></p>
-              </div>
-            </div>
-            <div class="mr-grid">
-              <p class="book-description"><%= book.description %>
-            </div>
-            <div class="mr-grid action-row">
-              <%= link_to '<i class="fas fa-book text-success"></i>'.html_safe,
-              book_path(book.id) %>
-              <%= link_to '<i class="far fa-edit text-warning"></i>'.html_safe,
-              book_path(book.id) %>
-              <%= link_to '<i class="far fa-trash-alt text-danger"></i>'.html_safe,
-              book_path(book.id),
-              method: :delete,
-              data: { confirm: "Are you sure?" } %>
-            </div>
-          </div>
-        </div>
-    </div>
+
+    <%= link_to book_path(book) do %>
+      <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path book.cover.key %>)">
+        <%= book.title %>
+      </div>
+    <% end %>
   <% end %>
 </div>
