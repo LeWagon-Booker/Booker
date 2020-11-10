@@ -9,7 +9,6 @@ require 'faker'
 require "open-uri"
 
 puts "Cleaning database..."
-Reservation.destroy_all
 Book.destroy_all
 Family.destroy_all
 

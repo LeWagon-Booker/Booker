@@ -63,7 +63,8 @@ class BooksController < ApplicationController
     unless json["items"][0]["volumeInfo"]["imageLinks"].nil?
       params[:book][:image_url] = json["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
     else
-      params[:book][:image_url] = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+      params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg"
+      # params[:book][:image_url] = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
     end
     ## returning the result hash
     params
