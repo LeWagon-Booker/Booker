@@ -32,7 +32,7 @@
 <h3>Reviews</h3>
 <ul>
   <% @book.reviews.each do |review| %>
-    <li><%= review.content %>  <%= review.rating %>/5 <%= review.user.user_name %></li>
+    <li><%= review.content %>  <%= review.rating %>/5 <%= review.user.username %></li>
   <% end %>
 </ul>
 
