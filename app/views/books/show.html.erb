@@ -1,13 +1,15 @@
+<dic class="title-add d-flex justify-content-between align-items-center">
+  <h1 class="flex-grow-1 p-3 "><%= @book.title %></h1>
+  <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn-booker" %>
+</dic>
 <div class="picture-and-info d-flex justify-content-between">
-  <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show">
-
+  <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
   <div class="info flex-grow-1 px-4">
-    <h1><%= @book.title %></h1>
     <h2>by <%= @book.author %></h2>
     <h3>Published on <%= @book.month %>/<%= @book.year %></h3>
-    <h3>Belongs to <%= @book.user.user_name %></h3>
+
     <p><%= @book.description %></p>
-    <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn btn-primary" %>
+    <h4>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h4>
   </div>
   <div class="actions">
     <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#EditModal">Edit Book</button>
@@ -17,6 +19,22 @@
     data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
   </div>
 </div>
+
+<p>
+  <h3>You read this book? Give a review! </h3>
+  <%= simple_form_for [@book, @review] do |f| %>
+    <%= f.input :rating, :label => 'On a scale of five what is this book worth?' %>
+    <%= f.input :content, :label => 'Tell us more about it' %>
+    <%= f.button :submit, 'Add!', class:"btn-booker"%>
+  <% end %>
+</p>
+
+<h3>Reviews</h3>
+<ul>
+  <% @book.reviews.each do |review| %>
+    <li><%= review.content %>  <%= review.rating %>/5 <%= review.user.user_name %></li>
+  <% end %>
+</ul>
 
 <!-- Edit Modal -->
 <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
@@ -37,7 +55,7 @@
           <%= f.input :category %>
           <%= f.input :image_url %>
           <%= f.input :description %>
-          <%= f.button :submit, class: "btn btn-primary" %>
+          <%= f.button :submit, class: "btn-booker" %>
         <% end %>
       </div>
     </div>
