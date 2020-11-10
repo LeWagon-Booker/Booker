@@ -1,11 +1,31 @@
-<h1>The books!</h1>
-<div class="cards">
+<div class="box">
   <% @books.each do |book| %>
-
-    <%= link_to book_path(book) do %>
-      <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= cl_image_path book.cover.key %>)">
-        <%= book.title %>
-      </div>
-    <% end %>
+    <div class="cellphone-container">
+        <div class="book">
+          <div class="owner avatar"><%= cl_image_tag book.cover.key, class: "avatar-bordered" %></div>
+          <div class="book-img" style="background-image: url(<%= cl_image_path book.cover.key %>)"></div>
+          <div class="text-book-cont">
+            <div class="mr-grid col1">
+                <h1><%= book.title %></h1>
+              <div class="mr-grid author-row">
+                <div class="col1">
+                  <p class="book-author"><%= book.author %></p>
+                </div>
+              </div>
+            </div>
+            <div class="mr-grid summary-row">
+            </div>
+            <div class="mr-grid">
+              <div class="col1">
+                <p class="book-description"><%= book.description %></div>
+            </div>
+            <div class="mr-grid action-row">
+              <i class="fas fa-shopping-cart"></i>
+              <i class="far fa-edit"></i>
+              <i class="far fa-trash-alt"></i>
+            </div>
+          </div>
+        </div>
+    </div>
   <% end %>
 </div>
