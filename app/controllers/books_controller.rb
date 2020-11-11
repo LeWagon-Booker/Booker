@@ -1,5 +1,6 @@
 require 'json'
 require 'rest-client'
+require 'open-uri'
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
@@ -13,10 +14,15 @@ class BooksController < ApplicationController
 
   def show
     @review = Review.new
-    book_reviews_rating = Review.where(book_id: @book.id).map do |review|
-      review.rating
+    if Review.where(book_id: @book.id).empty?
+      @avg_rating = "No ratings yet"
+    else
+      book_reviews_rating = Review.where(book_id: @book.id).map do |review|
+        review.rating
+      end
+      @avg_rating = book_reviews_rating.sum(0.0)/ book_reviews_rating.size
     end
-    @avg_rating = book_reviews_rating.sum(0.0)/ book_reviews_rating.size
+
   end
 
   def new
@@ -69,12 +75,14 @@ class BooksController < ApplicationController
     params[:book][:author] = json["items"][0]["volumeInfo"]["authors"][0]
     params[:book][:year] = json["items"][0]["volumeInfo"]["publishedDate"]
     params[:book][:description] = json["items"][0]["volumeInfo"]["description"]
+    params[:book][:category] = json["items"][0]["volumeInfo"]["categories"]
     unless json["items"][0]["volumeInfo"]["imageLinks"].nil?
       params[:book][:image_url] = json["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
     else
       params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg"
     end
     ## returning the result hash
+    puts params
     params
   end
 
