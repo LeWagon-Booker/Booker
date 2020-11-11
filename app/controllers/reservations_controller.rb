@@ -17,4 +17,14 @@ class ReservationsController < ApplicationController
       render :new
     end
   end
+
+  def update
+    @reservation = Reservation.find(params[:id])
+    # @reservation.confirmed?
+    # if @reservation.confirmed?
+    #   @reservation.confirmed? = false
+    # else @reservation.confirmed? = true
+    # end
+    redirect_to reservations_path
+  end
 end
