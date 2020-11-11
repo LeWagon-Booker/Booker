@@ -3,7 +3,12 @@ require 'rest-client'
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
-    @books = Book.all
+    if params[:search].present?
+      do_search
+    else
+      @no_result = false
+      @books = Book.all
+    end
   end
 
   def show
@@ -67,5 +72,16 @@ class BooksController < ApplicationController
     end
     ## returning the result hash
     params
+  end
+
+  def do_search
+    @books = []
+    PgSearch::Multisearch.rebuild(Book)
+    @object = PgSearch.multisearch(params[:search]).each do |result|
+      @books << Book.find(result[:searchable_id])
+      pp @books
+    end
+    @no_result = true if @books.size.zero?
+    @books = Book.all if @books.size.zero?
   end
 end
