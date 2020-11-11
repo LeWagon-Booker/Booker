@@ -3,4 +3,7 @@ class Book < ApplicationRecord
   belongs_to :user
   has_many :reservations, dependent: :destroy
   has_many :reviews, dependent: :destroy
+
+  include PgSearch::Model
+  multisearchable against: [:title, :description, :author]
 end

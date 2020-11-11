@@ -1,4 +1,7 @@
 <h1>Welcome to our book collection</h1>
+<% if @no_result == true %>
+  <div class="p-3 mb-2 bg-warning text-dark"><strong>Holy cocktail!</strong> Your search gave no result!</div>
+<% end %>
 <div class="cards">
   <% @books.each do |book| %>
 
