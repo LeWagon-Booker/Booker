@@ -30,29 +30,39 @@
     <p>
       <h3>You read this book? Give a review! </h3>
       <%= simple_form_for [@book, @review]  do |f| %>
-        <%= f.input :content, :label => 'Tell us more about it' %>
-        <div class="rating">
+        <div class="rating m-0 p-0">
           <label>
-            <input type="radio" name="rating" value="1" />
+            <input type="radio" name="stars" value="1" />
             <span class="icon">★</span>
           </label>
           <label>
-            <input type="radio" name="rating" value="2" />
-            <span class="icon">★</span><span class="icon">★</span>
+            <input type="radio" name="stars" value="2" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
           </label>
           <label>
-            <input type="radio" name="rating" value="3" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+            <input type="radio" name="stars" value="3" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
           </label>
           <label>
-            <input type="radio" name="rating" value="4" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+            <input type="radio" name="stars" value="4" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
           </label>
           <label>
-            <input type="radio" name="rating" value="5" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+            <input type="radio" name="stars" value="5" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
           </label>
         </div>
+        <%= f.input :content, :label => 'Tell us more about it' %>
         <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
       <% end %>
     </p>
@@ -91,7 +101,15 @@
         <div class="avatar-rating d-flex justify-content-between">
           <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
           <%= cl_image_tag tag, class: "avatar"%>
-          <p class="rating-text"><%= review.rating %>/5 by <strong><%= review.user.username %></strong></p>
+
+              <% review.rating.times do %>
+                <%= "<i style=\"color: #ffc600\" class=\"fas fa-star\"></i>".html_safe %>
+              <% end %>
+              <% (5 - review.rating).times do %>
+                <%= "<i style=\"color: #ffc600\" class=\"far fa-star\"></i>".html_safe %>
+              <% end %>
+
+            by <strong><%= review.user.first_name %></strong></p>
         </div>
         <p><%= review.content %></p>
       </div>
