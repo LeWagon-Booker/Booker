@@ -3,46 +3,33 @@
   background-size: cover;
   background-position: center;
   padding: 150px 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner h1 {
-  margin: 0;
+  position: relative;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
   font-size: 32px;
   font-weight: bold;
+  text-align: center;
 }
 
 .banner p {
   font-size: 20px;
+  text-align: center;
   color: white;
   opacity: .7;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    // margin: 0;
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // margin-right: -50%;
+    // transform: translate(-50%, -50%)
 }
-.footer {
-  background: #F4F4F4;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  position: center;
-  justify-content: space-between;
-  height: 100px;
-  padding: 0px 50px;
-  color: rgba(0,0,0,0.3);
-}
-.footer-links {
-  display: flex;
-  align-items: center;
-}
-.footer-links a {
-  color: black;
-  opacity: 0.15;
-  text-decoration: none;
-  font-size: 24px;
-  padding: 0px 10px;
-}
-.footer-links a:hover {
-  opacity: 1;
-}
+
+
 
 
