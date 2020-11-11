@@ -24,9 +24,9 @@
       <p>Asked by <strong> <%= reservation.user.username %></strong></p>
       <% if reservation.confirmed? %>
         <p style= "color: green">Booking confirmed!</p>
-        <%= link_to "Cancel", reservation_path(reservation), method: :patch %>
+        <%= link_to "Cancel", reservation_path(reservation), method: :put %>
       <% else %>
-        <%= link_to "Confirm booking", reservation_path(reservation), method: :patch  %>
+        <%= link_to "Confirm booking", reservation_path(reservation), method: :put  %>
 
       <% end %>
     </div>
