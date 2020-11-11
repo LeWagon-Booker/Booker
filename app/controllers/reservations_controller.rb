@@ -20,11 +20,11 @@ class ReservationsController < ApplicationController
 
   def update
     @reservation = Reservation.find(params[:id])
-    # @reservation.confirmed?
-    # if @reservation.confirmed?
-    #   @reservation.confirmed? = false
-    # else @reservation.confirmed? = true
-    # end
+    if @reservation.confirmed?
+      @reservation.confirmed = false
+    else @reservation.confirmed = true
+    end
+    @reservation.save
     redirect_to reservations_path
   end
 end
