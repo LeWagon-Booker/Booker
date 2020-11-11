@@ -96,7 +96,7 @@
   </div>
   <div class="col-12 col-md-3 reviews">
     <% unless @book.reviews.empty?%>
-      <h3 class = "py-3 pr-3">Reviews <em class="rating"><%= @avg_rating %>/5</em></h3>
+      <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
       <% @book.reviews.each do |review| %>
       <div class="review">
         <div class="avatar-rating d-flex justify-content-between">
