@@ -19,6 +19,7 @@
     <h2>Fast ISBN input</h2>
     <%= simple_form_for @book do |f| %>
       <%= f.input :ISBN , label: "Look at the back of your book you will find a 9 digits number"%>
+      <%= f.association :category, input_html: { class: 'select2' } %>
       <%= f.button :submit, class: "btn-booker" %>
     <% end %>
   </div>
