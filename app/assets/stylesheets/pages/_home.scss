@@ -1,48 +1,76 @@
 // Specific CSS for your home-page
+
 .banner {
-  background-size: cover;
-  background-position: center;
-  padding: 150px 0;
+  background-image: 
+  linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)
+  ),
+  url("https://images.unsplash.com/photo-1529148482759-b35b25c5f217?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80");
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -o-object-fit: contain;
+  object-fit: contain;
 }
 
+
+.logo {
+  position: absolute;
+  width: 666px; /*the image width*/
+  height: auto; /*the image height*/
+  left: 50%;
+  top: 13%;
+  margin-left: -333px; /*half the image width*/
+}
+
+
 .banner h1 {
-  margin: 0;
   color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 50px;
+  left: 0;
+  line-height: 200px;
+  margin-top: -100px;
+  position: absolute;
+  text-align: center;
+  top: 45%;
+  width: 100%;
 }
 
 .banner p {
   font-size: 20px;
   color: white;
-  opacity: .7;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-}
-.footer {
-  background: #F4F4F4;
-  display: flex;
+  left: 0;
+  line-height: 200px;
+  margin-top: -100px;
+  position: absolute;
   text-align: center;
-  align-items: center;
-  position: center;
-  justify-content: space-between;
-  height: 100px;
-  padding: 0px 50px;
-  color: rgba(0,0,0,0.3);
+  top: 50%;
+  width: 100%;
 }
-.footer-links {
-  display: flex;
-  align-items: center;
-}
-.footer-links a {
-  color: black;
-  opacity: 0.15;
+
+.container .far {
+  font-size: 32px;
   text-decoration: none;
-  font-size: 24px;
-  padding: 0px 10px;
+  color: rgb(255, 255, 255);
+  position: fixed;
+  bottom: 19px;
+  right: 50%; 
+  left: 50%;
+  cursor: pointer;
 }
-.footer-links a:hover {
-  opacity: 1;
+
+.far:hover {
+  color:#2a69bc;
+    text-shadow: 0 0 15px #2a69bc;
+    transition: all 0.5s ease;
 }
+
 
 
