@@ -20,9 +20,8 @@ class BooksController < ApplicationController
       book_reviews_rating = Review.where(book_id: @book.id).map do |review|
         review.rating
       end
-      @avg_rating = book_reviews_rating.sum(0.0)/ book_reviews_rating.size
+      @avg_rating = book_reviews_rating.sum(0.0) / book_reviews_rating.size
     end
-
   end
 
   def new
