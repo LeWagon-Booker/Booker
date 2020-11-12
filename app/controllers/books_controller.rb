@@ -13,6 +13,7 @@ class BooksController < ApplicationController
   end
 
   def show
+    @reservation = Reservation.new
     @review = Review.new
     if Review.where(book_id: @book.id).empty?
       @avg_rating = "No ratings yet"
