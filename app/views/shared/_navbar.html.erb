@@ -55,6 +55,7 @@
         <% @family = Family.new %>
         <%= simple_form_for @family do |f| %>
           <%= f.input :name %>
+          <%= f.input :picture, as: :file%>
           <%= f.button :submit, class: "btn-booker" %>
         <% end %>
       </div>

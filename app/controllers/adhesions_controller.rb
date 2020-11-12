@@ -1,11 +1,11 @@
 class AdhesionsController < ApplicationController
   def create
-    @adhesion = Adhesion.new()
+    @adhesion = Adhesion.new(adhesion_params)
     @adhesion.family = Family.find(params[:family_id])
-    if @adhesion.save
+    if @adhesion.save!
       redirect_to family_path(@adhesion.family)
     else
-      render :show
+      render :new
     end
   end
 

@@ -36,15 +36,18 @@
               <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
             <% if reservation.confirmed? %>
               <p style= "color: green">Booking confirmed!</p>
-              <%= link_to reservation_path(reservation), method: :put do %>
-                <i class="fas fa-times cancel"></i>
-              <% end %>
-            <% else %>
-              <%= link_to reservation_path(reservation), method: :put do %>
-                <i class="far fa-check-circle confirm"></i>
-              <% end %>
             <% end %>
           </div>
+          <% if reservation.confirmed? %>
+            <%= link_to reservation_path(reservation), method: :put do %>
+              <i class="fas fa-times cancel pr-2"></i>
+            <% end %>
+          <% else %>
+            <%= link_to reservation_path(reservation), method: :put do %>
+              <i class="far fa-check-circle confirm pr-2"></i>
+            <% end %>
+          <% end %>
+
         </div>
       </div>
     <% end %>
