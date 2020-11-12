@@ -11,6 +11,9 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new
     @reservation.user = current_user
     @reservation.book = Book.find(params[:book_id])
+    @reservation.start_date = Date.parse(params[:reservation]['start_date'])
+    @reservation.end_date = Date.parse(params[:reservation]['end_date'])
+    @reservation.message = params[:reservation]['message']
     if @reservation.save
       redirect_to book_path(@reservation.book)
     else
@@ -24,7 +27,13 @@ class ReservationsController < ApplicationController
       @reservation.confirmed = false
     else @reservation.confirmed = true
     end
-    @reservation.save
+    @reservation.save(validate: false)
     redirect_to reservations_path
+  end
+
+  private
+
+  def reservation_params
+    params.require(:reservation).permit(:start_date, :end_date, :message)
   end
 end

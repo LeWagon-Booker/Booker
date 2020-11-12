@@ -7,7 +7,11 @@
         <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
         <div class="card-product-infos">
           <h1><strong><%= reservation.book.title %></strong></h1>
-          <p>Booked to <strong> <%= reservation.book.user.username %></strong></p>
+          <p>Booked from <strong> <%= reservation.book.user.username %></strong></p>
+          <p>Requested from
+              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              until:
+              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
           <% if reservation.confirmed? %>
             <p style= "color: green">Booking confirmed!</p>
           <% else %>
@@ -26,10 +30,12 @@
           <div class="info flex-grow-1 ">
             <h1><strong><%= reservation.book.title %></strong></h1>
             <p>Asked by <strong> <%= reservation.user.username %></strong></p>
-            <p style= "color: green">Booking confirmed!</p>
-          </div>
-          <div class="w-30 d-flex justify-content-center align-items-center">
+            <p>Requested from
+              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              until:
+              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
             <% if reservation.confirmed? %>
+              <p style= "color: green">Booking confirmed!</p>
               <%= link_to reservation_path(reservation), method: :put do %>
                 <i class="fas fa-times cancel"></i>
               <% end %>
