@@ -1,6 +1,14 @@
 class FamiliesController < ApplicationController
   def index
-    @families = Family.all
+    @adhesion = Adhesion.new
+    sql_query = " \
+      adhesions.user_id = :query \
+    "
+    # @movies = Movie.joins(:director).where(sql_query, query: "%#{params[:query]}%")
+    @families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
+      adhesion.family
+    end
+    @family = Family.create()
   end
 
   def show
@@ -13,14 +21,14 @@ class FamiliesController < ApplicationController
     @adhesion.user = current_user
     @adhesion.family = @family
     @adhesion.save!
-    redirect_to books_path
+    redirect_to families_path
   end
 
 
   private
 
   def family_params
-    params.require(:family).permit(:name)
+    params.require(:family).permit(:name, :picture)
   end
 
 end

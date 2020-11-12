@@ -1,24 +1,29 @@
 <h1><%= @family.name %></h1>
+<h3>The current members of this family are:</h3>
 <% @family.users.each do |user| %>
   <p><%= user.username %></p>
+  <% tag = 'defaultavatar' %>
+  <% tag = user.avatar.key if user.avatar.attached? == true %>
+  <%= cl_image_tag tag, class: "avatar" %>
 <% end %>
-<%= link_to "Add a member", "#", "data-toggle"=>"modal",  "data-target"=>"#AddModal" %>
-
+<br>
+<br>
+<%= link_to "Add a member", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember", class: "btn-booker" %>
 
 <!-- add_family modal -->
 
-<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+<div class="modal fade" id="AddMember" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+        <h5 class="modal-title" id="EditModalLongTitle">Add this member!</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <%= simple_form_for [@family, @adhesion] do |f| %>
-          <%= f.association :user, input_html: { class: 'select2' } %>
+          <%= f.association :user, input_html: { class: 'select2'  }, label_method: :username %>
           <%= f.button :submit, class: "btn-booker" %>
         <% end %>
       </div>
