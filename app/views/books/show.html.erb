@@ -4,11 +4,12 @@
   <% end %>
 
   <div class="col-12 <%= size %> ">
-    <dic class="title-add d-flex justify-content-between align-items-center">
+    <div class="title-add d-flex justify-content-between align-items-center">
       <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
-      <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
-
-    </dic>
+      <% if @book.user != current_user %>
+      <li type="button" class="btn btn-primary" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
+      <% end %>
+    </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
       <div class="info flex-grow-1 px-4">
@@ -135,14 +136,12 @@
       </div>
       <div class="modal-body">
         <div id='book-reservation' data-unavailable="<%= @book.unavailable_dates.to_json %>">
-            <% if current_user.id != @book.user_id  %>
-               <%= simple_form_for([@book, @reservation]) do |f| %>
-                  <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From", wrapper_html: { class: "inline_field_wrapper" } %>
-                  <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To", disabled: true, wrapper_html: { class: "inline_field_wrapper" } %>
-                  <%= f.input :message, as: :text %>
-                  <%= f.submit "Book", class: "btn btn-primary" %>
-                <% end %>
-            <% end %>
+          <%= simple_form_for([@book, @reservation]) do |f| %>
+            <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From", wrapper_html: { class: "inline_field_wrapper" } %>
+            <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To", disabled: true, wrapper_html: { class: "inline_field_wrapper" } %>
+            <%= f.input :message, as: :text %>
+            <%= f.submit "Book", class: "btn btn-primary" %>
+          <% end %>
          </div>
       </div>
     </div>

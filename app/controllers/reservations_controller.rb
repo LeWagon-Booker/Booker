@@ -27,7 +27,7 @@ class ReservationsController < ApplicationController
       @reservation.confirmed = false
     else @reservation.confirmed = true
     end
-    @reservation.save
+    @reservation.save(validate: false)
     redirect_to reservations_path
   end
 
