@@ -1,36 +1,51 @@
-<h1>My reservations</h1>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <h1 class="text-center">My reservations</h1>
 
-<% @my_reservations.each do |reservation| %>
-  <div class="card-product">
-    <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
-    <div class="card-product-infos">
-      <h2><strong><%= reservation.book.title %></strong></h2>
-      <p>Booked to <strong> <%= reservation.book.user.username %></strong></p>
-      <% if reservation.confirmed? %>
-        <p style= "color: green">Booking confirmed!</p>
-      <% else %>
-        <p style= "color: red">Waiting for confirmation from the owner</p>
-      <% end %>
-    </div>
+    <% @my_reservations.each do |reservation| %>
+      <div class="card-product">
+        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+        <div class="card-product-infos">
+          <h1><strong><%= reservation.book.title %></strong></h1>
+          <p>Booked to <strong> <%= reservation.book.user.username %></strong></p>
+          <% if reservation.confirmed? %>
+            <p style= "color: green">Booking confirmed!</p>
+          <% else %>
+            <p style= "color: red">Waiting for confirmation from the owner</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
-
-<h1>Demands for my books</h1>
-<% @book_reserved.each do |reservation| %>
-  <div class="card-product">
-    <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
-    <div class="card-product-infos">
-      <h2><strong><%= reservation.book.title %></strong></h2>
-      <p>Asked by <strong> <%= reservation.user.username %></strong></p>
-      <% if reservation.confirmed? %>
-        <p style= "color: green">Booking confirmed!</p>
-        <%= link_to "Cancel", reservation_path(reservation), method: :put %>
-      <% else %>
-        <%= link_to "Confirm booking", reservation_path(reservation), method: :put  %>
-
-      <% end %>
-    </div>
+  <div class="col-12 col-md-6">
+    <h1 class="text-center">Demands for my books</h1>
+    <% @book_reserved.each do |reservation| %>
+      <div class="card-product">
+        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+        <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
+          <div class="info flex-grow-1 ">
+            <h1><strong><%= reservation.book.title %></strong></h1>
+            <p>Asked by <strong> <%= reservation.user.username %></strong></p>
+            <p style= "color: green">Booking confirmed!</p>
+          </div>
+          <div class="w-30 d-flex justify-content-center align-items-center">
+            <% if reservation.confirmed? %>
+              <%= link_to reservation_path(reservation), method: :put do %>
+                <i class="fas fa-times cancel"></i>
+              <% end %>
+            <% else %>
+              <%= link_to reservation_path(reservation), method: :put do %>
+                <i class="far fa-check-circle confirm"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
+
+
+
 
 

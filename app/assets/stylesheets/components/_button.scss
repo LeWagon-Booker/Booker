@@ -9,4 +9,13 @@
   }
 }
 
-
+.btn-booker-purple {
+  color: white;
+  background-color: $purple;
+  border-radius: 20px;
+  padding: 6px 10px;
+  &:hover {
+    text-decoration: none;
+    color:#e8e8e8;
+  }
+}
