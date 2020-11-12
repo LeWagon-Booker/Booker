@@ -88,8 +88,8 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "confirmed", default: false
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.date "start_date"
+    t.date "end_date"
     t.text "message"
     t.index ["book_id"], name: "index_reservations_on_book_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"

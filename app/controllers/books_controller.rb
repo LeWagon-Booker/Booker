@@ -40,6 +40,7 @@ class BooksController < ApplicationController
     @book.user = current_user
     if @book.save!
       redirect_to book_path(@book)
+      PgSearch::Multisearch.rebuild(Book)
     else
       render :new
     end
@@ -48,11 +49,13 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     redirect_to books_path
+    PgSearch::Multisearch.rebuild(Book)
   end
 
   def update
     @book.update(book_params)
     redirect_to book_path(@book)
+    PgSearch::Multisearch.rebuild(Book)
   end
 
   private
@@ -89,7 +92,6 @@ class BooksController < ApplicationController
 
   def do_search
     @books = []
-    PgSearch::Multisearch.rebuild(Book)
     @object = PgSearch.multisearch(params[:search]).each do |result|
       @books << Book.find(result[:searchable_id])
       pp @books

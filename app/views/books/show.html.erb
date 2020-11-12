@@ -133,12 +133,16 @@
       </div>
       <div class="modal-body">
         <p>Calendar</p>
-        <%= simple_form_for [@book, @reservation] do |f| %>
-          <%= f.input :start_date %>
-          <%= f.input :end_date %>
-          <%= f.input :message %>
-          <%= f.button :submit, class: "btn-booker" %>
-        <% end %>
+        <div id='book-reservation' data-unavailable="<%= @book.unavailable_dates.to_json %>">
+            <% if current_user.id != @book.user_id  %>
+               <%= simple_form_for([@book, @reservation]) do |f| %>
+                  <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From", wrapper_html: { class: "inline_field_wrapper" } %>
+                  <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To", disabled: true, wrapper_html: { class: "inline_field_wrapper" } %>
+                  <%= f.input :message, as: :text %>
+                  <%= f.submit "Book", class: "btn btn-primary" %>
+                <% end %>
+            <% end %>
+         </div>
       </div>
     </div>
   </div>
