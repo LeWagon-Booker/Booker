@@ -1,14 +1,36 @@
 <h1>My reservations</h1>
-<p>Dear <strong><%= current_user.first_name %></strong></p>
-<br>
+
 <% @my_reservations.each do |reservation| %>
-  <p>You have booked <strong><%= reservation.book.title %></strong> from <strong><%= reservation.book.user.username %>.</strong></p>
+  <div class="card-product">
+    <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+    <div class="card-product-infos">
+      <h2><strong><%= reservation.book.title %></strong></h2>
+      <p>Booked to <strong> <%= reservation.book.user.username %></strong></p>
+      <% if reservation.confirmed? %>
+        <p style= "color: green">Booking confirmed!</p>
+      <% else %>
+        <p style= "color: red">Waiting for confirmation from the owner</p>
+      <% end %>
+    </div>
+  </div>
 <% end %>
 
-<br>
+<h1>Demands for my books</h1>
 <% @book_reserved.each do |reservation| %>
-<div class="resevation-accepte d-flex justify-content-between w-70">
-  <p class="flex-grow-1">Pierre would like to rent your book</p>
-  <div class="accept d-flex justify-content-center align-items-center">GO</div>
-</div>
+  <div class="card-product">
+    <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+    <div class="card-product-infos">
+      <h2><strong><%= reservation.book.title %></strong></h2>
+      <p>Asked by <strong> <%= reservation.user.username %></strong></p>
+      <% if reservation.confirmed? %>
+        <p style= "color: green">Booking confirmed!</p>
+        <%= link_to "Cancel", reservation_path(reservation), method: :put %>
+      <% else %>
+        <%= link_to "Confirm booking", reservation_path(reservation), method: :put  %>
+
+      <% end %>
+    </div>
+  </div>
 <% end %>
+
+
