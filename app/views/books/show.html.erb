@@ -132,7 +132,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Calendar</p>
         <div id='book-reservation' data-unavailable="<%= @book.unavailable_dates.to_json %>">
             <% if current_user.id != @book.user_id  %>
                <%= simple_form_for([@book, @reservation]) do |f| %>
