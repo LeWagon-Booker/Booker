@@ -4,6 +4,7 @@ require 'open-uri'
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
+    @book = Book.new
     if params[:search].present?
       do_search
     else
