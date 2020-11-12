@@ -34,10 +34,8 @@
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
               until:
               <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
-            <p style= "color: green">Booking confirmed!</p>
-          </div>
-          <div class="w-30 d-flex justify-content-center align-items-center">
             <% if reservation.confirmed? %>
+              <p style= "color: green">Booking confirmed!</p>
               <%= link_to reservation_path(reservation), method: :put do %>
                 <i class="fas fa-times cancel"></i>
               <% end %>
