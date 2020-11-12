@@ -2,14 +2,13 @@
 <br>
 <br>
 <% if @no_result == true %>
-  <div class="p-3 mb-2 bg-warning text-dark"><strong>Holy cocktail!</strong> Your search gave no result!</div>
+  <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!</div>
 <% end %>
 <div class="cards">
   <% @books.each do |book| %>
 
     <%= link_to book_path(book) do %>
-      <div class="card-category text-center"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
-<%#             <%= book.title %>
+      <div class="card-category text-center" style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
       </div>
     <% end %>
   <% end %>
