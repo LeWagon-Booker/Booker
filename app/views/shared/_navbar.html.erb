@@ -25,7 +25,8 @@
           <%= cl_image_tag tag, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <%= link_to "My reservations", reservations_path, class: "dropdown-item" %>
-            <%= link_to "Add a family", "#", class: "dropdown-item", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
+            <%= link_to "My families", families_path, class: "dropdown-item" %>
+            <%= link_to "Add a family", "#", class: "dropdown-item", "data-toggle"=>"modal",  "data-target"=>"#AddModal" %>
             <%= link_to "Edit my profile", edit_user_registration_path, class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
           </div>
@@ -39,9 +40,9 @@
   </div>
 </div>
 
+<!-- add_family modal -->
 
-
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+<div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
