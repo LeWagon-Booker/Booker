@@ -54,7 +54,7 @@ puts 'Your library is loading...'
   Book.create(
       title: "Twilight and Dawn",
       author: "Ken Follett",
-      description:  "Before The Pillars of the Earth... nIn the year 997, at the end of the High Middle Ages, the British faced attacks by Vikings threatening to invade the country. In the absence of a rule of law, it is the reign of chaos. nIn this tumultuous period, the destinies of three characters intersect. The young Edgar, boat builder, sees his life change when his house is destroyed during a Viking raid. Ragna, a young, rebellious Norman nobleman, married the Englishman Wilwulf out of love, but the customs of his adopted country were scandalously different from his own. Aldred, an idealistic monk, dreams of transforming his modest abbey into a world-renowned centre of scholarship. Each of them will stand in the way of Bishop Wynstan’s life, ready to do anything to increase his wealth and strengthen.",
+      description:  "Before The Pillars of the Earth... In the year 997, at the end of the High Middle Ages, the British faced attacks by Vikings threatening to invade the country. In the absence of a rule of law, it is the reign of chaos. nIn this tumultuous period, the destinies of three characters intersect. The young Edgar, boat builder, sees his life change when his house is destroyed during a Viking raid. Ragna, a young, rebellious Norman nobleman, married the Englishman Wilwulf out of love, but the customs of his adopted country were scandalously different from his own. Aldred, an idealistic monk, dreams of transforming his modest abbey into a world-renowned centre of scholarship. Each of them will stand in the way of Bishop Wynstan’s life, ready to do anything to increase his wealth and strengthen.",
       year: 2020,
       month: 9,
       user_id: 1,
@@ -62,7 +62,7 @@ puts 'Your library is loading...'
     ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
     puts "    Book #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://lh3.googleusercontent.com/proxy/B9BYEjXqX2qDqQ22pFgNodcCLDRiZCQoEPc9zO6Ft6pPVnyS2Txkc-eXCa0QFclxgUqDZjYClF3HHuAiTBfAsJ8X_e5CFOPH27oK_t40Ib_U4oV6pTcXzpZvNw")   #book cover
+  file = URI.open("https://media.s-bol.com/JVY4qL3ZGz2/781x1200.jpg")   #book cover
   Book.create(
       title: "Holes",
       author: "Louis Sachar",
