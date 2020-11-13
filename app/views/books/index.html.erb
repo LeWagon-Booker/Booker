@@ -2,7 +2,7 @@
 <% unless @user_families.empty?  %>
 <div id="filter" class="d-flex flex-column justify-content-center">
   <div class="text-center d-flex justify-content-around align-items-center w-50 p-3">
-    <h4 class="mb-0">Family filters</h4>
+    <h5 class="mb-0">Family filters</h5>
     <% @user_families.each do |family| %>
       <p class="mb-0"><%= link_to family.name, books_path(:family => family.id) %></p>
     <% end %>
