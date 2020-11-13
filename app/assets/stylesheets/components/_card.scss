@@ -1,3 +1,12 @@
+
+.book-img {
+  width: 165px;
+  object-fit:cover;
+}
+
+
+
+
 .card-category p {
   font-size: 1.2em;
 
@@ -81,7 +90,7 @@ a:hover {
 .card-product {
   position: relative;
   overflow: hidden;
-  height: 170px;
+  height: 220px;
   background: white;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
