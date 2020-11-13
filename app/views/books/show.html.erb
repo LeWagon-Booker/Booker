@@ -4,78 +4,146 @@
   <% end %>
 
   <div class="col-12 <%= size %> ">
-    <dic class="title-add d-flex justify-content-between align-items-center">
-      <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %></h1>
-      <%= link_to "Reserve this book!", book_reservations_path(@book), method: :post, class: "btn-booker" %>
-    </dic>
+    <div class="title-add d-flex justify-content-between align-items-center">
+      <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
+      <% if @book.user != current_user %>
+      <li type="button" class="btn btn-primary" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
+      <% end %>
+    </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
       <div class="info flex-grow-1 px-4">
         <h2>by <%= @book.author %></h2>
-        <p><%= @book.description %></p>
-        <p>Published on <%= @book.month %>/<%= @book.year %></p>
+        <p class="text-justify"><%= @book.description %></p>
         <h5>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h5>
       </div>
-      <ul class="actions list-inline">
-        <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="far fa-edit"></i></li>
-        <li>
-          <%= link_to book_path(@book.id),
-            method: :delete,
-            data: { confirm: "Are you sure?" }, class: "font-awesome list-inline-item" do %>
-            <i class="fas fa-trash"></i>
-          <% end %>
-        </li>
-      </ul>
+      <% if @book.user == current_user %>
+        <ul class="actions list-inline">
+          <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit"></i></li>
+          <li>
+            <%= link_to book_path(@book.id),
+              method: :delete,
+              data: { confirm: "Are you sure?" }, class: "font-awesome list-inline-item" do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          </li>
+        </ul>
+      <% end %>
     </div>
+    <br>
 
     <p>
       <h3>You read this book? Give a review! </h3>
-      <%= simple_form_for [@book, @review] do |f| %>
-        <%= f.input :rating, :label => 'On a scale of five what is this book worth?' %>
+      <%= simple_form_for [@book, @review]  do |f| %>
+        <div class="rating m-0 p-0">
+          <label>
+            <input type="radio" name="rating" value="1" />
+            <span class="icon">★</span>
+          </label>
+          <label>
+            <input type="radio" name="rating" value="2" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+          </label>
+          <label>
+            <input type="radio" name="rating" value="3" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+          </label>
+          <label>
+            <input type="radio" name="rating" value="4" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+          </label>
+          <label>
+            <input type="radio" name="rating" value="5" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+          </label>
+        </div>
         <%= f.input :content, :label => 'Tell us more about it' %>
         <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
       <% end %>
     </p>
-    <!-- Edit Modal -->
-    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <%= simple_form_for @book do |f| %>
-              <%= f.input :title %>
-              <%= f.input :author %>
-              <%= f.input :year %>
-              <%= f.input :month %>
-              <%= f.input :category %>
-              <%= f.input :image_url %>
-              <%= f.input :description %>
-              <%= f.button :submit, class: "btn-booker" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </div>
   <div class="col-12 col-md-3 reviews">
     <% unless @book.reviews.empty?%>
-      <h3 class = "py-3 pr-3">Reviews</h3>
+      <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
       <% @book.reviews.each do |review| %>
       <div class="review">
         <div class="avatar-rating d-flex justify-content-between">
           <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
           <%= cl_image_tag tag, class: "avatar"%>
-          <p class="rating-text"><%= review.rating %>/5 by <strong><%= review.user.username %></strong></p>
+
+              <% review.rating.times do %>
+                <%= "<i style=\"color: #ffc600\" class=\"fas fa-star\"></i>".html_safe %>
+              <% end %>
+              <% (5 - review.rating).times do %>
+                <%= "<i style=\"color: #ffc600\" class=\"far fa-star\"></i>".html_safe %>
+              <% end %>
+
+            by <strong><%= review.user.first_name %></strong></p>
         </div>
         <p><%= review.content %></p>
       </div>
       <% end %>
     <% end %>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for @book do |f| %>
+          <%= f.input :title %>
+          <%= f.input :author %>
+          <%= f.input :year %>
+          <%= f.input :month %>
+          <%= f.input :category %>
+          <%= f.input :image_url %>
+          <%= f.input :description %>
+          <%= f.button :submit, class: "btn-booker" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Reservation Modal -->
+<div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ReservationModalLongTitle">Reserve this Book!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id='book-reservation' data-unavailable="<%= @book.unavailable_dates.to_json %>">
+          <%= simple_form_for([@book, @reservation]) do |f| %>
+            <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From", wrapper_html: { class: "inline_field_wrapper" } %>
+            <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To", disabled: true, wrapper_html: { class: "inline_field_wrapper" } %>
+            <%= f.input :message, as: :text %>
+            <%= f.submit "Book", class: "btn btn-primary" %>
+          <% end %>
+         </div>
+      </div>
+    </div>
   </div>
 </div>

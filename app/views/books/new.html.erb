@@ -1,20 +1,25 @@
-<h1>Manual input</h1>
 
-<%= simple_form_for @book do |f| %>
-  <%= f.input :title %>
-  <%= f.input :author %>
-  <%= f.input :year %>
-  <%= f.input :month %>
-  <%= f.input :category %>
-  <%= f.input :image_url %>
-  <%= f.input :cover, as: :file %>
-  <%= f.rich_text_area :description %>
-  <%= f.button :submit, class: "btn btn-primary" %>
-<% end %>
-<br>
-<h2>Rapid intrance with ISBN</h2>
-<p>Look at the back of your book you will find a 9 digits number</p>
-<%= simple_form_for @book do |f| %>
-  <%= f.input :ISBN %>
-  <%= f.button :submit, class: "btn btn-primary" %>
-<% end %>
+<h1>Let's add a new book!</h1>
+<div class="row py-3">
+  <div class="col-12 col-md-8 px-5 br-2">
+    <h2>Manual input</h2>
+    <%= simple_form_for @book do |f| %>
+      <%= f.input :title %>
+      <%= f.input :author %>
+      <%= f.input :year %>
+      <%= f.input :month %>
+      <%= f.input :category %>
+      <%= f.input :cover, as: :file%>
+      <%= f.rich_text_area :description %>
+      <%= f.button :submit, class: "btn-booker" %>
+    <% end %>
+  </div>
+  <div class="col-12 col-md-3">
+    <h2>Fast ISBN input</h2>
+    <%= simple_form_for @book do |f| %>
+      <%= f.input :ISBN , label: "Look at the back of your book you will find a 9 digits number"%>
+      <%= f.association :category, input_html: { class: 'select2' } %>
+      <%= f.button :submit, class: "btn-booker" %>
+    <% end %>
+  </div>
+</div>

@@ -1,14 +1,60 @@
-<h1>My reservations</h1>
-<p>Dear <strong><%= current_user.first_name %></strong></p>
-<br>
-<% @my_reservations.each do |reservation| %>
-  <p>You have booked <strong><%= reservation.book.title %></strong> from <strong><%= reservation.book.user.username %>.</strong></p>
-<% end %>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <h1 class="text-center">My reservations</h1>
 
-<br>
-<% @book_reserved.each do |reservation| %>
-<div class="resevation-accepte d-flex justify-content-between w-70">
-  <p class="flex-grow-1">Pierre would like to rent your book</p>
-  <div class="accept d-flex justify-content-center align-items-center">GO</div>
+    <% @my_reservations.each do |reservation| %>
+      <div class="card-product">
+        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+        <div class="card-product-infos">
+          <h1><strong><%= reservation.book.title %></strong></h1>
+          <p>Booked from <strong> <%= reservation.book.user.username %></strong></p>
+          <p>Requested from
+              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              until:
+              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
+          <% if reservation.confirmed? %>
+            <p style= "color: green">Booking confirmed!</p>
+          <% else %>
+            <p style= "color: red">Waiting for confirmation from the owner</p>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-12 col-md-6">
+    <h1 class="text-center">Demands for my books</h1>
+    <% @book_reserved.each do |reservation| %>
+      <div class="card-product">
+        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="covers-show shadow rounded">
+        <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
+          <div class="info flex-grow-1 ">
+            <h1><strong><%= reservation.book.title %></strong></h1>
+            <p>Asked by <strong> <%= reservation.user.username %></strong></p>
+            <p>Requested from
+              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              until:
+              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
+            <% if reservation.confirmed? %>
+              <p style= "color: green">Booking confirmed!</p>
+            <% end %>
+          </div>
+          <% if reservation.confirmed? %>
+            <%= link_to reservation_path(reservation), method: :put do %>
+              <i class="fas fa-times cancel pr-2"></i>
+            <% end %>
+          <% else %>
+            <%= link_to reservation_path(reservation), method: :put do %>
+              <i class="far fa-check-circle confirm pr-2"></i>
+            <% end %>
+          <% end %>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
-<% end %>
+
+
+
+
+

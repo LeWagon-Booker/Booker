@@ -7,13 +7,15 @@
 @import "bootstrap/scss/bootstrap";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+@import "flatpickr/dist/flatpickr.css";
 
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
 
 h1 {
- color: #495464;
+ color: $blue;
+ padding: 5px;
 }
 
 body {
@@ -25,4 +27,12 @@ body {
   &:hover{
     color: black;
   }
+}
+
+.tab {
+  padding-left: 5px;
+}
+
+.container {
+  min-height: 100vh;
 }

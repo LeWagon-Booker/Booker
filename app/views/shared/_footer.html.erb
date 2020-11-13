@@ -6,7 +6,12 @@
     <a href="#"><i class="fab fa-twitter"></i></a>
     <a href="#"><i class="fab fa-linkedin"></i></a>
   </div>
+
+  <%= link_to books_path, class: "navbar-brand p-0" do %>
+    <%= cl_image_tag 'Booker_Logo'  %>
+  <% end %>
+
   <div class="footer-copyright">
-    This footer is made with <i class="fas fa-heart"></i> at Le Wagon
+    Spend less, read more!
   </div>
 </div>
