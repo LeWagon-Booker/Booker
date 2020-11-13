@@ -12,11 +12,16 @@
     <div class="card-product">
       <% tag = 'defaultavatar' %>
       <% tag = family.picture.key if family.picture.attached? == true %>
-      <%= cl_image_tag tag %>
+      <%= cl_image_tag tag, class:"card-img" %>
       <div class="card-product-infos">
         <h1><%= link_to family.name, family_path(family)%></h1>
-        <% @members = family.users.map { |user| user.username } %>
-        <p>Members <% @members.each do |member| %>- <%= member %> <% end %> </p>
+        <div class="members-avatars d-inline-block">
+        <% family.users.each do |member| %>
+        <% tag = 'defaultavatar' %>
+        <% tag = member.avatar.key if member.avatar.attached? == true %>
+        <%= cl_image_tag tag, class: "avatar-small" %>
+        <% end %>
+        </div>
       </div>
       <%= link_to "Add a new member!", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember", class:"btn-booker" %>
     </div>
