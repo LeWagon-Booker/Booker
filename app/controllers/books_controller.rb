@@ -6,10 +6,13 @@ class BooksController < ApplicationController
   def index
     @book = Book.new
     if params[:search].present?
+      my_books_var = my_books
+      # filtered = do_search
+      # filtered.select { |book| my_books_var.include?(book)}
       do_search
     else
       @no_result = false
-      @books = Book.all
+      my_books
     end
   end
 
@@ -95,9 +98,40 @@ class BooksController < ApplicationController
     @books = []
     @object = PgSearch.multisearch(params[:search]).each do |result|
       @books << Book.find(result[:searchable_id])
-      pp @books
+      @books
+      # my_books_var = my_books
+      # puts @books.select {|book| my_books_var.include?(book)}
     end
     @no_result = true if @books.size.zero?
-    @books = Book.all if @books.size.zero?
+    @books = my_books if @books.size.zero?
   end
+
+  def my_books
+    sql_query = " \
+      adhesions.user_id = :query \
+    "
+    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
+      adhesion.family
+    end
+    @books = []
+    @user_families.each do |family|
+      family.users.each do |user|
+        user.books.each do |book|
+          @books << book unless @books.include?(book)
+        end
+      end
+    end
+  end
+
+
+
+
+
+
+
+
+
+
+
+
 end

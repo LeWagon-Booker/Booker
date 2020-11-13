@@ -52,14 +52,12 @@ a:hover {
   }
 }
 
-// .card-category:hover .content {
-//   height:100%;
-//   width:100%;
-//   visibility: visible;
-//   z-index: 2;
-//   text-decoration:none;
-//   background-color: rgba(240,240,240,0.6);
-// }
+.card-category:hover .content {
+  height:100%;
+  width:100%;
+  visibility: visible;
+  background-color: rgba(240,240,240,0.6);
+}
 
 
 .cards {
