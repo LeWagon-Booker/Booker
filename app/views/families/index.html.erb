@@ -3,11 +3,16 @@
   <br>
   <%= link_to "Create a new family!", "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" %>
 <% else %>
-  <h1>Your families</h1>
+  <div class="family-headers d-flex justify-content-between align-items-center">
+    <h1>Your families</h1>
+    <%= link_to "Add a new family", "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" %>
+  </div>
   <% @families.each do |family| %>
     <% @family = family %>
     <div class="card-product">
-      <img src="<%= cl_image_path family.picture.key %>" />
+      <% tag = 'defaultavatar' %>
+      <% tag = family.picture.key if family.picture.attached? == true %>
+      <%= cl_image_tag tag %>
       <div class="card-product-infos">
         <h1><%= link_to family.name, family_path(family)%></h1>
         <% @members = family.users.map { |user| user.username } %>
