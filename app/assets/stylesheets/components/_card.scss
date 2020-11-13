@@ -79,6 +79,7 @@ a:hover {
 
 
 .card-product {
+  position: relative;
   overflow: hidden;
   height: 170px;
   background: white;
@@ -92,6 +93,11 @@ a:hover {
   }
 }
 
+.horrible {
+  position: absolute;
+  right:20px;
+  top:20px;
+}
 .card-img {
   height: 100%;
   width: 120px;
