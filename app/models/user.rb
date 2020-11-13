@@ -9,4 +9,8 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
+
+  def full_name
+    "#{first_name} #{last_name} (#{username})"
+  end
 end

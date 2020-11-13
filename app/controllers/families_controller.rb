@@ -15,20 +15,22 @@ class FamiliesController < ApplicationController
     @family = Family.find(params[:id])
     @adhesion = Adhesion.new
   end
+
   def create
     @family = Family.create(family_params)
     @adhesion = Adhesion.new
     @adhesion.user = current_user
     @adhesion.family = @family
-    @adhesion.save!
-    redirect_to families_path
+    if @adhesion.save
+      redirect_to families_path
+    else
+      render :new
+    end
   end
-
 
   private
 
   def family_params
     params.require(:family).permit(:name, :picture)
   end
-
 end
