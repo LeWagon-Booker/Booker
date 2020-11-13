@@ -26,13 +26,10 @@ require("channels")
 import "bootstrap";
 
 // Internal imports, e.g:
-// import { initSelect2 } from '../components/init_select2';
 import { toggleDateInputs } from '../components/init_flatpickr';
-import flatpickr from 'flatpickr';
+import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
-  // Call your functions here, e.g:
-  // initSelect2();
   toggleDateInputs();
-  flatpickr();
+  initSelect2();
 });
