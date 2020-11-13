@@ -36,3 +36,11 @@ body {
 .container {
   min-height: 100vh;
 }
+
+
+#filter {
+  width: 100%;
+  border: solid $purple 1px;
+  background-color: $light-blue;
+  border-radius: 8px;
+}

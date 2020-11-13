@@ -5,8 +5,15 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   def index
     @book = Book.new
+    sql_query = " \
+      adhesions.user_id = :query \
+    "
+    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
+      adhesion.family
+    end
+
     if params[:search].present?
-      my_books_var = my_books
+      #my_books_var = my_books
       # filtered = do_search
       # filtered.select { |book| my_books_var.include?(book)}
       do_search
@@ -14,6 +21,16 @@ class BooksController < ApplicationController
       @no_result = false
       my_books
     end
+    if params[:family].present?
+      @books=[]
+      family = Family.find(params[:family])
+      family.users.each do |user|
+        user.books.each do |book|
+          @books << book unless @books.include?(book)
+        end
+      end
+    end
+
   end
 
   def show
@@ -107,12 +124,6 @@ class BooksController < ApplicationController
   end
 
   def my_books
-    sql_query = " \
-      adhesions.user_id = :query \
-    "
-    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
-      adhesion.family
-    end
     @books = []
     @user_families.each do |family|
       family.users.each do |user|
@@ -121,6 +132,7 @@ class BooksController < ApplicationController
         end
       end
     end
+    @books
   end
 
 
