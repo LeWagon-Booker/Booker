@@ -6,8 +6,8 @@
   <div class="col-12 <%= size %> ">
     <div class="title-add d-flex justify-content-between align-items-center">
       <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
-      <% if @book.user != current_user %>
-      <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
+      <% unless @book.users.include?(current_user) %>
+        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
       <% else %>
        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
       <% end %>
@@ -17,9 +17,11 @@
       <div class="info flex-grow-1 px-4">
         <h2>by <%= @book.author %></h2>
         <p class="text-justify"><%= @book.description %></p>
+        <% if false %>
         <h5>belongs to <%= @book.user.first_name %> <%= @book.user.last_name %></h5>
+        <% end %>
       </div>
-      <% if @book.user == current_user %>
+      <% if false %>
         <ul class="actions list-inline">
           <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit"></i></li>
           <li>
@@ -115,10 +117,9 @@
           <%= f.input :title %>
           <%= f.input :author %>
           <%= f.input :year %>
-          <%= f.input :month %>
           <%= f.input :category %>
-          <%= f.input :image_url %>
           <%= f.input :description %>
+          <%= f.input :cover, as: :file %>
           <%= f.button :submit, class: "btn-booker" %>
         <% end %>
       </div>
@@ -126,6 +127,8 @@
   </div>
 </div>
 
+
+<% if false  %> <!-- block modal for the moment -->
     <!-- Reservation Modal -->
 <div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -149,3 +152,5 @@
     </div>
   </div>
 </div>
+
+<% end %>
