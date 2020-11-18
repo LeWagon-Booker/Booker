@@ -36,6 +36,7 @@ class BooksController < ApplicationController
   def show
     @reservation = Reservation.new
     @review = Review.new
+    @book_ownership = @book.book_ownerships[0]
     if Review.where(book_id: @book.id).empty?
       @avg_rating = "No ratings yet"
     else

@@ -65,17 +65,26 @@ puts 'Your library is loading...'
   bo.user = User.last
   bo.book = Book.last
   bo.save
-#   file = URI.open("https://media.s-bol.com/JVY4qL3ZGz2/781x1200.jpg")   #book cover
-#   Book.create(
-#       title: "Holes",
-#       author: "Louis Sachar",
-#       description:  "Holes is a 1998 young adult novel written by Louis Sachar and first published by Farrar, Straus and Giroux. The book centers on an unlucky teenage boy named Stanley Yelnats, who is sent to Camp Green Lake, a juvenile detention center in a desert in Texas, after being falsely accused of theft.",
-#       year: 1998,
-#       month: 8,
-#       user_id: 2,
-#       category: Category.all.sample(),
-#     ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
-#     puts "    Book #{Book.last.id} - #{Book.last.title} Created"
+
+  bo = BookOwnership.new
+  bo.user = User.first
+  bo.book = Book.last
+  bo.save
+
+
+  file = URI.open("https://media.s-bol.com/JVY4qL3ZGz2/781x1200.jpg")   #book cover
+  Book.create(
+      title: "Holes",
+      author: "Louis Sachar",
+      description:  "Holes is a 1998 young adult novel written by Louis Sachar and first published by Farrar, Straus and Giroux. The book centers on an unlucky teenage boy named Stanley Yelnats, who is sent to Camp Green Lake, a juvenile detention center in a desert in Texas, after being falsely accused of theft.",
+      year: 1998,
+      category: Category.all.sample(),
+    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    puts "    Book #{Book.last.id} - #{Book.last.title} Created"
+  bo = BookOwnership.new
+  bo.user = User.first
+  bo.book = Book.last
+  bo.save
 
 #   file = URI.open("https://brandgenetics.com/wp-content/uploads/2019/11/Sapiens.jpg")   #book cover
 #   Book.create(
