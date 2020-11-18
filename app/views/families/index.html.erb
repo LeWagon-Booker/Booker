@@ -10,16 +10,14 @@
   <% @families.each do |family| %>
     <% @family = family %>
     <div class="card-product">
-      <% family.picture.attached? == true ? tag = family.picture.key : tag = 'defaultfamily' %>
-      <%= cl_image_tag tag, class:"card-img" %>
+      <%= cl_image_tag family.picture.key, class:"card-img" %>
       <div class="card-product-infos">
         <h1><em><%= family.name %></em></h1>
         <br>
         <br>
         <div class="members-avatars d-inline-block mb-3">
         <% family.users.each do |member| %>
-        <% member.avatar.attached? == true ? tag = member.avatar.key : tag = 'defaultavatar' %>
-        <%= cl_image_tag tag, class: "avatar" %>
+        <%= cl_image_tag member.avatar.key, class: "avatar" %>
         <a data-confirm="Are you sure?" class="text-danger mr-2" rel="nofollow" data-method="delete" href="/adhesions/<%= "#{family.id}_#{member.id}" %>">-   </a>
         <% end %>
         <%= link_to "<i class=\"fas fa-user-plus\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"m-2 text-success" %>
@@ -91,9 +89,10 @@
         </div>
         <div class="modal-body">
           <% @adhesion_new = Adhesion.new %>
+          <% data = User.all - Family.find(family.id).users  %>
         <%= simple_form_for @adhesion_new do |f| %>
           <%= f.input :family_id, input_html: {value: family.id}, as: :hidden %>
-          <%= f.association :user, label_method: :full_name, value_method: :id, input_html: { style: 'width: 400px', class: 'select2 form-control' } %>
+          <%= f.input :user, label_method: :full_name, value_method: :id, collection: data, input_html: { style: 'width: 400px', class: 'select2 form-control' }%>
           <%= f.button :submit, class: "btn-booker" %>
         <% end %>
         </div>

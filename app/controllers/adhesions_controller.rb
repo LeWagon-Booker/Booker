@@ -1,6 +1,6 @@
 class AdhesionsController < ApplicationController
   def create
-    Adhesion.create(family_id: params[:adhesion][:family_id], user_id: params[:adhesion][:user_id])
+    Adhesion.create!(family_id: params[:adhesion][:family_id], user_id: params[:adhesion][:user])
     redirect_to families_path
   end
 
