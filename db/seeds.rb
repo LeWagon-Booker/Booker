@@ -12,50 +12,44 @@ puts "Cleaning up the DB"
 puts "          ... done!"
 
 puts "Creating Users"
-  file = URI.open("https://avatars3.githubusercontent.com/u/11991244?v=4")
   User.create!( email: 'olivier@dotreppe.be',
-                password: '123456',
-                password_confirmation: '123456',
-                first_name: 'Olivier',
-                last_name: "d'Otreppe",
-                username: "odotreppe",
-                ).avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg')
-
-  file = URI.open("https://avatars2.githubusercontent.com/u/71709801?v=4")
+    password: '123456',
+    password_confirmation: '123456',
+    first_name: 'Olivier',
+    last_name: "d'Otreppe",
+    username: "odotreppe",
+    ).avatar.attach(io: URI.open("https://avatars3.githubusercontent.com/u/11991244?v=4"), filename: 'avatar.jpg', content_type: 'image/jpg')
   User.create!( email: 'ScottvanStrydonck@gmail.com',
-                password: '123456',
-                password_confirmation: '123456',
-                first_name: 'Scott',
-                last_name: "Van Strydonck",
-                username: "scottvanstrydonck"
-                ).avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg')
+    password: '123456',
+    password_confirmation: '123456',
+    first_name: 'Scott',
+    last_name: "Van Strydonck",
+    username: "scottvanstrydonck"
+    ).avatar.attach(io: URI.open("https://avatars2.githubusercontent.com/u/71709801?v=4"), filename: 'avatar.jpg', content_type: 'image/jpg')
 
-  file = URI.open("https://res.cloudinary.com/wagon/image/upload/c_fill,g_face,h_200,w_200/v1601370359/fhlao5go9y2ak4uqxzb6.jpg")
   User.create!( email: 'Lex.Radj@gmail.com',
-                password: '123456',
-                password_confirmation: '123456',
-                first_name: 'Lex',
-                last_name: "Radj",
-                username: "lexradj"
-                ).avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg')
+    password: '123456',
+    password_confirmation: '123456',
+    first_name: 'Lex',
+    last_name: "Radj",
+    username: "lexradj"
+    ).avatar.attach(io: URI.open("https://res.cloudinary.com/wagon/image/upload/c_fill,g_face,h_200,w_200/v1601370359/fhlao5go9y2ak4uqxzb6.jpg"), filename: 'avatar.jpg', content_type: 'image/jpg')
 
-  file = URI.open("https://res.cloudinary.com/wagon/image/upload/c_fill,g_face,h_200,w_200/v1603807623/rkkm2rsclqznydbt7rxb.jpg")
   User.create!( email: 'thibault.a@hotmail.com',
-                password: '123456',
-                password_confirmation: '123456',
-                first_name: 'Thibault',
-                last_name: "Alexandre",
-                username: "thibaultalexandre"
-                ).avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg')
+    password: '123456',
+    password_confirmation: '123456',
+    first_name: 'Thibault',
+    last_name: "Alexandre",
+    username: "thibaultalexandre"
+    ).avatar.attach(io: URI.open("https://res.cloudinary.com/wagon/image/upload/c_fill,g_face,h_200,w_200/v1603807623/rkkm2rsclqznydbt7rxb.jpg"), filename: 'avatar.jpg', content_type: 'image/jpg')
 
-  file = URI.open("https://avatars3.githubusercontent.com/u/71701904?v=4")
   User.create!( email: 'Charles.delalaing@gmail.com',
-                password: '123456',
-                password_confirmation: '123456',
-                first_name: 'Charles',
-                last_name: "de Lalaing",
-                username: 'charles.delalaing'
-                ).avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg')
+    password: '123456',
+    password_confirmation: '123456',
+    first_name: 'Charles',
+    last_name: "de Lalaing",
+    username: 'charles.delalaing'
+    ).avatar.attach(io: URI.open("https://avatars3.githubusercontent.com/u/71701904?v=4"), filename: 'avatar.jpg', content_type: 'image/jpg')
 puts "          ... done!"
 
 puts 'Creating catergories...'
@@ -64,136 +58,124 @@ puts 'Creating catergories...'
 puts "          ... done!"
 
 puts 'Your library is loading...'
-  file = URI.open("https://media.standaardboekhandel.be/-/media/mdm/product/9782221157701/frontImagesLink.img?rev=2451225236&w=525&hash=A881EB5495E8A08D7D672653E35223C5")
   Book.create(
-      title: "Twilight and Dawn",
-      author: "Ken Follett",
-      description:  "Before The Pillars of the Earth... In the year 997, at the end of the High Middle Ages, the British faced attacks by Vikings threatening to invade the country. In the absence of a rule of law, it is the reign of chaos. nIn this tumultuous period, the destinies of three characters intersect. The young Edgar, boat builder, sees his life change when his house is destroyed during a Viking raid. Ragna, a young, rebellious Norman nobleman, married the Englishman Wilwulf out of love, but the customs of his adopted country were scandalously different from his own. Aldred, an idealistic monk, dreams of transforming his modest abbey into a world-renowned centre of scholarship. Each of them will stand in the way of Bishop Wynstan’s life, ready to do anything to increase his wealth and strengthen.",
-      year: 2020,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Twilight and Dawn",
+    author: "Ken Follett",
+    description:  "Before The Pillars of the Earth... In the year 997, at the end of the High Middle Ages, the British faced attacks by Vikings threatening to invade the country. In the absence of a rule of law, it is the reign of chaos. nIn this tumultuous period, the destinies of three characters intersect. The young Edgar, boat builder, sees his life change when his house is destroyed during a Viking raid. Ragna, a young, rebellious Norman nobleman, married the Englishman Wilwulf out of love, but the customs of his adopted country were scandalously different from his own. Aldred, an idealistic monk, dreams of transforming his modest abbey into a world-renowned centre of scholarship. Each of them will stand in the way of Bishop Wynstan’s life, ready to do anything to increase his wealth and strengthen.",
+    year: 2020,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://media.standaardboekhandel.be/-/media/mdm/product/9782221157701/frontImagesLink.img?rev=2451225236&w=525&hash=A881EB5495E8A08D7D672653E35223C5"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://media.s-bol.com/JVY4qL3ZGz2/781x1200.jpg")
   Book.create(
-      title: "Holes",
-      author: "Louis Sachar",
-      description:  "Holes is a 1998 young adult novel written by Louis Sachar and first published by Farrar, Straus and Giroux. The book centers on an unlucky teenage boy named Stanley Yelnats, who is sent to Camp Green Lake, a juvenile detention center in a desert in Texas, after being falsely accused of theft.",
-      year: 1998,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Holes",
+    author: "Louis Sachar",
+    description:  "Holes is a 1998 young adult novel written by Louis Sachar and first published by Farrar, Straus and Giroux. The book centers on an unlucky teenage boy named Stanley Yelnats, who is sent to Camp Green Lake, a juvenile detention center in a desert in Texas, after being falsely accused of theft.",
+    year: 1998,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://media.s-bol.com/JVY4qL3ZGz2/781x1200.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://brandgenetics.com/wp-content/uploads/2019/11/Sapiens.jpg")
   Book.create(
-      title: "Sapiens",
-      author: "Yuval Noah Harari",
-      description:  "What does it mean to be human? In a sweeping narrative spanning two and half million years of human evolution, Israeli historian Yuval Noah Harari weaves insights from science and the humanities together to answer to what it means to be human.",
-      year: 2014 ,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    description:  "What does it mean to be human? In a sweeping narrative spanning two and half million years of human evolution, Israeli historian Yuval Noah Harari weaves insights from science and the humanities together to answer to what it means to be human.",
+    year: 2014 ,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://brandgenetics.com/wp-content/uploads/2019/11/Sapiens.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51buA9khcPL._SX329_BO1,204,203,200_.jpg")
   Book.create(
-      title: "Wolf Hall",
-      author: "Hilary Mantel",
-      description:  "'Lock Cromwell in a deep dungeon in the morning,' says Thomas More, 'and when you come back that night he'll be sitting on a plush cushion eating larks' tongues, and all the gaolers will owe him money.' England, the 1520s. Henry VIII is on the throne, but has no heir. Cardinal Wolsey is his chief advisor, charged with securing the divorce the pope refuses to grant. Into this atmosphere of distrust and need comes Thomas Cromwell, first as Wolsey's clerk, and later his successor. Cromwell is a wholly original man: the son of a brutal blacksmith, a political genius, a briber, a charmer, a bully, a man with a delicate and deadly expertise in manipulating people and events. Ruthless in pursuit of his own interests, he is as ambitious in his wider politics as he is for himself. His reforming agenda is carried out in the grip of a self-interested parliament and a king who fluctuates between romantic passions and murderous rages. From one of our finest living writers, Wolf Hall is that very rare thing: a truly great English novel, one that explores the intersection of individual psychology and wider politics. With a vast array of characters, and richly overflowing with incident, it peels back history to show us Tudor England as a half-made society, moulding itself with great passion, suffering and courage. ",
-      year: 2010,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Wolf Hall",
+    author: "Hilary Mantel",
+    description:  "'Lock Cromwell in a deep dungeon in the morning,' says Thomas More, 'and when you come back that night he'll be sitting on a plush cushion eating larks' tongues, and all the gaolers will owe him money.' England, the 1520s. Henry VIII is on the throne, but has no heir. Cardinal Wolsey is his chief advisor, charged with securing the divorce the pope refuses to grant. Into this atmosphere of distrust and need comes Thomas Cromwell, first as Wolsey's clerk, and later his successor. Cromwell is a wholly original man: the son of a brutal blacksmith, a political genius, a briber, a charmer, a bully, a man with a delicate and deadly expertise in manipulating people and events. Ruthless in pursuit of his own interests, he is as ambitious in his wider politics as he is for himself. His reforming agenda is carried out in the grip of a self-interested parliament and a king who fluctuates between romantic passions and murderous rages. From one of our finest living writers, Wolf Hall is that very rare thing: a truly great English novel, one that explores the intersection of individual psychology and wider politics. With a vast array of characters, and richly overflowing with incident, it peels back history to show us Tudor England as a half-made society, moulding itself with great passion, suffering and courage. ",
+    year: 2010,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51buA9khcPL._SX329_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/513MJX2NNwL._SX307_BO1,204,203,200_.jpg")
   Book.create(
-      title: "stairway: Book II",
-      author: "Zecharia Sitchin",
-      description:  "Since earliest times, human beings have pondered the incomprehensible questions of the universe, life . . . and the afterlife. Where did mortal man go to join the immortal Gods? Was the immense and complex structure at Giza an Egyptian Pharaoh's portal to immortality? Or a pulsating beacon built by extraterrestrials for landing on Earth? In this second volume of his trailblazing series The Earth Chronicles, Zecharia Sitchin unveils secrets of the pyramids and hidden clues from ancient times to reveal a grand forgery on which established Egyptology is founded, and takes the reader to the Spaceport and Landing Place of the Anunnaki gods— Those Who from Heaven to Earth Came.",
-      year: 2007,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "stairway: Book II",
+    author: "Zecharia Sitchin",
+    description:  "Since earliest times, human beings have pondered the incomprehensible questions of the universe, life . . . and the afterlife. Where did mortal man go to join the immortal Gods? Was the immense and complex structure at Giza an Egyptian Pharaoh's portal to immortality? Or a pulsating beacon built by extraterrestrials for landing on Earth? In this second volume of his trailblazing series The Earth Chronicles, Zecharia Sitchin unveils secrets of the pyramids and hidden clues from ancient times to reveal a grand forgery on which established Egyptology is founded, and takes the reader to the Spaceport and Landing Place of the Anunnaki gods— Those Who from Heaven to Earth Came.",
+    year: 2007,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/513MJX2NNwL._SX307_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51-1GV1227L._SX307_BO1,204,203,200_.jpg")
   Book.create(
-      title: "Bind, Torture, Kill",
-      author: "Roy Wenzl, Tim Potter, Hurst Laviana, L. Kelly",
-      description:  "For thirty-one years, a monster terrorized the residents of Wichita, Kansas. A bloodthirsty serial killer, self-named BTK—for bind them, torture them, kill them—he slaughtered men, women, and children alike, eluding the police for decades while bragging of his grisly exploits to the media. The nation was shocked when the fiend who was finally apprehended turned out to be Dennis Rader—a friendly neighbor . . . a devoted husband . . . a helpful Boy Scout dad . . . the respected president of his church. ",
-      year: 2008,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Bind, Torture, Kill",
+    author: "Roy Wenzl, Tim Potter, Hurst Laviana, L. Kelly",
+    description:  "For thirty-one years, a monster terrorized the residents of Wichita, Kansas. A bloodthirsty serial killer, self-named BTK—for bind them, torture them, kill them—he slaughtered men, women, and children alike, eluding the police for decades while bragging of his grisly exploits to the media. The nation was shocked when the fiend who was finally apprehended turned out to be Dennis Rader—a friendly neighbor . . . a devoted husband . . . a helpful Boy Scout dad . . . the respected president of his church. ",
+    year: 2008,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51-1GV1227L._SX307_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51Mn7NOBP1L._SX316_BO1,204,203,200_.jpg")
   Book.create(
-      title: "Barbarian Days: A Surfing Life",
-      author: "William Finnegan ",
-      description:  "Surfing only looks like a sport. To devotees, it is something else entirely: a beautiful addiction, a mental and physical study, a passionate way of life. New Yorker writer William Finnegan first started surfing as a young boy in California and Hawaii. Barbarian Days is his immersive memoir of a life spent travelling the world chasing waves through the South Pacific, Australia, Asia, Africa and beyond. Finnegan describes the edgy yet enduring brotherhood forged among the swell of the surf; and recalling his own apprenticeship to the world's most famous and challenging waves, he considers the intense relationship formed between man, board and water.",
-      year: 2016,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Barbarian Days: A Surfing Life",
+    author: "William Finnegan ",
+    description:  "Surfing only looks like a sport. To devotees, it is something else entirely: a beautiful addiction, a mental and physical study, a passionate way of life. New Yorker writer William Finnegan first started surfing as a young boy in California and Hawaii. Barbarian Days is his immersive memoir of a life spent travelling the world chasing waves through the South Pacific, Australia, Asia, Africa and beyond. Finnegan describes the edgy yet enduring brotherhood forged among the swell of the surf; and recalling his own apprenticeship to the world's most famous and challenging waves, he considers the intense relationship formed between man, board and water.",
+    year: 2016,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51Mn7NOBP1L._SX316_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/71E0REBFNKL._SX404_BO1,204,203,200_.gif")
   Book.create(
-      title: "Mr. Sunset",
-      author: "Phil Jarratt",
-      description:  "The history of modern 60's/70's surfing from the life of Hakman. A Californian raised surfer who moved to Hawaii & travelled the world during the 60's & 70's living the life of a surfer and a finding ways to make enough money to continue his surfing lifestyle. Professional surfing was growing but not yet organized enough as a sport to make a year round living from surfing alone. Because of this Hakman tried a lot of different businesses both legal and illegal. The amount of business ventures he started and places he lived is incredible! So much unending energy he had to do all that was likely why outside of surfing consequential waves it so challenging for Jeff to stay focused on land.",
-      year: 1997,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Mr. Sunset",
+    author: "Phil Jarratt",
+    description:  "The history of modern 60's/70's surfing from the life of Hakman. A Californian raised surfer who moved to Hawaii & travelled the world during the 60's & 70's living the life of a surfer and a finding ways to make enough money to continue his surfing lifestyle. Professional surfing was growing but not yet organized enough as a sport to make a year round living from surfing alone. Because of this Hakman tried a lot of different businesses both legal and illegal. The amount of business ventures he started and places he lived is incredible! So much unending energy he had to do all that was likely why outside of surfing consequential waves it so challenging for Jeff to stay focused on land.",
+    year: 1997,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/71E0REBFNKL._SX404_BO1,204,203,200_.gif"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/41TJJwKrw4L._SX439_BO1,204,203,200_.jpg")
   Book.create(
-      title: "The Pilgrimage: 50 Places to Surf Before You Die",
-      author: "Sean Doherty",
-      description:  "This book is sure to become a classic. The text creates a great sense of place, and there's practical information on getting to (nearly) every break, the best time to go, what to take, where to stay, and what to look out for. The Pilgrimage is the perfect read for anyone who has ever caught, or tried to catch, a wave, from grommets to geriatrics. Destinations include:Australia and New Zealand, Indonesia and southern Asia, the north and south Pacific Africa and the Indian Ocean, Europe and Great Britain North and South America.",
-      year: 2014,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "The Pilgrimage: 50 Places to Surf Before You Die",
+    author: "Sean Doherty",
+    description:  "This book is sure to become a classic. The text creates a great sense of place, and there's practical information on getting to (nearly) every break, the best time to go, what to take, where to stay, and what to look out for. The Pilgrimage is the perfect read for anyone who has ever caught, or tried to catch, a wave, from grommets to geriatrics. Destinations include:Australia and New Zealand, Indonesia and southern Asia, the north and south Pacific Africa and the Indian Ocean, Europe and Great Britain North and South America.",
+    year: 2014,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/41TJJwKrw4L._SX439_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-    file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51cP5BibznL._SX417_BO1,204,203,200_.jpg")
-    Book.create(
-        title: "The Disposable Skateboard Bible",
-        author: "Sean Cliver",
-        description:  "With the release of Disposable - A History of Skateboard Art in 2004, author Sean Cliver made a brilliant attempt at artfully cataloging every important skateboard deck ever released. In the process, he created a classic, but was left feeling less than satisfied. Ever the completist, the gaping omissions in the first book gnawed at him and drove him to envision compiling the ultimate encyclopedia of Skateboard decks. While Disposable was beautiful, capturing the essence of the aesthetic, The Disposable Skateboard Bible sets out to be the ultimate guide. The author's industry insider status (in 1989 he landed his first job as a designer at Powell-Peralta) allows him to guide readers through the culture and experience, the art and the mania of the skate world with authority and expertise. While the boards take center stage, fascinating vignettes and recollections by an A-list of skateboarding personalities from Tony Hawk to Mike Vallely, Mark Gonzales to Stacy Peralta and more.",
-        year: 2009,
-        user: User.all.sample,
-        category: Category.all.sample(),
-      ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+  Book.create(
+    title: "The Disposable Skateboard Bible",
+    author: "Sean Cliver",
+    description:  "With the release of Disposable - A History of Skateboard Art in 2004, author Sean Cliver made a brilliant attempt at artfully cataloging every important skateboard deck ever released. In the process, he created a classic, but was left feeling less than satisfied. Ever the completist, the gaping omissions in the first book gnawed at him and drove him to envision compiling the ultimate encyclopedia of Skateboard decks. While Disposable was beautiful, capturing the essence of the aesthetic, The Disposable Skateboard Bible sets out to be the ultimate guide. The author's industry insider status (in 1989 he landed his first job as a designer at Powell-Peralta) allows him to guide readers through the culture and experience, the art and the mania of the skate world with authority and expertise. While the boards take center stage, fascinating vignettes and recollections by an A-list of skateboarding personalities from Tony Hawk to Mike Vallely, Mark Gonzales to Stacy Peralta and more.",
+    year: 2009,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51cP5BibznL._SX417_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51bPx-QtlSL._SX401_BO1,204,203,200_.jpg")
   Book.create(
-      title: "Skateboarding and the City",
-      author: "Iain Borden",
-      description:  "Skateboarding is both a sport and a way of life. Creative, physical, graphic, urban and controversial, it is full of contradictions a billion-dollar global industry which still retains its vibrant, counter-cultural heart. Skateboarding and the City presents the only complete history of the sport, exploring the story of skate culture from the surf-beaches of 60s California to the latest developments in street-skating today. Written by a life-long skater who also happens to be an architectural historian, and packed through with full-colour images of skaters, boards, moves, graphics, and film-stills this passionate, readable and rigorously-researched book explores the history of skateboarding and reveals a vivid understanding of how skateboarders, through their actions, experience the city and its architecture in a unique way.",
-      year: 2019,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Skateboarding and the City",
+    author: "Iain Borden",
+    description:  "Skateboarding is both a sport and a way of life. Creative, physical, graphic, urban and controversial, it is full of contradictions a billion-dollar global industry which still retains its vibrant, counter-cultural heart. Skateboarding and the City presents the only complete history of the sport, exploring the story of skate culture from the surf-beaches of 60s California to the latest developments in street-skating today. Written by a life-long skater who also happens to be an architectural historian, and packed through with full-colour images of skaters, boards, moves, graphics, and film-stills this passionate, readable and rigorously-researched book explores the history of skateboarding and reveals a vivid understanding of how skateboarders, through their actions, experience the city and its architecture in a unique way.",
+    year: 2019,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51bPx-QtlSL._SX401_BO1,204,203,200_.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 
-  file = URI.open("https://images-na.ssl-images-amazon.com/images/I/51q-YHB62GL.jpg")
   Book.create(
-      title: "Coding For Dummies",
-      author: "Nikhil Abraham",
-      description:  "No coding experience is required for Coding For Dummies, your one-stop guide to building a foundation of knowledge in writing computer code for web, application, and software development. It doesn't matter if you've dabbled in coding or never written a line of code, this book guides you through the basics.",
-      year: 2015,
-      user: User.all.sample,
-      category: Category.all.sample(),
-    ).cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    title: "Coding For Dummies",
+    author: "Nikhil Abraham",
+    description:  "No coding experience is required for Coding For Dummies, your one-stop guide to building a foundation of knowledge in writing computer code for web, application, and software development. It doesn't matter if you've dabbled in coding or never written a line of code, this book guides you through the basics.",
+    year: 2015,
+    category: Category.all.sample(),
+    ).cover.attach(io: URI.open("https://images-na.ssl-images-amazon.com/images/I/51q-YHB62GL.jpg"), filename: 'cover.png', content_type: 'image/png')
+    BookOwnership.create!(user: User.all.sample, book: Book.last)
     puts "    Book ID: #{Book.last.id} - #{Book.last.title} Created"
 puts "          ... done!"
 
