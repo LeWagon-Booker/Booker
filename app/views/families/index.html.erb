@@ -10,29 +10,27 @@
   <% @families.each do |family| %>
     <% @family = family %>
     <div class="card-product">
-      <% tag = 'defaultavatar' %>
-      <% tag = family.picture.key if family.picture.attached? == true %>
+      <% family.picture.attached? == true ? tag = family.picture.key : tag = 'defaultavatar' %>
       <%= cl_image_tag tag, class:"card-img" %>
       <div class="card-product-infos">
-        <h1><em><%= link_to family.name, family_path(family)%></em></h1>
+        <h1><em><%= family.name %></em></h1>
         <br>
         <br>
         <div class="members-avatars d-inline-block mb-3">
         <% family.users.each do |member| %>
-        <% tag = 'defaultavatar' %>
-        <% tag = member.avatar.key if member.avatar.attached? == true %>
+        <% member.avatar.attached? == true ? tag = member.avatar.key : tag = 'defaultavatar' %>
         <%= cl_image_tag tag, class: "avatar-small" %>
         <% end %>
+        <%= link_to "<i class=\"fas fa-user-plus\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember", class:"m-2 text-success" %>
         </div>
       </div>
       <div class="horrible">
-        <%= link_to "Add a new member!", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember", class:"btn-booker" %>
+        <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditFamily#{family.id}", class:"m-2 text-warning" %>
+        <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, family_path(family), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
       </div>
     </div>
   <% end %>
 <% end %>
-
-
 
 <!-- add family modal -->
 <div class="modal fade" id="CreateFamily" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
@@ -56,23 +54,43 @@
   </div>
 </div>
 
-
-<!-- add_family modal -->
-
+<!-- Edit family modal -->
+<% @families.each do |family| %>
+  <div class="modal fade" id="EditFamily<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Edit this family</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= simple_form_for family do |f| %>
+            <%= f.input :name, label: "Give it name"%>
+            <%= f.input :picture, as: :file%>
+            <%= f.button :submit, class: "btn-booker" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- add_member to family modal -->
 <div class="modal fade" id="AddMember" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="EditModalLongTitle">Add this member!</h5>
+        <h5 class="modal-title" id="EditModalLongTitle">Add a new member to the family!</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for [@family, @adhesion] do |f| %>
-          <%= f.association :user, input_html: { class: 'select2'  }, label_method: :username %>
-          <%= f.button :submit, class: "btn-booker" %>
-        <% end %>
+      <%= simple_form_for [@family, @adhesion] do |f| %>
+        <%= f.association :user, label_method: :full_name, value_method: :id, input_html: { style: 'width: 400px', class: 'select2 form-control' } %>
+        <%= f.button :submit, class: "btn-booker" %>
+      <% end %>
       </div>
     </div>
   </div>

@@ -8,8 +8,8 @@ Rails.application.routes.draw do
   end
 
   resources :reservations, only: [:index, :update ]
-  resources :families, only: [:index, :show, :create] do
+
+  resources :families, only: [:index, :create, :destroy, :update] do
     resources :adhesions, only: [:create]
   end
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
