@@ -2,7 +2,6 @@ class FamiliesController < ApplicationController
   before_action :family_select, only: %i[show edit destroy update]
 
   def index
-    @adhesion = Adhesion.new
     sql_query = " \
       adhesions.user_id = :query \
     "

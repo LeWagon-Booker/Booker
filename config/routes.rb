@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :reservations, only: [:index, :update ]
 
-  resources :families, only: [:index, :create, :destroy, :update] do
-    resources :adhesions, only: [:create]
-  end
+  resources :adhesions, only: [:create, :destroy]
+
+  resources :families, only: [:index, :create, :destroy, :update]
 end

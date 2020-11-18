@@ -10,7 +10,7 @@
   <% @families.each do |family| %>
     <% @family = family %>
     <div class="card-product">
-      <% family.picture.attached? == true ? tag = family.picture.key : tag = 'defaultavatar' %>
+      <% family.picture.attached? == true ? tag = family.picture.key : tag = 'defaultfamily' %>
       <%= cl_image_tag tag, class:"card-img" %>
       <div class="card-product-infos">
         <h1><em><%= family.name %></em></h1>
@@ -19,9 +19,10 @@
         <div class="members-avatars d-inline-block mb-3">
         <% family.users.each do |member| %>
         <% member.avatar.attached? == true ? tag = member.avatar.key : tag = 'defaultavatar' %>
-        <%= cl_image_tag tag, class: "avatar-small" %>
+        <%= cl_image_tag tag, class: "avatar" %>
+        <a data-confirm="Are you sure?" class="text-danger mr-2" rel="nofollow" data-method="delete" href="/adhesions/<%= "#{family.id}_#{member.id}" %>">-   </a>
         <% end %>
-        <%= link_to "<i class=\"fas fa-user-plus\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember", class:"m-2 text-success" %>
+        <%= link_to "<i class=\"fas fa-user-plus\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"m-2 text-success" %>
         </div>
       </div>
       <div class="horrible">
@@ -76,22 +77,27 @@
     </div>
   </div>
 <% end %>
+
 <!-- add_member to family modal -->
-<div class="modal fade" id="AddMember" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="EditModalLongTitle">Add a new member to the family!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <%= simple_form_for [@family, @adhesion] do |f| %>
-        <%= f.association :user, label_method: :full_name, value_method: :id, input_html: { style: 'width: 400px', class: 'select2 form-control' } %>
-        <%= f.button :submit, class: "btn-booker" %>
-      <% end %>
+<% @families.each do |family| %>
+  <div class="modal fade" id="AddMember<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Add a new member to <%= family.name %></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <% @adhesion_new = Adhesion.new %>
+        <%= simple_form_for @adhesion_new do |f| %>
+          <%= f.input :family_id, input_html: {value: family.id}, as: :hidden %>
+          <%= f.association :user, label_method: :full_name, value_method: :id, input_html: { style: 'width: 400px', class: 'select2 form-control' } %>
+          <%= f.button :submit, class: "btn-booker" %>
+        <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
