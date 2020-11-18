@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_101037) do
+ActiveRecord::Schema.define(version: 2020_11_18_112314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,16 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
     t.index ["user_id"], name: "index_adhesions_on_user_id"
   end
 
+  create_table "book_ownerships", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "available", default: true
+    t.index ["book_id"], name: "index_book_ownerships_on_book_id"
+    t.index ["user_id"], name: "index_book_ownerships_on_user_id"
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
@@ -52,9 +62,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
     t.integer "year"
-    t.integer "month"
     t.bigint "user_id"
-    t.string "image_url"
     t.integer "ISBN"
     t.bigint "category_id"
     t.index ["category_id"], name: "index_books_on_category_id"
@@ -71,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "description"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -84,14 +93,14 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
 
   create_table "reservations", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "book_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "confirmed", default: false
     t.date "start_date"
     t.date "end_date"
     t.text "message"
-    t.index ["book_id"], name: "index_reservations_on_book_id"
+    t.bigint "book_ownership_id"
+    t.index ["book_ownership_id"], name: "index_reservations_on_book_ownership_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
@@ -133,9 +142,11 @@ ActiveRecord::Schema.define(version: 2020_11_12_101037) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adhesions", "families"
   add_foreign_key "adhesions", "users"
+  add_foreign_key "book_ownerships", "books"
+  add_foreign_key "book_ownerships", "users"
   add_foreign_key "books", "categories"
   add_foreign_key "books", "users"
-  add_foreign_key "reservations", "books"
+  add_foreign_key "reservations", "book_ownerships"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
