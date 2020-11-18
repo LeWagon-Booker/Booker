@@ -59,6 +59,7 @@ puts "          ... done!"
 
 puts 'Your library is loading...'
   Book.create(
+
     title: "Twilight and Dawn",
     author: "Ken Follett",
     description:  "Before The Pillars of the Earth... In the year 997, at the end of the High Middle Ages, the British faced attacks by Vikings threatening to invade the country. In the absence of a rule of law, it is the reign of chaos. nIn this tumultuous period, the destinies of three characters intersect. The young Edgar, boat builder, sees his life change when his house is destroyed during a Viking raid. Ragna, a young, rebellious Norman nobleman, married the Englishman Wilwulf out of love, but the customs of his adopted country were scandalously different from his own. Aldred, an idealistic monk, dreams of transforming his modest abbey into a world-renowned centre of scholarship. Each of them will stand in the way of Bishop Wynstan’s life, ready to do anything to increase his wealth and strengthen.",

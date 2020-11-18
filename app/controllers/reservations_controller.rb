@@ -10,12 +10,12 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new
     @reservation.user = current_user
-    @reservation.book = Book.find(params[:book_id])
+    @reservation.book_ownership = BookOwnership.find(params[:book_ownership_id])
     @reservation.start_date = Date.parse(params[:reservation]['start_date'])
     @reservation.end_date = Date.parse(params[:reservation]['end_date'])
     @reservation.message = params[:reservation]['message']
     if @reservation.save
-      redirect_to book_path(@reservation.book)
+      redirect_to book_path(@reservation.book_ownership.book)
     else
       render :new
     end

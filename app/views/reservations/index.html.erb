@@ -4,10 +4,10 @@
 
     <% @my_reservations.each do |reservation| %>
       <div class="card-product">
-        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="shadow rounded book-img">
+        <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos">
-          <h3><strong><%= reservation.book.title %></strong></h3>
-          <p>Booked from <strong> <%= reservation.book.user.username %></strong></p>
+          <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
+          <p>Booked from <strong> <%= reservation.book_ownership.user.username %></strong></p>
           <p>Requested from
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
               until:
@@ -25,10 +25,10 @@
     <h1 class="text-center">Demands for my books</h1>
     <% @book_reserved.each do |reservation| %>
       <div class="card-product">
-        <img src="<%= cl_image_path reservation.book.cover.key %>" alt="" class="shadow rounded book-img">
+        <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
           <div class="info flex-grow-1 ">
-            <h3><strong><%= reservation.book.title %></strong></h3>
+            <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
             <p>Asked by <strong> <%= reservation.user.username %></strong></p>
             <p>Requested from
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>

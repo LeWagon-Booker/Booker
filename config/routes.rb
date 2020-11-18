@@ -3,8 +3,11 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   resources :books do
-    # resources :reservations, only: [ :create]
     resources :reviews, only:[:create]
+  end
+
+  resources :book_ownerships do
+    resources :reservations, only: [ :create]
   end
 
   resources :reservations, only: [:index, :update ]
