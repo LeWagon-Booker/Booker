@@ -10,8 +10,14 @@ class User < ApplicationRecord
   has_many :reservations, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
+  after_save :upload_default_avatar
 
   def full_name
     "#{first_name} #{last_name} (#{username})"
+  end
+
+  def upload_default_avatar
+    file = File.open("#{Rails.root}/app/assets/images/defaultavatar.jpg")
+    avatar.attach(io: file, filename: 'avatar.jpg', content_type: 'image/jpg') unless avatar.attached?
   end
 end

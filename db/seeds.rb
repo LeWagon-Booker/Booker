@@ -205,10 +205,10 @@ puts 'Creating reservations'
 puts "          ... done!"
 
 puts 'Creating families'
+  Family.create(name: "Namur's church of scientology reading group")
   Family.create(name: "Let's read!").picture.attach(filename: 'family.jpg', io: URI.open("https://res.cloudinary.com/bestycame/image/upload/v1605282752/0686qk1cx34ozpre8f0u7y31gs0p.jpg"))
   Family.create(name: "Bxl's old ladies").picture.attach(filename: 'family.jpg', io: URI.open("https://res.cloudinary.com/bestycame/image/upload/v1605705266/index_cwpjl8.jpg"))
   Family.create(name: "Brussels reading group!").picture.attach(filename: 'family.jpg', io: URI.open("https://res.cloudinary.com/bestycame/image/upload/v1605705325/bru_o6oyit.jpg"))
-  Family.create(name: "Namur's church of scientology reading group")
 puts "          ... done!"
 
 puts 'creating adhesions'
