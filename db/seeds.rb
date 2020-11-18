@@ -6,6 +6,7 @@ puts "Cleaning up the DB"
  Adhesion.destroy_all
  Family.destroy_all
  Reservation.destroy_all
+ BookOwnership.destroy_all
  Book.destroy_all
  Category.destroy_all
  User.destroy_all
@@ -181,26 +182,26 @@ puts 'Your library is loading...'
 puts "          ... done!"
 
 puts 'Creating reservations'
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('15/11/2020'), end_date: Date.parse('16/11/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('17/11/2020'), end_date: Date.parse('18/11/2020'), message: "this book look nice, can I borrow it?")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('19/11/2020'), end_date: Date.parse('20/11/2020'), message: "Long time I have searched for this one!")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('21/11/2020'), end_date: Date.parse('22/11/2020'), message: "I like the first one of the serie, i would love to read this one")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('23/11/2020'), end_date: Date.parse('24/11/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('25/11/2020'), end_date: Date.parse('26/11/2020'), message: "This might be interesting to read.")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('27/11/2020'), end_date: Date.parse('28/11/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('29/11/2020'), end_date: Date.parse('30/11/2020'), message: "this book look nice, can I borrow it?")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('01/12/2020'), end_date: Date.parse('02/12/2020'), message: "Long time I have searched for this one!")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('03/12/2020'), end_date: Date.parse('04/12/2020'), message: "I like the first one of the serie, i would love to read this one")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('05/12/2020'), end_date: Date.parse('06/12/2020'), message: "Awesome")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('07/12/2020'), end_date: Date.parse('08/12/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('09/12/2020'), end_date: Date.parse('10/12/2020'), message: "this book look nice, can I borrow it?")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('11/12/2020'), end_date: Date.parse('12/12/2020'), message: "I like the first one of the serie, i would love to read this one")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('13/12/2020'), end_date: Date.parse('14/12/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('15/12/2020'), end_date: Date.parse('16/12/2020'), message: "This might be interesting to read.")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('17/12/2020'), end_date: Date.parse('18/12/2020'), message: "I would like to read this")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('19/12/2020'), end_date: Date.parse('20/12/2020'), message: "Awesome")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('21/12/2020'), end_date: Date.parse('22/12/2020'), message: "I would love to borrow this book")
-  Reservation.create!(user: User.all.sample, book: Book.all.sample , start_date: Date.parse('23/12/2020'), end_date: Date.parse('24/12/2020'), message: "Share this book with me please")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('15/11/2020'), end_date: Date.parse('16/11/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('17/11/2020'), end_date: Date.parse('18/11/2020'), message: "this book look nice, can I borrow it?")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('19/11/2020'), end_date: Date.parse('20/11/2020'), message: "Long time I have searched for this one!")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('21/11/2020'), end_date: Date.parse('22/11/2020'), message: "I like the first one of the serie, i would love to read this one")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('23/11/2020'), end_date: Date.parse('24/11/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('25/11/2020'), end_date: Date.parse('26/11/2020'), message: "This might be interesting to read.")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('27/11/2020'), end_date: Date.parse('28/11/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('29/11/2020'), end_date: Date.parse('30/11/2020'), message: "this book look nice, can I borrow it?")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('01/12/2020'), end_date: Date.parse('02/12/2020'), message: "Long time I have searched for this one!")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('03/12/2020'), end_date: Date.parse('04/12/2020'), message: "I like the first one of the serie, i would love to read this one")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('05/12/2020'), end_date: Date.parse('06/12/2020'), message: "Awesome")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('07/12/2020'), end_date: Date.parse('08/12/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('09/12/2020'), end_date: Date.parse('10/12/2020'), message: "this book look nice, can I borrow it?")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('11/12/2020'), end_date: Date.parse('12/12/2020'), message: "I like the first one of the serie, i would love to read this one")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('13/12/2020'), end_date: Date.parse('14/12/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('15/12/2020'), end_date: Date.parse('16/12/2020'), message: "This might be interesting to read.")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('17/12/2020'), end_date: Date.parse('18/12/2020'), message: "I would like to read this")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('19/12/2020'), end_date: Date.parse('20/12/2020'), message: "Awesome")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('21/12/2020'), end_date: Date.parse('22/12/2020'), message: "I would love to borrow this book")
+  Reservation.create!(user: User.all.sample, book_ownership_id: BookOwnership.ids.sample , start_date: Date.parse('23/12/2020'), end_date: Date.parse('24/12/2020'), message: "Share this book with me please")
 puts "          ... done!"
 
 puts 'Creating families'
