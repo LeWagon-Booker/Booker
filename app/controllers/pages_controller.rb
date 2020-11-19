@@ -5,13 +5,13 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    @user = current_user
+    @user = User.find(params[:user_id])
     @books = BookOwnership.where(user_id: @user.id).map(&:book)
     @wishlist = Wishlist.where(user_id: @user.id).map(&:book)
     @reviews = Review.where(user_id: @user.id)
     sql_query = " \
       adhesions.user_id = :query \
     "
-    @families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map(&:family)
+    @families = Adhesion.joins(:family).where(sql_query, query: @user.id).map(&:family)
   end
 end
