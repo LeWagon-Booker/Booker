@@ -7,20 +7,16 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    sql_query = " \
-      adhesions.user_id = :query \
-    "
-    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map(&:family)
+    @user_families = current_user.families
     if params[:search].present?
       do_search
+    elsif params[:family].present?
+      @books = []
+      family = Family.find(params[:family])
+      @books = family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
     else
       @no_result = false
       my_books
-    end
-    if params[:family].present?
-      @books = []
-      family = Family.find(params[:family])
-      family.users.each { |user| user.books.each { |book| @books << book unless @books.include?(book) } }
     end
   end
 
@@ -92,7 +88,7 @@ class BooksController < ApplicationController
 
   def do_search
     @books = []
-    @object = Book.global_search(params[:search])
+    @object = Book.includes(:category, cover_attachment: :blob).global_search(params[:search])
     @object.each { |result| @books << Book.find(result[:id]) }
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
@@ -101,10 +97,8 @@ class BooksController < ApplicationController
   def my_books
     @books = []
     @user_families.each do |family|
-      family.users.each do |user|
-        user.books.each { |book| @books << book unless @books.include?(book) }
-      end
+      @books << family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
     end
-    @books
+    @books.flatten
   end
 end

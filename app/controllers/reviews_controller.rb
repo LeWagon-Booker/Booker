@@ -8,7 +8,6 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @book = Book.find(params[:book_id])
     @review.book = @book
-    @review.rating = params[:rating]
     @review.user = current_user
     if @review.save
       redirect_to book_path(@book)
@@ -30,15 +29,13 @@ class ReviewsController < ApplicationController
 
   def update
     review = Review.find(params[:id])
-    review.rating = params[:rating] unless params[:rating].nil?
-    review.content = params[:review][:content] unless params[:review][:content].nil?
-    review.save
+    review.update(review_params)
     redirect_to book_path(params[:book_id])
   end
 
   private
 
   def review_params
-    params.require(:review).permit(:content, :rating, :id, [review: :content], [review: :rating])
+    params.require(:review).permit(:content, :rating)
   end
 end

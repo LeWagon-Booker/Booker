@@ -11,7 +11,7 @@
       <% else %>
        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
       <% end %>
-      <% if @wishlist.empty? %>
+      <% if @wishlist&.empty? || @wishlist.nil? %>
         <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post, class: "btn-booker" %>
       <% else %>
         <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
@@ -47,7 +47,7 @@
     </div>
     <br>
       <h3>You read this book? Give a review! </h3>
-            <%= render "reviews/new" %>
+            <%= render "reviews/form", book: @book, review: @review %>
   </div>
   <div class="col-12 col-md-3 reviews">
     <% unless @book.reviews.empty?%>
@@ -128,22 +128,18 @@
 </div>
 
 <!-- Edit Review Modal -->
-<% @book.reviews.each do |review| %>
-  <% if review.user == current_user %>
-    <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          </div>
-          <div class="modal-body">
-            <%= render "reviews/edit" %>
-          </div>
+<% @book.reviews.select{|review| review.user == current_user}.each do |review| %>
+  <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <%= render "reviews/form", book: @book, review: review %>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 <% end %>
-
-

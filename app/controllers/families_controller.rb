@@ -2,10 +2,7 @@ class FamiliesController < ApplicationController
   before_action :family_select, only: %i[show edit destroy update]
 
   def index
-    sql_query = " \
-      adhesions.user_id = :query \
-    "
-    @families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map(&:family)
+    @families = current_user.families.includes(users: [avatar_attachment: :blob])
     @family = Family.new
   end
 
