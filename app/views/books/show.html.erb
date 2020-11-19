@@ -1,6 +1,6 @@
 <div class="row">
   <% if @book.reviews.empty? {size = "col-md-12"}%>
-  <% else size = "col-md-9"%>
+    <% else size = "col-md-9"%>
   <% end %>
 
   <div class="col-12 <%= size %> ">
@@ -16,7 +16,6 @@
       <% else %>
         <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
       <% end %>
-      <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_path(@book), method: :delete, data: { confirm: "Are you sure?" }, class: "text-danger" %>
     </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
@@ -33,7 +32,7 @@
           </div>
         </div>
       </div>
-      <% if false %>
+      <% if @book.users.include?(current_user) %>
         <ul class="actions list-inline">
           <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit"></i></li>
           <li>
@@ -47,35 +46,8 @@
       <% end %>
     </div>
     <br>
-    <p>
       <h3>You read this book? Give a review! </h3>
-      <%= simple_form_for [@book, @review]  do |f| %>
-        <div class="rating m-0 p-0">
-          <label>
-            <input type="radio" name="rating" value="1" />
-            <span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="rating" value="2" />
-            <span class="icon">★</span><span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="rating" value="3" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="rating" value="4" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
-          </label>
-          <label>
-            <input type="radio" name="rating" value="5" />
-            <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
-          </label>
-        </div>
-        <%= f.input :content, :label => 'Tell us more about it' %>
-        <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
-      <% end %>
-    </p>
+            <%= render "review_form", review: @review %>
   </div>
   <div class="col-12 col-md-3 reviews">
     <% unless @book.reviews.empty?%>
@@ -94,6 +66,12 @@
             by <strong><%= review.user.first_name %></strong></p>
         </div>
         <p><%= review.content %></p>
+        <% if review.user == current_user %>
+          <p class="text-center">
+            <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
+            <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 text-warning" %>
+          </p>
+        <% end %>
       </div>
       <% end %>
     <% end %>
@@ -148,4 +126,24 @@
     </div>
   </div>
 </div>
+
+<!-- Edit Review Modal -->
+<% @book.reviews.each do |review| %>
+  <% if review.user == current_user %>
+    <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <%= render "review_form", review: Review.find(review.id) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
 
