@@ -1,33 +1,8 @@
-#sign-up {
-  color: #167FFB;
-  font-size: 56px;
-  text-align: center;
-  font-family:roboto;
-  font-weight:bolder;
-
-}
-
 #center-bloc {
   display: center;
   font-family:roboto;
 }
 
-.btn-signup {
-  color: white;
-  padding: 10px 200px;
-  border-radius: 4px;
-  font-weight: bold;
-  background: linear-gradient(#167FFB, #0F60C4);
-  transition: background 0.3s ease;
-  border: 1px solid #0F60C4;
-  font-family:roboto
-
-}
-
-.btn-signup:hover {
-  background: linear-gradient(#147EFF, #0F67DA);
-  color: white;
-}
 
 .form-actions {
   margin:center
@@ -35,4 +10,9 @@
 
 .login {
   color: $purple;
+}
+
+
+#login-container {
+  min-height: 70vh !important;
 }
