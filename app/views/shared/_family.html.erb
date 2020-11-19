@@ -1,0 +1,69 @@
+<!-- add family modal -->
+<div class="modal fade" id="CreateFamily" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="EditModalLongTitle">Add a new family!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <% @family_new = Family.new %>
+        <%= simple_form_for @family_new do |f| %>
+          <%= f.input :name, label: "Give it name"%>
+          <%= f.input :picture, as: :file%>
+          <%= f.button :submit, class: "btn-booker" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit family modal -->
+<% @families.each do |family| %>
+  <div class="modal fade" id="EditFamily<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Edit this family</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= simple_form_for family do |f| %>
+            <%= f.input :name, label: "Give it name"%>
+            <%= f.input :picture, as: :file%>
+            <%= f.button :submit, class: "btn-booker" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- add_member to family modal -->
+<% @families.each do |family| %>
+  <div class="modal fade" id="AddMember<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Add a new member to <%= family.name %></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <% @adhesion_new = Adhesion.new %>
+          <% data = User.all - Family.find(family.id).users  %>
+        <%= simple_form_for @adhesion_new do |f| %>
+          <%= f.input :family_id, input_html: {value: family.id}, as: :hidden %>
+          <%= f.input :user, label_method: :full_name, value_method: :id, collection: data, input_html: { style: 'width: 400px', class: 'select2 form-control' }%>
+          <%= f.button :submit, class: "btn-booker" %>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

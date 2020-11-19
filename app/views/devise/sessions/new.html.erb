@@ -1,21 +1,39 @@
-<br>
-<h2 class="login" >Log in</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+<div class="login-banner">
+  <div class="d-flex justify-content-center pt-5">
+    <%= cl_image_tag 'Booker_Logo', class: "w-25" %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Go !", class:"btn-booker" %>
+  <div class="container content">
+    <h1>The best tool to create your reading communities</h1>
+    <p>Stop buying books when you can borrow what's best in your friends libraries</p>
   </div>
-<% end %>
+</div>
+<div class="container" id="login-container">
+  <div class="row">
+    <div class="col-12 col-md-8">
+      <br>
+      <h2 class="login" >Log in</h2>
 
-<%= render "devise/shared/links" %>
+      <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="form-inputs">
+          <%= f.input :email,
+                      required: false,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" } %>
+          <%= f.input :password,
+                      required: false,
+                      input_html: { autocomplete: "current-password" } %>
+          <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.button :submit, "GO !", class:"btn-booker w-25" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-4">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
+
+

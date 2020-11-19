@@ -1,39 +1,65 @@
-<h2>Sign up</h2>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :first_name,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "first name" }%>
-    <%= f.input :last_name,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "last name" }%>
-    <%= f.input :username,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "user name" }%>
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :avatar,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+<div class="login-banner">
+  <div class="d-flex justify-content-center pt-5">
+    <%= cl_image_tag 'Booker_Logo', class: "w-25" %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up", class:"btn-booker" %>
+  <div class="container content">
+    <h1>The best tool to create your reading communities</h1>
+    <p>Stop buying books when you can borrow what's best in your friends libraries</p>
   </div>
-<% end %>
+</div>
+<div class="container py-5">
+  <h2 class="login">Sign up</h2>
+
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs px-1 py-2">
+      <div class="row">
+        <div class="col-4">
+          <%= f.input :first_name,
+                            required: true,
+                            autofocus: true,
+                            input_html: { autocomplete: "first name" }%>
+        </div>
+        <div class="col-4">
+          <%= f.input :last_name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "last name" }%>
+        </div>
+        <div class="col-4">
+          <%= f.input :username,
+                      required: false,
+                      autofocus: true,
+                      input_html: { autocomplete: "user name" }%>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <%= f.input :email,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" }%>
+        </div>
+        <div class="col-12 col-md-4">
+          <%= f.input :avatar,
+                      required: false,
+                      autofocus: true,
+                      input_html: { autocomplete: "email" }%>
+        </div>
+      </div>
+      <%= f.input :password,
+                  required: true,
+                  hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: true,
+                  input_html: { autocomplete: "new-password" } %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "JOIN US!", class:"btn-booker w-100" %>
+    </div>
+  <% end %>
+</div>
+
