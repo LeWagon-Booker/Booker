@@ -53,14 +53,14 @@ class BooksController < ApplicationController
   end
 
   def create
-    new_params = parse_by_isbn(params[:book][:ISBN], params) if params[:book][:title].nil?
-    puts new_params
+    parse_by_isbn(params[:book][:ISBN], params) if params[:book][:title].nil?
+    puts params
     params[:book][:ISBN] = ""
-    file = URI.open(new_params[:book][:image_url])
+    file = URI.open(params[:book][:image_url])
     @book = Book.new(book_params)
     @book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
-    @book.user = current_user
     if @book.save!
+      BookOwnership.create(user_id: current_user.id, book_id: @book.id)
       redirect_to book_path(@book)
       PgSearch::Multisearch.rebuild(Book)
     else
@@ -83,7 +83,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :year, :month, :category_id, :description, :image_url, :user_id, :cover, :ISBN)
+    params.require(:book).permit(:title, :author, :year, :category_id, :description, :cover, :ISBN)
   end
 
   def set_book
@@ -108,7 +108,6 @@ class BooksController < ApplicationController
       params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg"
     end
     ## returning the result hash
-    puts params
     params
   end
 

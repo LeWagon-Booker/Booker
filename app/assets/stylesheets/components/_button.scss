@@ -6,8 +6,18 @@
   &:hover {
     text-decoration: none;
     color:#e8e8e8;
+    transform: translateY(-3px);
+    background: linear-gradient($purple, $blue);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   }
 }
+
+
 
 .btn-booker-purple {
   color: white;
@@ -17,11 +27,12 @@
   &:hover {
     text-decoration: none;
     color:#e8e8e8;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
-}
-
-.btn-booker:hover {
-  background: linear-gradient($purple, $blue);
-  color: white;
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
 }
 
