@@ -1,0 +1,26 @@
+<%= simple_form_for [book, review]  do |f| %>
+  <div class="rating m-0 p-0">
+    <label>
+      <input type="radio" name="rating" value="1" />
+      <span class="icon">★</span>
+    </label>
+    <label>
+      <input type="radio" name="rating" value="2" />
+      <span class="icon">★</span><span class="icon">★</span>
+    </label>
+    <label>
+      <input type="radio" name="rating" value="3" />
+      <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+    </label>
+    <label>
+      <input type="radio" name="rating" value="4" />
+      <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+    </label>
+    <label>
+      <input type="radio" name="rating" value="5" />
+      <span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span><span class="icon">★</span>
+    </label>
+  </div>
+  <%= f.input :content, :label => 'Tell us more about it' %>
+  <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
+<% end %>
