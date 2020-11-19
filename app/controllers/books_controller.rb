@@ -92,7 +92,8 @@ class BooksController < ApplicationController
 
   def do_search
     @books = []
-    @object = PgSearch.multisearch(params[:search]).each { |result| @books << Book.find(result[:searchable_id]) }
+    @object = Book.global_search(params[:search])
+    @object.each { |result| @books << Book.find(result[:id]) }
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
   end

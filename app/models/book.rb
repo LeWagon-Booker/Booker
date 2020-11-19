@@ -8,7 +8,14 @@ class Book < ApplicationRecord
   after_save :upload_default_cover
 
   include PgSearch::Model
-  multisearchable against: %i[title description author users]
+  pg_search_scope :global_search,
+    against: [[:title, 'A'], :description, [:author, 'B'], :year, :ISBN],
+    associated_against: {
+      users: [:first_name, :last_name, :email, :username]
+    },
+    using: {
+      tsearch: { prefix: true }
+    }
 
   private
 

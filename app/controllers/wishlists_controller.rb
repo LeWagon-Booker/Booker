@@ -1,9 +1,7 @@
 class WishlistsController < ApplicationController
-
   def index
     @wishlists = Wishlist.where(user_id: current_user.id)
   end
-
 
   def create
     @wishlist = Wishlist.new
@@ -23,5 +21,4 @@ class WishlistsController < ApplicationController
 
   def set_wishlist
   end
-
 end
