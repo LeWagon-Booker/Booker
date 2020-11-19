@@ -16,6 +16,7 @@
       <% else %>
         <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
       <% end %>
+      <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_path(@book), method: :delete, data: { confirm: "Are you sure?" }, class: "text-danger" %>
     </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
