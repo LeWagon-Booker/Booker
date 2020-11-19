@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   def index
-    @my_reservations = Reservation.where(user_id: current_user.id)
+    @my_reservations = Reservation.includes(book_ownership: [:user, book: :cover_attachment]).where(user_id: current_user.id)
     mybooks_id = Book.where(user_id: current_user.id).map do |book|
       book.id
     end
