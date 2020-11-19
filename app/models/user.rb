@@ -14,7 +14,7 @@ class User < ApplicationRecord
   after_save :upload_default_avatar
 
   def full_name
-    "#{first_name} #{last_name} (#{username})"
+    "#{first_name} #{last_name}"
   end
 
   def upload_default_avatar

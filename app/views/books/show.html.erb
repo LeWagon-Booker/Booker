@@ -6,16 +6,18 @@
   <div class="col-12 <%= size %> ">
     <div class="title-add d-flex justify-content-between align-items-center">
       <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
-      <% unless @book.users.include?(current_user) %>
-        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
-      <% else %>
-       <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
-      <% end %>
-      <% if @wishlist&.empty? || @wishlist.nil? %>
-        <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post, class: "btn-booker" %>
-      <% else %>
-        <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
-      <% end %>
+      <div class="book-action">
+        <% unless @book.users.include?(current_user) %>
+          <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
+        <% else %>
+         <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
+        <% end %>
+        <% if @wishlist&.empty? || @wishlist.nil? %>
+          <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post %>
+        <% else %>
+          <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
+        <% end %>
+      </div>
     </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">

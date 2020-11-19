@@ -99,6 +99,8 @@ class BooksController < ApplicationController
     @user_families.each do |family|
       @books << family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
     end
-    @books.flatten
+
+    @books = @books.flatten
+
   end
 end
