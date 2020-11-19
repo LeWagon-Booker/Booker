@@ -16,7 +16,7 @@
         <br>
         <br>
         <div class="members-avatars d-inline-block mb-3">
-        <% family.users.each do |member| %>
+        <% family.users.includes(avatar_attachment: :blob).each do |member| %>
         <%= cl_image_tag member.avatar.key, class: "avatar" %>
         <a data-confirm="Are you sure?" class="text-danger mr-2" rel="nofollow" data-method="delete" href="/adhesions/<%= "#{family.id}_#{member.id}" %>">-   </a>
         <% end %>
