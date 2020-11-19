@@ -1,0 +1,17 @@
+<h2>Hello! This is your wishlist!</h2>
+<% @wishlists.each do |wishlist| %>
+
+<% end %>
+
+<% @wishlists.each do |wishlist| %>
+  <%= link_to book_path(wishlist.book) do  %>
+  <div class="card-product">
+    <img src="<%= cl_image_path wishlist.book.cover.key %>" alt="" class="shadow rounded book-img">
+    <div class="card-product-infos">
+      <h3><strong><%= wishlist.book.title %></strong></h3>
+      <h4><%= wishlist.book.author %></h4>
+      <p><%= link_to "delete", wishlist_path(wishlist), method: :delete %></p>
+    </div>
+  </div>
+  <% end %>
+<% end %>
