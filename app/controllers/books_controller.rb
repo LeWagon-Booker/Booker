@@ -10,10 +10,7 @@ class BooksController < ApplicationController
     sql_query = " \
       adhesions.user_id = :query \
     "
-    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
-      adhesion.family
-    end
-
+    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map(&:family)
     if params[:search].present?
       do_search
     else
@@ -23,11 +20,7 @@ class BooksController < ApplicationController
     if params[:family].present?
       @books = []
       family = Family.find(params[:family])
-      family.users.each do |user|
-        user.books.each do |book|
-          @books << book unless @books.include?(book)
-        end
-      end
+      family.users.each { |user| user.books.each { |book| @books << book unless @books.include?(book) } }
     end
   end
 
@@ -38,11 +31,8 @@ class BooksController < ApplicationController
     if Review.where(book_id: @book.id).empty?
       @avg_rating = "No ratings yet"
     else
-      book_reviews_rating = Review.where(book_id: @book.id).map do |review|
-        review.rating
-      end
-      @avg_rating = book_reviews_rating.sum(0.0) / book_reviews_rating.size
-      @avg_rating = @avg_rating.round(2)
+      book_reviews_rating = Review.where(book_id: @book.id).map(&:rating)
+      @avg_rating = (book_reviews_rating.sum(0.0) / book_reviews_rating.size).round(2)
     end
   end
 
@@ -61,7 +51,6 @@ class BooksController < ApplicationController
     if @book.save!
       BookOwnership.create(book: @book, user: current_user)
       redirect_to book_path(@book)
-      PgSearch::Multisearch.rebuild(Book)
     else
       render :new
     end
@@ -70,13 +59,11 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     redirect_to books_path
-    PgSearch::Multisearch.rebuild(Book)
   end
 
   def update
     @book.update(book_params)
     redirect_to book_path(@book)
-    PgSearch::Multisearch.rebuild(Book)
   end
 
   private
@@ -104,12 +91,7 @@ class BooksController < ApplicationController
 
   def do_search
     @books = []
-    @object = PgSearch.multisearch(params[:search]).each do |result|
-      @books << Book.find(result[:searchable_id])
-      @books
-      # my_books_var = my_books
-      # puts @books.select {|book| my_books_var.include?(book)}
-    end
+    @object = PgSearch.multisearch(params[:search]).each { |result| @books << Book.find(result[:searchable_id]) }
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
   end
@@ -118,9 +100,7 @@ class BooksController < ApplicationController
     @books = []
     @user_families.each do |family|
       family.users.each do |user|
-        user.books.each do |book|
-          @books << book unless @books.include?(book)
-        end
+        user.books.each { |book| @books << book unless @books.include?(book) }
       end
     end
     @books
