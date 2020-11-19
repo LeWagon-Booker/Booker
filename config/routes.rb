@@ -4,11 +4,14 @@ Rails.application.routes.draw do
 
   resources :books do
     resources :reviews, only:[:create]
+    resources :wishlists, only:[:create]
   end
 
   resources :book_ownerships do
     resources :reservations, only: [ :create]
   end
+
+  resources :wishlists, only: [:index, :destroy]
 
   resources :reservations, only: [:index, :update ]
 

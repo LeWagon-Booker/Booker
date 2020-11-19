@@ -46,6 +46,7 @@ class BooksController < ApplicationController
       @avg_rating = book_reviews_rating.sum(0.0) / book_reviews_rating.size
       @avg_rating = @avg_rating.round(2)
     end
+    @wishlist = Wishlist.where(user_id: current_user, book_id: @book.id)
   end
 
   def new
