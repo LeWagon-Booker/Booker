@@ -41,7 +41,6 @@
       <% end %>
     </div>
     <br>
-
     <p>
       <h3>You read this book? Give a review! </h3>
       <%= simple_form_for [@book, @review]  do |f| %>
@@ -81,7 +80,6 @@
         <%= f.button :submit, 'Add!', class:"btn-booker px-4"%>
       <% end %>
     </p>
-
   </div>
   <div class="col-12 col-md-3 reviews">
     <% unless @book.reviews.empty?%>
@@ -91,14 +89,12 @@
         <div class="avatar-rating d-flex justify-content-between">
           <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
           <%= cl_image_tag tag, class: "avatar"%>
-
               <% review.rating.times do %>
                 <%= "<i style=\"color: #ffc600\" class=\"fas fa-star\"></i>".html_safe %>
               <% end %>
               <% (5 - review.rating).times do %>
                 <%= "<i style=\"color: #ffc600\" class=\"far fa-star\"></i>".html_safe %>
               <% end %>
-
             by <strong><%= review.user.first_name %></strong></p>
         </div>
         <p><%= review.content %></p>
@@ -132,7 +128,6 @@
     </div>
   </div>
 </div>
-
 
     <!-- Reservation Modal -->
 <div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">

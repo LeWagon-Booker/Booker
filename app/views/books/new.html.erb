@@ -9,7 +9,8 @@
       <%= f.input :year %>
       <%= f.association :category, input_html: { class: 'select2' } %>
       <%= f.input :cover, as: :file%>
-      <%= f.rich_text_area :description %>
+      <%= f.input :ISBN %>
+      <%= f.input :description %>
       <%= f.button :submit, class: "btn-booker" %>
     <% end %>
   </div>

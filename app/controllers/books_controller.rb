@@ -1,36 +1,27 @@
 require 'json'
 require 'rest-client'
 require 'open-uri'
+
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_book, only: %i[show edit update destroy]
+
   def index
     @book = Book.new
     sql_query = " \
       adhesions.user_id = :query \
     "
-    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map do |adhesion|
-      adhesion.family
-    end
-
+    @user_families = Adhesion.joins(:family).where(sql_query, query: current_user.id).map(&:family)
     if params[:search].present?
-      #my_books_var = my_books
-      # filtered = do_search
-      # filtered.select { |book| my_books_var.include?(book)}
       do_search
     else
       @no_result = false
       my_books
     end
     if params[:family].present?
-      @books=[]
+      @books = []
       family = Family.find(params[:family])
-      family.users.each do |user|
-        user.books.each do |book|
-          @books << book unless @books.include?(book)
-        end
-      end
+      family.users.each { |user| user.books.each { |book| @books << book unless @books.include?(book) } }
     end
-
   end
 
   def show
@@ -40,11 +31,8 @@ class BooksController < ApplicationController
     if Review.where(book_id: @book.id).empty?
       @avg_rating = "No ratings yet"
     else
-      book_reviews_rating = Review.where(book_id: @book.id).map do |review|
-        review.rating
-      end
-      @avg_rating = book_reviews_rating.sum(0.0) / book_reviews_rating.size
-      @avg_rating = @avg_rating.round(2)
+      book_reviews_rating = Review.where(book_id: @book.id).map(&:rating)
+      @avg_rating = (book_reviews_rating.sum(0.0) / book_reviews_rating.size).round(2)
     end
   end
 
@@ -53,16 +41,16 @@ class BooksController < ApplicationController
   end
 
   def create
-    parse_by_isbn(params[:book][:ISBN], params) if params[:book][:title].nil?
-    puts params
-    params[:book][:ISBN] = ""
-    file = URI.open(params[:book][:image_url])
-    @book = Book.new(book_params)
-    @book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+    if params[:book][:title].nil?
+      isbn_params = parse_by_isbn(params[:book][:ISBN], params)
+      @book = Book.new(isbn_params)
+    else
+      @book = Book.new(book_params)
+      @book.category = Category.find(params[:book][:category_id])
+    end
     if @book.save!
-      BookOwnership.create(user_id: current_user.id, book_id: @book.id)
+      BookOwnership.create(book: @book, user: current_user)
       redirect_to book_path(@book)
-      PgSearch::Multisearch.rebuild(Book)
     else
       render :new
     end
@@ -71,19 +59,17 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     redirect_to books_path
-    PgSearch::Multisearch.rebuild(Book)
   end
 
   def update
     @book.update(book_params)
     redirect_to book_path(@book)
-    PgSearch::Multisearch.rebuild(Book)
   end
 
   private
 
   def book_params
-    params.require(:book).permit(:title, :author, :year, :category_id, :description, :cover, :ISBN)
+    params.require(:book).permit(:title, :author, :year, :category_id, :description, :user, :cover, :ISBN)
   end
 
   def set_book
@@ -91,34 +77,21 @@ class BooksController < ApplicationController
   end
 
   def parse_by_isbn(isbn, params)
-    ## Empty hash to store the result
-    ## parsing link, supplying ISBN, and GOOGLE KEY from .env file
-    source = "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{ENV['GOOGLEKEY']}"
-    response = RestClient.get source
-    json = JSON.parse(response)
-    ## adding require results in the result hash
-    params[:book][:title] = json["items"][0]["volumeInfo"]["title"]
-    params[:book][:author] = json["items"][0]["volumeInfo"]["authors"][0]
-    params[:book][:year] = json["items"][0]["volumeInfo"]["publishedDate"]
-    params[:book][:description] = json["items"][0]["volumeInfo"]["description"]
-    params[:book][:category] = json["items"][0]["volumeInfo"]["categories"]
-    unless json["items"][0]["volumeInfo"]["imageLinks"].nil?
-      params[:book][:image_url] = json["items"][0]["volumeInfo"]["imageLinks"]["thumbnail"]
-    else
-      params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg"
-    end
-    ## returning the result hash
-    params
+    response = RestClient.get "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{ENV['GOOGLEKEY']}"
+    json = JSON.parse(response)["items"][0]["volumeInfo"]
+    params[:book][:title] = json["title"]
+    params[:book][:author] = json["authors"][0]
+    params[:book][:year] = json["publishedDate"]
+    params[:book][:description] = json["description"]
+    params[:book][:category] = json["categories"]
+    params[:book][:ISBN] = isbn
+    json["imageLinks"].nil? ? params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg" : params[:book][:image_url] = json["imageLinks"]["thumbnail"]
+    params.require(:book).permit(:title, :author, :year, :category_id, :description, :user, :cover, :ISBN)
   end
 
   def do_search
     @books = []
-    @object = PgSearch.multisearch(params[:search]).each do |result|
-      @books << Book.find(result[:searchable_id])
-      @books
-      # my_books_var = my_books
-      # puts @books.select {|book| my_books_var.include?(book)}
-    end
+    @object = PgSearch.multisearch(params[:search]).each { |result| @books << Book.find(result[:searchable_id]) }
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
   end
@@ -127,23 +100,9 @@ class BooksController < ApplicationController
     @books = []
     @user_families.each do |family|
       family.users.each do |user|
-        user.books.each do |book|
-          @books << book unless @books.include?(book)
-        end
+        user.books.each { |book| @books << book unless @books.include?(book) }
       end
     end
     @books
   end
-
-
-
-
-
-
-
-
-
-
-
-
 end

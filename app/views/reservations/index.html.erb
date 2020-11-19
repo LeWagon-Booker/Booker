@@ -7,7 +7,7 @@
         <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos">
           <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
-          <p>Booked from <strong> <%= reservation.book_ownership.user.username %></strong></p>
+          <p>Booked from <strong> <%= reservation.book_ownership.user.full_name %></strong></p>
           <p>Requested from
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
               until:
@@ -29,7 +29,7 @@
         <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
           <div class="info flex-grow-1 ">
             <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
-            <p>Asked by <strong> <%= reservation.user.username %></strong></p>
+            <p>Asked by <strong> <%= reservation.user.full_name %></strong></p>
             <p>Requested from
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
               until:
@@ -47,7 +47,6 @@
               <i class="far fa-check-circle confirm pr-2"></i>
             <% end %>
           <% end %>
-
         </div>
       </div>
     <% end %>
