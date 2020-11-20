@@ -1,10 +1,7 @@
 class ReservationsController < ApplicationController
   def index
-    @my_reservations = Reservation.includes(book_ownership: [:user, book: :cover_attachment]).where(user_id: current_user.id)
-    mybooks_id = Book.where(user_id: current_user.id).map do |book|
-      book.id
-    end
-    @book_reserved = Reservation.where(book_id: mybooks_id)
+    @my_reservations = Reservation.where(user: current_user)
+    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships)
   end
 
   def create
@@ -23,11 +20,19 @@ class ReservationsController < ApplicationController
 
   def update
     @reservation = Reservation.find(params[:id])
-    if @reservation.confirmed?
-      @reservation.confirmed = false
-    else @reservation.confirmed = true
-    end
-    @reservation.save(validate: false)
+    @reservation.update!(reservation_params)
+    redirect_to reservations_path
+  end
+
+  def toggle_confirmation
+    @reservation = Reservation.find(params[:format])
+    @reservation.toggle_confirmation
+    redirect_to reservations_path
+  end
+
+  def destroy
+    @reservation = Reservation.find(params[:id])
+    @reservation.destroy
     redirect_to reservations_path
   end
 

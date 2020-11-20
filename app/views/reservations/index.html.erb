@@ -8,52 +8,64 @@
         <div class="card-product-infos">
           <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
           <p>Booked from <strong> <%= reservation.book_ownership.user.full_name %></strong></p>
-          <p>Requested from
+          <p>Asked by from
               <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
               until:
               <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
+          <p><%= reservation.message %></p>
           <% if reservation.confirmed? %>
             <p style= "color: green">Booking confirmed!</p>
           <% else %>
             <p style= "color: red">Waiting for confirmation from the owner</p>
           <% end %>
+          <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReservationModal#{reservation.id}", class:"m-2 text-warning" %>
+          <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(reservation.book_ownership, reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
         </div>
       </div>
     <% end %>
   </div>
   <div class="col-12 col-md-6">
     <h1 class="text-center">Demands for my books</h1>
-    <% @book_reserved.each do |reservation| %>
+    <% @my_requests.each do |request| %>
       <div class="card-product">
-        <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
+        <img src="<%= cl_image_path request.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
           <div class="info flex-grow-1 ">
-            <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
-            <p>Asked by <strong> <%= reservation.user.full_name %></strong></p>
+            <h3><strong><%= request.book_ownership.book.title %></strong></h3>
+            <p>Asked by <strong> <%= request.user.full_name %></strong></p>
             <p>Requested from
-              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              <strong><%= request.start_date.strftime('%d/%m/%Y') %></strong>
               until:
-              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
-            <% if reservation.confirmed? %>
+              <strong><%= request.end_date.strftime('%d/%m/%Y') %></strong></p>
+            <p><%= request.message %></p>
+            <% if request.confirmed? %>
               <p style= "color: green">Booking confirmed!</p>
             <% end %>
           </div>
-          <% if reservation.confirmed? %>
-            <%= link_to reservation_path(reservation), method: :put do %>
-              <i class="fas fa-times cancel pr-2"></i>
+            <% if request.confirmed? %>
+              <%= link_to "<i class=\"fas fa-circle confirm pr-2\"></i>".html_safe, reservations_toggle_confirmation_path(request) %>
+            <% else %>
+              <%= link_to "<i class=\"fas fa-times cancel pr-2\"></i>".html_safe, reservations_toggle_confirmation_path(request) %>
             <% end %>
-          <% else %>
-            <%= link_to reservation_path(reservation), method: :put do %>
-              <i class="far fa-check-circle confirm pr-2"></i>
-            <% end %>
-          <% end %>
         </div>
       </div>
     <% end %>
   </div>
 </div>
 
-
-
-
-
+<!-- Edit Reservation Modal -->
+<% @my_reservations.each do |reservation| %>
+  <div class="modal fade" id="EditReservationModal<%= reservation.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReservationModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Change this reservation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <%= render "reservations/form", book_ownership: reservation.book_ownership, reservation: reservation %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

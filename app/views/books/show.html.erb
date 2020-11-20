@@ -10,7 +10,7 @@
         <% unless @book.users.include?(current_user) %>
           <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
         <% else %>
-         <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
+          <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
         <% end %>
         <% if @wishlist&.empty? || @wishlist.nil? %>
           <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post %>
@@ -38,9 +38,7 @@
         <ul class="actions list-inline">
           <li type="button" class="font-awesome list-inline-item" data-toggle="modal" data-target="#EditModal"><i class="fas fa-edit"></i></li>
           <li>
-            <%= link_to book_path(@book.id),
-              method: :delete,
-              data: { confirm: "Are you sure?" }, class: "font-awesome list-inline-item" do %>
+            <%= link_to book_path(@book.id), method: :delete, data: { confirm: "Are you sure?" }, class: "font-awesome list-inline-item" do %>
               <i class="fas fa-trash"></i>
             <% end %>
           </li>
@@ -117,13 +115,8 @@
       </div>
       <div class="modal-body">
         <div id='book-reservation' data-unavailable="<%= @book_ownership.unavailable_dates.to_json %>">
-          <%= simple_form_for([@book_ownership, @reservation]) do |f| %>
-            <%= f.input :start_date, as: :string, label: "Dates", placeholder: "From", wrapper_html: { class: "inline_field_wrapper" } %>
-            <%= f.input :end_date, as: :string, label: '&nbsp;'.html_safe, placeholder: "To", disabled: true, wrapper_html: { class: "inline_field_wrapper" } %>
-            <%= f.input :message, as: :text %>
-            <%= f.submit "Book", class: "btn btn-primary" %>
-          <% end %>
-         </div>
+            <%= render "reservations/form", book_ownership: @book_ownership, reservation: @reservation %>
+        </div>
       </div>
     </div>
   </div>

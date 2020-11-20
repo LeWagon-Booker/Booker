@@ -1,2 +1,3 @@
 class BookOwnershipsController < ApplicationController
+
 end
