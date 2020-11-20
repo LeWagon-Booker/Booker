@@ -89,15 +89,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <%= simple_form_for @book do |f| %>
-          <%= f.input :title %>
-          <%= f.input :author %>
-          <%= f.input :year %>
-          <%= f.input :category %>
-          <%= f.input :description %>
-          <%= f.input :cover, as: :file %>
-          <%= f.button :submit, class: "btn-booker" %>
-        <% end %>
+        <%= render 'form', book: @book %>
       </div>
     </div>
   </div>
