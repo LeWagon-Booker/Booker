@@ -9,11 +9,9 @@ class BooksController < ApplicationController
     @book = Book.new
     @user_families = current_user.families
     if params[:search].present?
-      do_search
+      do_global_search
     elsif params[:family].present?
-      @books = []
-      family = Family.find(params[:family])
-      @books = family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
+      do_family_search
     else
       @no_result = false
       my_books
@@ -86,7 +84,7 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :author, :year, :category_id, :description, :user, :cover, :ISBN)
   end
 
-  def do_search
+  def do_global_search
     @books = []
     @object = Book.includes(:category, cover_attachment: :blob).global_search(params[:search])
     @object.each { |result| @books << Book.find(result[:id]) }
@@ -94,13 +92,19 @@ class BooksController < ApplicationController
     @books = my_books if @books.size.zero?
   end
 
+  def do_family_search
+    @books = []
+    family = Family.find(params[:family])
+    @books = family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
+    @no_result = true if @books.size.zero?
+    @books = my_books if @books.size.zero?
+  end
+
   def my_books
     @books = []
     @user_families.each do |family|
-      @books << family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
+      @books << family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books)
+      @books = @books.flatten.uniq
     end
-
-    @books = @books.flatten
-
   end
 end
