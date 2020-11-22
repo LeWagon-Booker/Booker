@@ -6,6 +6,9 @@ class Book < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :users, through: :book_ownerships
   after_save :upload_default_cover
+  validates :ISBN, uniqueness: true, :allow_blank => true
+  validates :title, presence: true
+  validates :author, presence: true
 
   include PgSearch::Model
   pg_search_scope :global_search,

@@ -1,7 +1,7 @@
 class BookOwnership < ApplicationRecord
   belongs_to :book
   belongs_to :user
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
 
   def unavailable_dates
     reservations.pluck(:start_date, :end_date).map do |range|
