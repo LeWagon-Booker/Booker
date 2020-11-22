@@ -38,13 +38,27 @@ class BooksController < ApplicationController
   def create
     if params[:book][:title].nil?
       isbn_params = parse_by_isbn(params[:book][:ISBN], params)
-      @book = Book.new(isbn_params)
+      if isbn_params.is_a? String
+        @book = Book.new
+        render :new
+      end
+      if Book.find_by(ISBN: isbn_params[:parameters][:ISBN]).nil?
+        file = URI.open(isbn_params[:file])
+        @book = Book.new(isbn_params[:parameters])
+        @book.cover.attach(io: file, filename: 'cover.png', content_type: 'image/png')
+      else
+        @book = Book.find_by ISBN: isbn_params[:parameters][:ISBN]
+      end
     else
       @book = Book.new(book_params)
       @book.category = Category.find(params[:book][:category_id])
     end
-    if @book.save!
-      BookOwnership.create(book: @book, user: current_user)
+    if @book.save
+      if params[:book][:wishlist] == "1"
+        Wishlist.create(book: @book, user: current_user)
+      else
+        BookOwnership.create(book: @book, user: current_user)
+      end
       redirect_to book_path(@book)
     else
       render :new
@@ -52,7 +66,8 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book.destroy
+    book_ownership = BookOwnership.find_by(book_id: @book.id, user_id: current_user.id)
+    book_ownership.destroy
     redirect_to books_path
   end
 
@@ -73,15 +88,23 @@ class BooksController < ApplicationController
 
   def parse_by_isbn(isbn, params)
     response = RestClient.get "https://www.googleapis.com/books/v1/volumes?q=isbn%3D#{isbn}&key=#{ENV['GOOGLEKEY']}"
+    i = 0
+    10.times do
+      i += 1
+      file = JSON.parse(response)
+      break if file["totalItems"].positive?
+    end
+    return "No book found. Please enter it manually" if i >= 10
+
     json = JSON.parse(response)["items"][0]["volumeInfo"]
     params[:book][:title] = json["title"]
     params[:book][:author] = json["authors"][0]
     params[:book][:year] = json["publishedDate"]
     params[:book][:description] = json["description"]
-    params[:book][:category] = json["categories"]
     params[:book][:ISBN] = isbn
+    p json["imageLinks"]
     json["imageLinks"].nil? ? params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg" : params[:book][:image_url] = json["imageLinks"]["thumbnail"]
-    params.require(:book).permit(:title, :author, :year, :category_id, :description, :user, :cover, :ISBN)
+    { parameters: params.require(:book).permit(:title, :author, :year, :description, :ISBN, :category_id), file: params[:book][:image_url] }
   end
 
   def do_global_search

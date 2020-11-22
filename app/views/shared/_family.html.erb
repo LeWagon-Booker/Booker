@@ -60,7 +60,7 @@
         <%= simple_form_for @adhesion_new do |f| %>
           <%= f.input :family_id, input_html: {value: family.id}, as: :hidden %>
           <%= f.input :user, label_method: :full_name, value_method: :id, collection: data, input_html: { style: 'width: 400px', class: 'select2 form-control' }%>
-          <%= f.button :submit, class: "btn-booker" %>
+          <%= f.button :submit, "Add", class: "btn-booker w-25" %>
         <% end %>
         </div>
       </div>

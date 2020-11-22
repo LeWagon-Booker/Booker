@@ -7,15 +7,15 @@
     <div class="title-add d-flex justify-content-between align-items-center">
       <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
       <div class="book-action">
-        <% unless @book.users.include?(current_user) %>
+        <% unless @book.users.include?(current_user) || @book.users.empty? %>
           <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BOOK THIS BOOK</li>
         <% else %>
           <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">BLOCK THIS BOOK</li>
         <% end %>
         <% if @wishlist&.empty? || @wishlist.nil? %>
-          <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post %>
+          <%= link_to "+ WISHLIST", book_wishlists_path(@book), method: :post, class: "purple" %>
         <% else %>
-          <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete %>
+          <%= link_to "- WISHLIST", wishlist_path(@wishlist[0]), method: :delete, class: "purple" %>
         <% end %>
       </div>
     </div>
@@ -65,13 +65,15 @@
               <% end %>
             by <strong><%= review.user.first_name %></strong></p>
         </div>
-        <p><%= review.content %></p>
-        <% if review.user == current_user %>
-          <p class="text-center">
-            <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
-            <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 text-warning" %>
-          </p>
-        <% end %>
+        <div class="d-flex justify-content-between">
+        <p class="flex-grow-1"><%= review.content %></p>
+          <% if review.user == current_user %>
+            <p class="text-center">
+              <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+              <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 font-awesome " %>
+            </p>
+          <% end %>
+        </div>
       </div>
       <% end %>
     <% end %>
@@ -95,6 +97,8 @@
   </div>
 </div>
 
+<% unless @book.users.empty? %>
+
     <!-- Reservation Modal -->
 <div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -114,6 +118,7 @@
   </div>
 </div>
 
+<% end %>
 <!-- Edit Review Modal -->
 <% @book.reviews.select{|review| review.user == current_user}.each do |review| %>
   <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">

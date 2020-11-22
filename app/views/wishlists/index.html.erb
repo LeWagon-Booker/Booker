@@ -1,4 +1,4 @@
-<h2>Hello! This is your wishlist!</h2>
+<h1>My wishlist</h1>
 <% @wishlists.each do |wishlist| %>
 
 <% end %>
@@ -10,7 +10,7 @@
     <div class="card-product-infos">
       <h3><strong><%= wishlist.book.title %></strong></h3>
       <h4><%= wishlist.book.author %></h4>
-      <p><%= link_to "delete", wishlist_path(wishlist), method: :delete %></p>
+      <p><%= link_to "Remove", wishlist_path(wishlist), method: :delete %></p>
     </div>
   </div>
   <% end %>
