@@ -106,7 +106,7 @@ class BooksController < ApplicationController
 
   def do_global_search
     @books = Book.all
-    @books = Book.includes(:category, cover_attachment: :blob).global_search(params[:search][:term]) if params[:search][:terms].present?
+    @books = Book.includes(:category, cover_attachment: :blob).global_search(params[:search][:term]) if params[:search][:term].present?
     @books = @books.where(category_id: params[:search][:category]) if params[:search][:category].present?
     @books = current_user.families.select{|fam| fam.id == params[:search][:families].to_i }.flat_map(&:books).uniq & @books if params[:search][:families].present?
     @no_result = true if @books.size.zero?
