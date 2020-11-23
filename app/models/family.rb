@@ -2,6 +2,7 @@ class Family < ApplicationRecord
   has_one_attached :picture
   has_many :adhesions, dependent: :destroy
   has_many :users, through: :adhesions
+  has_many :books, through: :users
 
   after_save :upload_default_picture
 

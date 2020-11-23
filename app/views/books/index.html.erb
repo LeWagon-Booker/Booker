@@ -1,23 +1,25 @@
 <h1 class="py-4">Let's <i class="fas fa-search" style="color:$blue; font-size: 1.2em"></i> in your friends libraries!</h1>
-<% unless @user_families.empty?  %>
-<div id="filter" class="d-flex flex-column justify-content-center">
-  <div class="text-center d-flex justify-content-around align-items-center w-50 p-3">
-    <h5 class="mb-0">Family filters</h5>
-    <% @user_families.each do |family| %>
-      <p class="mb-0"><%= link_to family.name, books_path(:family => family.id) %></p>
+
+<div class="d-flex justify-content-between">
+  <div class="col-12 col-lg-8">
+    <% if @no_result == true %>
+      <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!</div>
+    <% end %>
+    <% if @books.empty? %>
+      <h2>You have currently no books in your library!</h2>
+    <% else %>
+      <div class="cards">
+        <%= render 'book', books: @books %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="col-12 col-lg-2">
+      <%= simple_form_for :search, url: books_path, method: "get" do |f| %>
+      <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)) %>
+      <%= f.input :families, required: false, collection: current_user.families %>
+      <%= f.button :submit %>
+      <%= link_to "Reset", books_path  %>
     <% end %>
   </div>
 </div>
-<% end %>
-<br>
-<% if @no_result == true %>
-  <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!</div>
-<% end %>
-<% if @books.empty? %>
-  <h2>You have currently no books in your library!</h2>
-<% else %>
-  <div class="cards">
-    <%= render 'book', books: @books %>
-  </div>
-<% end %>
-

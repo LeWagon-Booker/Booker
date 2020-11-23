@@ -11,7 +11,7 @@
     <div class="navbar-nav mr-auto d-flex align-items-center">
       <% if user_signed_in? %>
         <form class="form-inline my-2 my-lg-0" action="/books" accept-charset="UTF-8" method="get">
-          <input class="form-control mr-sm-2" name="search" placeholder="Search">
+          <input class="form-control mr-sm-2" name="search[term]" placeholder="Search">
         </form>
         <div class="nav-item ml-3 mr-3 mt-1">
           <%= link_to "Add new book!", new_book_path , class: "btn-booker-purple px-2"%>

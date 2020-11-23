@@ -8,12 +8,10 @@ class BooksController < ApplicationController
   def index
     @book = Book.new
     @user_families = current_user.families
+    @no_result = false
     if params[:search].present?
       do_global_search
-    elsif params[:family].present?
-      do_family_search
     else
-      @no_result = false
       my_books
     end
   end
@@ -102,23 +100,15 @@ class BooksController < ApplicationController
     params[:book][:year] = json["publishedDate"]
     params[:book][:description] = json["description"]
     params[:book][:ISBN] = isbn
-    p json["imageLinks"]
     json["imageLinks"].nil? ? params[:book][:image_url] = "https://images.isbndb.com/covers/02/21/#{isbn}.jpg" : params[:book][:image_url] = json["imageLinks"]["thumbnail"]
     { parameters: params.require(:book).permit(:title, :author, :year, :description, :ISBN, :category_id), file: params[:book][:image_url] }
   end
 
   def do_global_search
-    @books = []
-    @object = Book.includes(:category, cover_attachment: :blob).global_search(params[:search])
-    @object.each { |result| @books << Book.find(result[:id]) }
-    @no_result = true if @books.size.zero?
-    @books = my_books if @books.size.zero?
-  end
-
-  def do_family_search
-    @books = []
-    family = Family.find(params[:family])
-    @books = family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books).uniq
+    @books = Book.all
+    @books = Book.includes(:category, cover_attachment: :blob).global_search(params[:search][:term]) if params[:search][:terms].present?
+    @books = @books.where(category_id: params[:search][:category]) if params[:search][:category].present?
+    @books = current_user.families.select{|fam| fam.id == params[:search][:families].to_i }.flat_map(&:books).uniq & @books if params[:search][:families].present?
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
   end
@@ -129,5 +119,6 @@ class BooksController < ApplicationController
       @books << family.users.includes(books: [:category, cover_attachment: :blob]).flat_map(&:books)
       @books = @books.flatten.uniq
     end
+    @books
   end
 end

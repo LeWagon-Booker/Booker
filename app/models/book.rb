@@ -10,10 +10,13 @@ class Book < ApplicationRecord
   validates :title, presence: true
   validates :author, presence: true
 
+  $categories = Category.select('distinct name').collect { |p| p.name }
+
   include PgSearch::Model
   pg_search_scope :global_search,
     against: [[:title, 'A'], :description, [:author, 'B'], :year, :ISBN],
     associated_against: {
+      category: :name,
       users: [:first_name, :last_name, :email, :username]
     },
     using: {

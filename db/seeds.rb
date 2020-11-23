@@ -54,7 +54,7 @@ puts "Creating Users"
 puts "          ... done!"
 
 puts 'Creating catergories...'
-  CATEGORIES = %w[Fantasy Adventure Romance Contemporary Dystopian Mystery Horror Thriller Paranormal Science-Fiction Cooking Art Personal Motivational Health History Travel Humor Children’s Business Entrepreneurship Manga BD Comic"]
+  CATEGORIES = %w[Fantasy Adventure Romance Contemporary Dystopian Mystery Horror Thriller Paranormal Science-Fiction Cooking Art Personal Motivational Health History Travel Humor Children’s Business Entrepreneurship Manga BD Comic]
   CATEGORIES.each { |category| Category.create(name: category) }
 puts "          ... done!"
 
