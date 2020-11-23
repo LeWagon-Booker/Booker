@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :books do
     resources :reviews, only:[:create, :update, :new, :edit]
     resources :wishlists, only:[:create]
+    resources :book_ownerships, only:[:new]
   end
 
   resources :reviews, only:[:destroy]
