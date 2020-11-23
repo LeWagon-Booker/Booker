@@ -13,7 +13,6 @@
   font-size:30px;
 }
 
-
 a:hover {
   text-decoration:none;
 }
@@ -32,6 +31,10 @@ a:hover {
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   transition: 0.1s ease-in-out;
+}
+
+.mybookhighlight {
+  border: 1px solid purple !important
 }
 
 .card-category .content {
@@ -58,15 +61,12 @@ a:hover {
 
 }
 
-
 .cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 16px;
   justify-items: center;
 }
-
-
 
 .card-product {
   position: relative;
