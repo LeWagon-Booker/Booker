@@ -109,9 +109,19 @@
           </button>
         </div>
         <div class="modal-body">
-          <div id='book-reservation' data-unavailable="<%= @book_ownership.unavailable_dates.to_json %>">
-              <%= render "reservations/form", book_ownership: @book_ownership, reservation: @reservation %>
-          </div>
+          <label>Choose who you want to rent to:
+            <select class="name" name="name">
+              <option value="">Select One …</option>
+              <% @book_ownerships.each do |bo| %>
+              <option value="user-<%= bo.user_id %>"><%= bo.user.full_name %></option>
+              <% end %>
+            </select>
+          </label>
+          <% @book_ownerships.each do |bo| %>
+            <div id='user-<%= bo.user_id %>' class="hidden form-reservation-container">
+                <%= render "reservations/form", book_ownership: bo, reservation: @reservation %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
