@@ -34,6 +34,7 @@ class BooksController < ApplicationController
   end
 
   def create
+    #  Lisbn.new(params[:book][:ISBN]).valid? will return true if a valid ISBN is supplied. should be implemented
     if params[:book][:title].nil?
       isbn_params = parse_by_isbn(params[:book][:ISBN], params)
       if isbn_params.is_a? String
