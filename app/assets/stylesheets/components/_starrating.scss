@@ -62,10 +62,10 @@
 
 .rating:not(:hover) label input:checked ~ .icon,
 .rating:hover label:hover input ~ .icon {
-  color: #ffc600;
+  color: $purple;
 }
 
 .rating label input:focus:not(:checked) ~ .icon:last-child {
   color: $light-blue;
-  text-shadow: 0 0 5px #ffc600;
+  text-shadow: 0 0 5px $purple;
 }

@@ -37,6 +37,25 @@ a:hover {
 .mybookhighlight {
   border: 1px solid purple !important
 }
+.small {
+  height: 140px;
+  width: 90px;
+  font-size: 5px;
+  h3 {
+    font-weight: 400;
+    font-size: 1em;
+  }
+  h5 {
+    font-weight: 400;
+    font-size: 0.7em;
+  }
+  .content {
+    width: 90px;
+    height:100%;
+    padding: 1px;
+  }
+}
+
 .card-category .content {
   width: 150px;
   height:100%;

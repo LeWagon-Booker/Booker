@@ -6,6 +6,27 @@
   <div class="col-12 <%= size %> ">
     <div class="title-add d-flex justify-content-between align-items-center">
       <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
+      <div class="book-actions">
+        <ul class="list list-inline">
+          <% unless @book.users.include?(current_user) || @book.users.empty? %>
+            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Book this book</li>
+            <% else %>
+            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Block this book</li>
+          <% end %>
+          <% if @wishlist&.empty? || @wishlist.nil? %>
+            <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_wishlists_path(@book), method: :post %>+ WISHLIST</li>
+            <% else %>
+            <li type="button" class="list-inline-item btn-booker"><%= link_to "", wishlist_path(@wishlist[0]), method: :delete %>- WISHLIST</li>
+          <% end %>
+          <% if @book.users.include?(current_user) %>
+            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#EditModal">Edit Book</li>
+            <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_path(@book.id), method: :delete %>Remove BOOK</li>
+          <% end %>
+          <% unless @book.users.include?(current_user)%>
+            <li type="button" class="list-inline-item btn-booker"><%= link_to "I own this Book", new_book_book_ownership_path(@book) %></li>
+          <% end %>
+        </ul>
+      </div>
    </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
@@ -23,27 +44,6 @@
         </div>
       </div>
     </div>
-    <div class="book-actions">
-      <ul class="list list-inline">
-        <% unless @book.users.include?(current_user) || @book.users.empty? %>
-          <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Book this book</li>
-          <% else %>
-          <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Block this book</li>
-        <% end %>
-        <% if @wishlist&.empty? || @wishlist.nil? %>
-          <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_wishlists_path(@book), method: :post %>+ WISHLIST</li>
-          <% else %>
-          <li type="button" class="list-inline-item btn-booker"><%= link_to "", wishlist_path(@wishlist[0]), method: :delete %>- WISHLIST</li>
-        <% end %>
-        <% if @book.users.include?(current_user) %>
-          <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#EditModal">Edit Book</li>
-          <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_path(@book.id), method: :delete %>Remove BOOK</li>
-        <% end %>
-        <% unless @book.users.include?(current_user)%>
-          <li type="button" class="list-inline-item btn-booker"><%= link_to "I own this Book", new_book_book_ownership_path(@book) %></li>
-        <% end %>
-      </ul>
-    </div>
     <br>
       <h3>You read this book? Give a review! </h3>
       <%= render "reviews/form", book: @book, review: @review %>
@@ -54,14 +54,14 @@
       <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
       <% @book.reviews.each do |review| %>
       <div class="review">
-        <div class="avatar-rating d-flex justify-content-between">
+        <div class="avatar-rating d-flex justify-content-between align-items-center">
           <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
           <%= cl_image_tag tag, class: "avatar"%>
               <% review.rating.times do %>
-                <%= "<i style=\"color: #ffc600\" class=\"fas fa-star\"></i>".html_safe %>
+                <%= "<i style=\"color: #706897 \" class=\"fas fa-star\"></i>".html_safe %>
               <% end %>
               <% (5 - review.rating).times do %>
-                <%= "<i style=\"color: #ffc600\" class=\"far fa-star\"></i>".html_safe %>
+                <%= "<i style=\"color: #706897 \" class=\"far fa-star\"></i>".html_safe %>
               <% end %>
             by <strong><%= review.user.first_name %></strong></p>
         </div>

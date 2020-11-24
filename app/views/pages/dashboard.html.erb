@@ -3,46 +3,45 @@
 <% else %>
   <h1><%= @user.full_name %></h1>
 <% end %>
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="dashboard-card">
+      <h2>Shelve</h2>
+      <div class="cards p-1">
+        <% @books.each do |book| %>
 
-<div class="dashboard-card">
-  <h2>Shelve</h2>
-  <div class="cards p-1">
-    <% @books.each do |book| %>
+          <%= link_to book_path(book) do %>
+            <div class="card-category small text-center dashboard"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
+              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
+                <h5 class="book-info"><%= book.title %></h5>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="dashboard-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Wishlist</h2>
+        <%= link_to "Add a new book", new_book_path, class: "btn-booker" %>
+      </div>
+      <div class="cards p-1">
+        <% @wishlist.each do |book| %>
 
-      <%= link_to book_path(book) do %>
-        <div class="card-category text-center dashboard"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
-          <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
-            <h3 class="book-info"><%= book.title %></h3>
-            <h5 class="book-info">by <%= book.author %></h5>
-            <h5 class="book-info"><%= book.category.name %></h5>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
+          <%= link_to book_path(book) do %>
+            <div class="card-category small text-center"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
+              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
+                <h5 class="book-info"><%= book.title %></h5>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
-
-<div class="dashboard-card">
-  <div class="d-flex justify-content-between align-items-center">
-    <h2>Wishlist</h2>
-    <%= link_to "Add a new book", new_book_path, class: "btn-booker" %>
-  </div>
-  <div class="cards p-1">
-    <% @wishlist.each do |book| %>
-
-      <%= link_to book_path(book) do %>
-        <div class="card-category text-center"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
-          <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
-            <h3 class="book-info"><%= book.title %></h3>
-            <h5 class="book-info">by <%= book.author %></h5>
-            <h5 class="book-info"><%= book.category.name %></h5>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-</div>
-
 <div class="dashboard-card">
   <% if @families.empty? %>
     <h2>You have no families for the moment!</h2>
