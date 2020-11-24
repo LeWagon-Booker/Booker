@@ -6,33 +6,10 @@
   &:hover {
     text-decoration: none;
     color:#e8e8e8;
-    transform: translateY(-3px);
-    background: linear-gradient($purple, $blue);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
     color: white;
   }
-  &:active {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  }
 }
 
 
-
-.btn-booker-purple {
-  color: white;
-  background-color: $purple;
-  border-radius: 20px;
-  padding: 6px 10px;
-  &:hover {
-    text-decoration: none;
-    color:#e8e8e8;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-  &:active {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  }
-}
 
