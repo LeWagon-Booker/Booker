@@ -9,17 +9,17 @@ class FamiliesController < ApplicationController
   def create
     Family.create!(family_params)
     Adhesion.create!(user_id: current_user.id, family_id: Family.last.id)
-    redirect_to families_path
+    redirect_to dashboard_path(current_user)
   end
 
   def destroy
     @family.destroy
-    redirect_to families_path
+    redirect_to dashboard_path(current_user)
   end
 
   def update
     @family.update(family_params)
-    redirect_to families_path
+    redirect_to dashboard_path(current_user)
   end
 
   private

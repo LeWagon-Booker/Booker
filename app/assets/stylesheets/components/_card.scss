@@ -12,9 +12,9 @@ a:hover {
   justify-content: center;
   align-items: center;
   color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
   border-radius: 2px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
   transition: 0.1s ease-in-out;
 }
 
@@ -68,12 +68,13 @@ a:hover {
   justify-items: center;
 }
 
+
 .card-product {
   position: relative;
   overflow: hidden;
-  height: 170px;
+  height: 140px;
   background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   margin: 20px 0px;
@@ -82,19 +83,15 @@ a:hover {
   }
 }
 
-.horrible {
-  position: absolute;
-  right:20px;
-  top:20px;
-}
+
 .card-img {
   height: 100%;
   width: 170px;
   object-fit: cover;
 }
 
-.book-img {
-  width: 115px;
+.reservation-book-img {
+  width: 90px;
   height: 100%;
   object-fit:cover;
 }
@@ -124,20 +121,8 @@ a:hover {
 // Smallest device
 @media (min-width: 100px) and (max-width: 575px) {
   .cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr ;
     justify-items: center;
-  }
-  .card-product {
-    h4 {
-      font-size: 15px;
-    }
-  }
-}
-
-// Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-  .cards {
-    grid-template-columns: 1fr;
   }
   .card-product {
     h4 {
@@ -146,24 +131,32 @@ a:hover {
   }
 }
 
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+}
+
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
   .cards {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
   .cards {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 
 // Extra large devices (large desktops, 1200px and up)
-@media (min-width: 1500px) {
+@media (min-width: 1200px) {
   .cards {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
     justify-items: center;
   }
 }

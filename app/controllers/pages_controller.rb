@@ -13,5 +13,7 @@ class PagesController < ApplicationController
       adhesions.user_id = :query \
     "
     @families = Adhesion.joins(:family).where(sql_query, query: @user.id).map(&:family)
+    @my_reservations = Reservation.where(user: current_user)
+    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships)
   end
 end

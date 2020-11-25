@@ -67,5 +67,4 @@
 
 .rating label input:focus:not(:checked) ~ .icon:last-child {
   color: $light-blue;
-  text-shadow: 0 0 5px $purple;
 }
