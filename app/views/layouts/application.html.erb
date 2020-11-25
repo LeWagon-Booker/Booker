@@ -16,7 +16,7 @@
   <body>
     <%= render 'shared/navbar' unless (params[:controller] == 'devise/sessions' || params[:controller] == 'devise/registrations') %>
     <%= render 'shared/flashes' %>
-    <div class="<%= 'container' unless (params[:controller] == 'devise/sessions' || params[:controller] == 'devise/registrations') %>">
+    <div class="<%= 'container' unless (params[:controller] == 'devise/sessions' || params[:controller] == 'devise/registrations' || params[:controller] == 'books') %>">
       <%= yield %>
     </div>
     <%= render 'shared/footer' %>
