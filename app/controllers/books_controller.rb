@@ -110,6 +110,11 @@ class BooksController < ApplicationController
     @books = Book.includes(:category, cover_attachment: :blob).global_search(params[:search][:term]) if params[:search][:term].present?
     @books = @books.where(category_id: params[:search][:category]) if params[:search][:category].present?
     @books = current_user.families.select{|fam| fam.id == params[:search][:families].to_i }.flat_map(&:books).uniq & @books if params[:search][:families].present?
+    pp "------------------"
+    @books = BookOwnership.where(user_id: params[:search][:user]).map(&:book) if params[:search][:user].present?
+    pp params
+    pp @books
+    pp "------------------"
     @no_result = true if @books.size.zero?
     @books = my_books if @books.size.zero?
   end
