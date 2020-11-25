@@ -61,10 +61,10 @@
   right: 50%;
   left: 50%;
   cursor: pointer;
+  &:hover {
+    color:$blue;
+    text-shadow: 0 0 15px $blue;
+    transition: all 0.5s ease;
+  }
 }
 
-.far:hover {
-  color:#2a69bc;
-    text-shadow: 0 0 15px #2a69bc;
-    transition: all 0.5s ease;
-}

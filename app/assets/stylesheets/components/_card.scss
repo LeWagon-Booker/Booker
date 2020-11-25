@@ -1,18 +1,3 @@
-.card-category p {
-  font-size: 1.2em;
-
-}
-
-.confirm {
-  color:green;
-  font-size:30px;
-}
-
-.cancel {
-  color:red;
-  font-size:30px;
-}
-
 a:hover {
   text-decoration:none;
 }
@@ -28,15 +13,11 @@ a:hover {
   align-items: center;
   color: white;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-  border: 1px solid black;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   transition: 0.1s ease-in-out;
 }
 
-.mybookhighlight {
-  border: 1px solid purple !important
-}
 .small {
   height: 140px;
   width: 90px;
@@ -99,10 +80,6 @@ a:hover {
   h1 {
     font-size: 30px;
   }
-  &:hover {
-    transform: scale(1.01);
-    transition: 0.2s ease-in-out;
-  }
 }
 
 .horrible {
@@ -117,7 +94,7 @@ a:hover {
 }
 
 .book-img {
-  width: 125px;
+  width: 115px;
   height: 100%;
   object-fit:cover;
 }
@@ -141,7 +118,7 @@ a:hover {
 }
 
 .card-product .card-product-infos {
-  padding: 16px;
+  padding: 10px 15px;
 }
 
 // Smallest device
@@ -149,7 +126,11 @@ a:hover {
   .cards {
     grid-template-columns: 1fr;
     justify-items: center;
-
+  }
+  .card-product {
+    h4 {
+      font-size: 15px;
+    }
   }
 }
 
@@ -157,6 +138,11 @@ a:hover {
 @media (min-width: 576px) {
   .cards {
     grid-template-columns: 1fr;
+  }
+  .card-product {
+    h4 {
+      font-size: 10px;
+    }
   }
 }
 

@@ -1,19 +1,6 @@
 <h1 class="py-4">Let's <i class="fas fa-search" style="color:$blue; font-size: 1.2em"></i> in your friends libraries!</h1>
 <div class="row">
-  <div class="col-12 col-md-2 pr-0">
-    <div class="book-search">
-        <form id="searchbar" class="" action="/books" accept-charset="UTF-8" method="get">
-          <input class="form-control mr-sm-2" name="search[term]" placeholder="Search">
-        </form>
-        <%= simple_form_for :search, url: books_path, method: "get" do |f| %>
-        <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)), prompt: "Category", label: false %>
-        <%= f.input :families, required: false, collection: current_user.families, prompt: "Family", label: false %>
-        <%= f.button :submit, "Search", class: "btn-booker"%>
-<!--         <%= link_to "Reset", books_path  %> -->
-      <% end %>
-    </div>
-  </div>
-  <div class="col-12 col-md-10 ">
+  <div class="col-12 col-md-9 pr-0">
     <% if @no_result == true %>
       <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!</div>
     <% end %>
@@ -24,6 +11,19 @@
         <%= render 'book', books: @books %>
       </div>
     <% end %>
+  </div>
+  <div class="col-12 col-md-3 ">
+    <h3>Go for a quick access</h3>
+    <div class="book-search">
+      <form id="searchbar" class="" action="/books" accept-charset="UTF-8" method="get">
+        <input class="form-control mr-sm-2" name="search[term]" placeholder="Search">
+      </form>
+      <%= simple_form_for :search, url: books_path, method: "get" do |f| %>
+        <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)), prompt: "Category", label: false %>
+        <%= f.input :families, required: false, collection: current_user.families, prompt: "Family", label: false %>
+        <%= f.button :submit, "Filter", class: "btn-booker w-100"%>
+      <% end %>
+    </div>
   </div>
 </div>
 

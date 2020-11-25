@@ -1,11 +1,23 @@
-.accept {
-  height: 50px;
-  width: 50px;
-  background-color: green;
+.cancel-booking {
+  color:red;
+  font-size:30px;
 }
 
-.resevation-accepte {
-  background-color: white;
-  border: solid 1px grey;
-  margin: 20px 0px;
+.confirm-booking {
+  color:green;
+  font-size:30px;
+}
+
+.accepted {
+  position: absolute;
+  font-size: 1.5em;
+  right: 20px;
+  top: 20px;
+
+}
+
+.reservation-actions {
+  position: absolute;
+  right:20px;
+  bottom: 5px;
 }

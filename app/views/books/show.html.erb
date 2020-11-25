@@ -2,31 +2,14 @@
   <% if @book.reviews.empty? {size = "col-md-12"}%>
     <% else size = "col-md-9"%>
   <% end %>
-
   <div class="col-12 <%= size %> ">
-    <div class="title-add d-flex justify-content-between align-items-center">
-      <h1 class="flex-grow-1 py-3 pr-3 "><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
-      <div class="book-actions">
-        <ul class="list list-inline">
-          <% unless @book.users.include?(current_user) || @book.users.empty? %>
-            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Book this book</li>
-            <% else %>
-            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#ReservationModal">Block this book</li>
-          <% end %>
-          <% if @wishlist&.empty? || @wishlist.nil? %>
-            <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_wishlists_path(@book), method: :post %>+ WISHLIST</li>
-            <% else %>
-            <li type="button" class="list-inline-item btn-booker"><%= link_to "", wishlist_path(@wishlist[0]), method: :delete %>- WISHLIST</li>
-          <% end %>
-          <% if @book.users.include?(current_user) %>
-            <li type="button" class="list-inline-item btn-booker" data-toggle="modal" data-target="#EditModal">Edit Book</li>
-            <li type="button" class="list-inline-item btn-booker"><%= link_to "", book_path(@book.id), method: :delete %>Remove BOOK</li>
-          <% end %>
-          <% unless @book.users.include?(current_user)%>
-            <li type="button" class="list-inline-item btn-booker"><%= link_to "I own this Book", new_book_book_ownership_path(@book) %></li>
-          <% end %>
-        </ul>
-      </div>
+    <div class="title-add d-flex justify-content-between align-items-start py-3">
+      <h1 class="pr-3"><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
+      <% unless @book.users.include?(current_user) || @book.users.empty? %>
+        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal"> Book it</li>
+      <% else %>
+        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">Block it</li>
+      <% end %>
    </div>
     <div class="picture-and-info d-flex justify-content-between">
       <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
@@ -44,9 +27,23 @@
         </div>
       </div>
     </div>
+    <div class="book-actions d-flex justify-content-around">
+      <% if @wishlist&.empty? || @wishlist.nil? %>
+        <%= link_to "Wishlist", book_wishlists_path(@book), method: :post%>
+      <% else %>
+        <%= link_to "Remove from wishlist", wishlists_path(@wishlist), method: :delete%>
+      <% end %>
+      <% if @book.users.include?(current_user) %>
+        <%= link_to "Edit Book", "#", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
+        <%= link_to "Remove Book", book_path(@book), method: :delete %>
+      <% end %>
+      <% unless @book.users.include?(current_user)%>
+        <%= link_to "Add to my shelve", new_book_book_ownership_path(@book) %>
+      <% end %>
+    </div>
     <br>
-      <h3>You read this book? Give a review! </h3>
-      <%= render "reviews/form", book: @book, review: @review %>
+    <h3>You read this book? Give a review! </h3>
+    <%= render "reviews/form", book: @book, review: @review %>
   </div>
 
   <div class="col-12 col-md-3 reviews">

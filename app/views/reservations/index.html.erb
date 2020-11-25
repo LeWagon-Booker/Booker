@@ -1,52 +1,55 @@
 <div class="row">
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <h1 class="text-center">My reservations</h1>
 
     <% @my_reservations.each do |reservation| %>
       <div class="card-product">
         <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos">
-          <h3><strong><%= reservation.book_ownership.book.title %></strong></h3>
-          <p>Booked from <strong> <%= reservation.book_ownership.user.full_name %></strong></p>
-          <p>Asked by from
-              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
-              until:
-              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
-          <p><%= reservation.message %></p>
+          <h4 class="pr-5"><%= reservation.book_ownership.book.title %></h4>
           <% if reservation.confirmed? %>
-            <p style= "color: green">Booking confirmed!</p>
-          <% else %>
-            <p style= "color: red">Waiting for confirmation from the owner</p>
+            <i class="fas fa-check-circle font-awesome pb-1 accepted"></i>
           <% end %>
-          <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReservationModal#{reservation.id}", class:"m-2 text-warning" %>
-          <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(reservation.book_ownership, reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
+          <p>Asked to <strong><%= reservation.book_ownership.user.full_name %></strong></p>
+          <p>From
+              <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+              until the
+              <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
+          <p>"<%= reservation.message %>"</p>
+          <div class="reservation-actions">
+            <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReservationModal#{reservation.id}", class:"m-2 font-awesome" %>
+            <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(reservation.book_ownership, reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
-  <div class="col-12 col-md-6">
+  <div class="col-12 col-lg-6">
     <h1 class="text-center">Demands for my books</h1>
     <% @my_requests.each do |request| %>
       <div class="card-product">
         <img src="<%= cl_image_path request.book_ownership.book.cover.key %>" alt="" class="shadow rounded book-img">
         <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
-          <div class="info flex-grow-1 ">
-            <h3><strong><%= request.book_ownership.book.title %></strong></h3>
+          <div class="flex-grow-1 ">
+            <h4 class="pr-5"><%= request.book_ownership.book.title %></h4>
+            <% if request.confirmed? %>
+              <i class="fas fa-check-circle font-awesome pb-1 accepted"></i>
+            <% end %>
             <p>Asked by <strong> <%= request.user.full_name %></strong></p>
-            <p>Requested from
+            <p>From
               <strong><%= request.start_date.strftime('%d/%m/%Y') %></strong>
               until:
               <strong><%= request.end_date.strftime('%d/%m/%Y') %></strong></p>
-            <p><%= request.message %></p>
+            <p>"<%= request.message %>"</p>
+          </div>
+          <div class="reservation-actions">
             <% if request.confirmed? %>
-              <p style= "color: green">Booking confirmed!</p>
+              <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, reservations_toggle_confirmation_path(request), class:"m-2 font-awesome" %>
+            <% else %>
+              <%= link_to "<i class=\"fas fa-check\"></i>".html_safe, reservations_toggle_confirmation_path(request), class: "m-2 font-awesome" %>
+              <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(request.book_ownership, request), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
             <% end %>
           </div>
-            <% if request.confirmed? %>
-              <%= link_to "<i class=\"fas fa-circle confirm pr-2\"></i>".html_safe, reservations_toggle_confirmation_path(request) %>
-            <% else %>
-              <%= link_to "<i class=\"fas fa-times cancel pr-2\"></i>".html_safe, reservations_toggle_confirmation_path(request) %>
-            <% end %>
         </div>
       </div>
     <% end %>

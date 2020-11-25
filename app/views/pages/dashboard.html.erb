@@ -25,7 +25,9 @@
     <div class="dashboard-card">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Wishlist</h2>
-        <%= link_to "Add a new book", new_book_path, class: "btn-booker" %>
+        <%= link_to new_book_path, class: "btn-booker" do %>
+          <i class="fas fa-plus"></i>
+        <% end %>
       </div>
       <div class="cards p-1">
         <% @wishlist.each do |book| %>
@@ -50,7 +52,9 @@
   <% else %>
     <div class="family-headers d-flex justify-content-between align-items-center">
       <h2>Families</h2>
-      <%= link_to "Add a new family", "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" %>
+      <%= link_to "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" do %>
+        <i class="fas fa-plus"></i>
+      <% end %>
     </div>
     <% @families.each do |family| %>
       <% @family = family %>
@@ -76,6 +80,17 @@
     <% end %>
   <% end %>
 </div>
+<div class="dashboard-card">
+  <h2>My reservations</h2>
+</div>
+
+
+
+
+
+
+
+
 
 
 <%= render 'shared/family' %>
