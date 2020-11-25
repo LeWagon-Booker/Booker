@@ -28,26 +28,12 @@ import "bootstrap";
 // Internal imports, e.g:
 import { toggleDateInputs } from '../components/init_flatpickr';
 import { initSelect2 } from '../components/init_select2';
+import {reservationForm} from '../components/init_form_reservation';
 
 document.addEventListener('turbolinks:load', () => {
   toggleDateInputs();
   initSelect2();
-});
-
-
-
-
-
-const selectElement = document.querySelector('.name');
-
-selectElement.addEventListener('change', (event) => {
-  console.log(event.target.value);
-  document.querySelectorAll(".form-reservation-container").forEach((div)=> {
-    div.classList.add("hidden")
-  })
-  const id = event.target.value
-  const div = document.getElementById(id)
-  div.classList.remove("hidden")
+  reservationForm();
 });
 
 
