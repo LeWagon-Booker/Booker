@@ -24,3 +24,11 @@
   padding:50px 30px;
   min-width: 0px;
 }
+
+
+.index-banner {
+  background-size: cover;
+  background-position: top;
+  background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('/assets/index.jpg');
+  height:30vh;
+}

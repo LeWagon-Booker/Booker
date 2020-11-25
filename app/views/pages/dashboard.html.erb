@@ -3,11 +3,52 @@
 <% else %>
   <h1><%= @user.full_name %></h1>
 <% end %>
+
+
+
+
+<div class="dashboard-card">
+  <div class="family-headers d-flex justify-content-between align-items-center">
+    <h2>Families</h2>
+    <%= link_to "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-add" do %>
+      <i class="fas fa-plus"></i>
+    <% end %>
+  </div>
+  <div class="dashboard-grid">
+    <% @families.each do |family| %>
+      <div class="family-card">
+        <div class="img-header" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(<%= cl_image_path family.picture.key %>)">
+          <h4><%= family.name %></h4>
+        </div>
+        <div class="members">
+          <% family.users.includes(avatar_attachment: :blob).each do |member| %>
+            <div class="member">
+              <%= cl_image_tag member.avatar.key, class: "avatar-small" %>
+              <p><%= member.full_name%></p>
+              <p><%= member.book_ownerships.count %> books</p>
+            </div>
+          <% end %>
+        </div>
+        <%= link_to "Add a member!", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"btn-booker add-member" %>
+        <div class="family-action">
+          <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditFamily#{family.id}", class:"m-2 font-awesome" %>
+          <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, family_path(family), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-12 col-md-6">
     <div class="dashboard-card">
-      <h2>Shelve</h2>
-      <div class="cards p-1">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Shelve</h2>
+        <%= link_to new_book_path, class: "btn-add" do %>
+          <i class="fas fa-plus"></i>
+        <% end %>
+      </div>
+      <div class="dashboard-grid p-1">
         <% @books.each do |book| %>
 
           <%= link_to book_path(book) do %>
@@ -25,11 +66,11 @@
     <div class="dashboard-card">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Wishlist</h2>
-        <%= link_to new_book_path, class: "btn-booker" do %>
+        <%= link_to new_book_path, class: "btn-add" do %>
           <i class="fas fa-plus"></i>
         <% end %>
       </div>
-      <div class="cards p-1">
+      <div class="dashboard-grid">
         <% @wishlist.each do |book| %>
 
           <%= link_to book_path(book) do %>
@@ -43,53 +84,66 @@
       </div>
     </div>
   </div>
-</div>
-<div class="dashboard-card">
-  <% if @families.empty? %>
-    <h2>You have no families for the moment!</h2>
-    <br>
-    <%= link_to "Create a new family!", "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" %>
-  <% else %>
-    <div class="family-headers d-flex justify-content-between align-items-center">
-      <h2>Families</h2>
-      <%= link_to "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-booker" do %>
-        <i class="fas fa-plus"></i>
-      <% end %>
-    </div>
-    <% @families.each do |family| %>
-      <% @family = family %>
-      <div class="card-product">
-        <%= cl_image_tag family.picture.key, class:"card-img" %>
-        <div class="card-product-infos">
-          <h1><em><%= family.name %></em></h1>
-          <br>
-          <br>
-          <div class="members-avatars d-inline-block mb-3">
-          <% family.users.includes(avatar_attachment: :blob).each do |member| %>
-          <%= cl_image_tag member.avatar.key, class: "avatar" %>
-          <a data-confirm="Are you sure?" class="text-danger mr-2" rel="nofollow" data-method="delete" href="/adhesions/<%= "#{family.id}_#{member.id}" %>">-   </a>
-          <% end %>
-          <%= link_to "<i class=\"fas fa-user-plus\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"m-2 text-success" %>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
+      <h2>My reservations</h2>
+
+      <% @my_reservations.each do |reservation| %>
+        <div class="card-product">
+          <img src="<%= cl_image_path reservation.book_ownership.book.cover.key %>" alt="" class="reservation-book-img">
+          <div class="card-product-infos">
+            <h6 class="pr-5"><%= reservation.book_ownership.book.title %></h6>
+            <% if reservation.confirmed? %>
+              <i class="fas fa-check-circle font-awesome pb-1 accepted"></i>
+            <% end %>
+            <p>Asked to <strong><%= reservation.book_ownership.user.full_name %></strong></p>
+            <p>From
+                <strong><%= reservation.start_date.strftime('%d/%m/%Y') %></strong>
+                until the
+                <strong><%= reservation.end_date.strftime('%d/%m/%Y') %></strong></p>
+            <p>"<%= reservation.message %>"</p>
+            <div class="reservation-actions">
+              <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReservationModal#{reservation.id}", class:"m-2 font-awesome" %>
+              <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(reservation.book_ownership, reservation), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+            </div>
           </div>
         </div>
-        <div class="horrible">
-          <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditFamily#{family.id}", class:"m-2 text-warning" %>
-          <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, family_path(family), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 text-danger" %>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
+      <h2>Shelve requests</h2>
+          <% @my_requests.each do |request| %>
+            <div class="card-product">
+              <img src="<%= cl_image_path request.book_ownership.book.cover.key %>" alt="" class="reservation-book-img">
+              <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
+                <div class="flex-grow-1 ">
+                  <h6 class="pr-5"><%= request.book_ownership.book.title %></h6>
+                  <% if request.confirmed? %>
+                    <i class="fas fa-check-circle font-awesome pb-1 accepted"></i>
+                  <% end %>
+                  <p>Asked by <strong> <%= request.user.full_name %></strong></p>
+                  <p>From
+                    <strong><%= request.start_date.strftime('%d/%m/%Y') %></strong>
+                    until:
+                    <strong><%= request.end_date.strftime('%d/%m/%Y') %></strong></p>
+                  <p>"<%= request.message %>"</p>
+                </div>
+                <div class="reservation-actions">
+                  <% if request.confirmed? %>
+                    <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, reservations_toggle_confirmation_path(request), class:"m-2 font-awesome" %>
+                  <% else %>
+                    <%= link_to "<i class=\"fas fa-check\"></i>".html_safe, reservations_toggle_confirmation_path(request), class: "m-2 font-awesome" %>
+                    <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(request.book_ownership, request), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+    </div>
+  </div>
 </div>
-<div class="dashboard-card">
-  <h2>My reservations</h2>
-</div>
-
-
-
-
-
-
-
 
 
 
