@@ -4,9 +4,9 @@
       <input class="form-control mr-sm-2" name="search[term]" placeholder="Search">
     </form>
     <%= simple_form_for :search, url: books_path, method: "get" do |f| %>
-      <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)), prompt: "Category", label: false %>
-      <%= f.input :families, required: false, collection: current_user.families, prompt: "Family", label: false %>
-      <%= f.input :user, required: false, collection: User.find(current_user.families.flat_map(&:users).map(&:id)), label_method: :full_name, prompt: "Users", label: false %>
+      <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)), prompt: "Category", label: false, input_html: { class: 'select2' } %>
+      <%= f.input :families, required: false, collection: current_user.families, prompt: "Family", label: false, input_html: { class: 'select2' } %>
+      <%= f.input :user, required: false, collection: User.find(current_user.families.flat_map(&:users).map(&:id)), label_method: :full_name, prompt: "Users", label: false, input_html: { class: 'select2' } %>
       <%= f.button :submit, "Filter", class: "btn-booker w-100"%>
     <% end %>
   </div>
