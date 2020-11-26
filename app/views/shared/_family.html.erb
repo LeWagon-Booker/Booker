@@ -22,7 +22,7 @@
 
 <!-- Edit family modal -->
 <% @families.each do |family| %>
-  <% if family.familyadmin_id == current_user.id %>
+  <% if (family.familyadmin_id == current_user.id || current_user.siteadmin?) %>
     <div class="modal fade" id="EditFamily<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -47,7 +47,7 @@
 
 <!-- add_member to family modal -->
 <% @families.each do |family| %>
-  <% if family.familyadmin_id == current_user.id %>
+  <% if (family.familyadmin_id == current_user.id || current_user.siteadmin?) %>
     <div class="modal fade" id="AddMember<%= family.id %>" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
