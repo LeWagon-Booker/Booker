@@ -7,7 +7,7 @@
 
 
 
-<div class="dashboard-card">
+<div class="dashboard-card" id="family">
   <div class="family-headers d-flex justify-content-between align-items-center">
     <h2>Families</h2>
     <%= link_to "#", "data-toggle"=>"modal",  "data-target"=>"#CreateFamily", class:"btn-add" do %>
@@ -17,7 +17,7 @@
   <div class="dashboard-grid">
     <% @families.each do |family| %>
       <div class="family-card">
-        <div class="img-header" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(<%= cl_image_path family.picture.key %>)">
+        <div class="img-header" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(<%= cl_image_path family.picture.key %>)">
           <h4><%= family.name %></h4>
         </div>
         <div class="members">
@@ -40,50 +40,6 @@
 </div>
 
 <div class="row">
-  <div class="col-12 col-md-6">
-    <div class="dashboard-card">
-      <div class="d-flex justify-content-between align-items-center">
-        <h2>Shelve</h2>
-        <%= link_to new_book_path, class: "btn-add" do %>
-          <i class="fas fa-plus"></i>
-        <% end %>
-      </div>
-      <div class="dashboard-grid p-1">
-        <% @books.each do |book| %>
-
-          <%= link_to book_path(book) do %>
-            <div class="card-category small text-center dashboard"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
-              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
-                <h5 class="book-info"><%= book.title %></h5>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="dashboard-card">
-      <div class="d-flex justify-content-between align-items-center">
-        <h2>Wishlist</h2>
-        <%= link_to new_book_path, class: "btn-add" do %>
-          <i class="fas fa-plus"></i>
-        <% end %>
-      </div>
-      <div class="dashboard-grid">
-        <% @wishlist.each do |book| %>
-
-          <%= link_to book_path(book) do %>
-            <div class="card-category small text-center"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
-              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
-                <h5 class="book-info"><%= book.title %></h5>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-  </div>
   <div class="col-12 col-lg-6">
     <div class="dashboard-card">
       <h2>My reservations</h2>
@@ -141,6 +97,55 @@
               </div>
             </div>
           <% end %>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Shelve</h2>
+        <%= link_to new_book_path, class: "btn-add" do %>
+          <i class="fas fa-plus"></i>
+        <% end %>
+      </div>
+      <div class="dashboard-grid">
+        <% @books.each do |book| %>
+
+          <%= link_to book_path(book) do %>
+            <div class="card-category small text-center dashboard"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
+              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
+                <h5 class="book-info"><%= book.title %></h5>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Wishlist</h2>
+        <%= link_to new_book_path, class: "btn-add" do %>
+          <i class="fas fa-plus"></i>
+        <% end %>
+      </div>
+      <div class="dashboard-grid">
+        <% @wishlist.each do |book| %>
+
+          <%= link_to book_path(book) do %>
+            <div class="card-category small text-center"  style="background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= cl_image_path book.cover.key %>)">
+              <div class="content p-2 py-4 d-flex justify-content-between flex-column h-80">
+                <h5 class="book-info"><%= book.title %></h5>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="dashboard-card">
+      <h2>Rented books</h2>
     </div>
   </div>
 </div>
