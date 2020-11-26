@@ -1,7 +1,8 @@
 class ReservationsController < ApplicationController
   def index
     @my_reservations = Reservation.where(user: current_user)
-    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships)
+    @my_rented = Reservation.where(book_ownership: current_user.book_ownerships, rented: true)
+    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships, rented: false)
   end
 
   def create
@@ -36,12 +37,14 @@ class ReservationsController < ApplicationController
     redirect_to dashboard_path(current_user)
   end
 
-  def rent_out!
-    Reservation.find(params[:id]).rent_out!
+  def rent_out
+    Reservation.find(params[:format]).rent_out!
+    redirect_to dashboard_path(current_user)
   end
 
-  def rent_in!
-    Reservation.find(params[:id]).rent_in!
+  def rent_in
+    Reservation.find(params[:format]).rent_in!
+    redirect_to dashboard_path(current_user)
   end
 
   private

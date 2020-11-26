@@ -72,33 +72,9 @@
   <div class="col-12 col-lg-6">
     <div class="dashboard-card">
       <h2>Shelve requests</h2>
-          <% @my_requests.each do |request| %>
-            <div class="card-product">
-              <img src="<%= cl_image_path request.book_ownership.book.cover.key %>" alt="" class="reservation-book-img">
-              <div class="card-product-infos d-flex justify-content-between align-items-center flex-grow-1">
-                <div class="flex-grow-1 ">
-                  <h6 class="pr-5"><%= request.book_ownership.book.title %></h6>
-                  <% if request.confirmed? %>
-                    <i class="fas fa-check-circle font-awesome pb-1 accepted"></i>
-                  <% end %>
-                  <p>Asked by <strong> <%= request.user.full_name %></strong></p>
-                  <p>From
-                    <strong><%= request.start_date.strftime('%d/%m/%Y') %></strong>
-                    until:
-                    <strong><%= request.end_date.strftime('%d/%m/%Y') %></strong></p>
-                  <p>"<%= request.message %>"</p>
-                </div>
-                <div class="reservation-actions">
-                  <% if request.confirmed? %>
-                    <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, reservations_toggle_confirmation_path(request), class:"m-2 font-awesome" %>
-                  <% else %>
-                    <%= link_to "<i class=\"fas fa-check\"></i>".html_safe, reservations_toggle_confirmation_path(request), class: "m-2 font-awesome" %>
-                    <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, book_ownership_reservation_path(request.book_ownership, request), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-          <% end %>
+      <% @my_requests.each do |request| %>
+        <%= render 'reservation', request: request %>
+      <% end %>
     </div>
   </div>
   <div class="col-12 col-lg-6">
@@ -145,14 +121,23 @@
       </div>
     </div>
   </div>
-  <div class="col-12">
+  <div class="col-12 col-lg-6">
     <div class="dashboard-card">
       <h2>Rented books</h2>
+        <% @my_rented.each do |request| %>
+          <%= render 'reservation', request: request %>
+        <% end %>
     </div>
   </div>
+  <div class="col-12 col-lg-6">
+      <div class="dashboard-card">
+        <h2>Previously Rented books</h2>
+          <% @my_previously_rented.each do |request| %>
+            <%= render 'reservation', request: request %>
+          <% end %>
+      </div>
+    </div>
+  </div>
+
 </div>
-
-
-
 <%= render 'shared/family' %>
-
