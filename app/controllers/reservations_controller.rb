@@ -36,6 +36,14 @@ class ReservationsController < ApplicationController
     redirect_to dashboard_path(current_user)
   end
 
+  def rent_out
+    Reservation.find(params[:id]).rent_out!
+  end
+
+  def rent_in
+    Reservation.find(params[:id]).rent_in!
+  end
+
   private
 
   def reservation_params
