@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root to: 'pages#home'
-  get   "/:user_id/dashboard",                  to: "pages#dashboard", as: :dashboard
+
+  get   "/:user_id/dashboard",                  to: "pages#dashboard",                as: :dashboard
   get   "reservations/toggle_confirmation",     to: "reservations#toggle_confirmation"
-  get   "reservations/rent_out",              to: "reservations#rent_out"
-  get   "reservations/rent_in",               to: "reservations#rent_in"
+  get   "reservations/rent_out",                to: "reservations#rent_out"
+  get   "reservations/rent_in",                 to: "reservations#rent_in"
+  get   "reservations/rent_reset",              to: "reservations#rent_reset"
 
   resources :books do
     resources :reviews, only:[:create, :update, :new, :edit]

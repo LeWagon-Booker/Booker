@@ -11,15 +11,22 @@ class Reservation < ApplicationRecord
   end
 
   def rent_out!
-    self.rented = true
-    self.rentedin = nil
-    self.rentedout = DateTime.current
+    self.rented     = true
+    self.rentedin   = nil
+    self.rentedout  = DateTime.current
     save!
   end
 
   def rent_in!
-    self.rented = false
-    self.rentedin = DateTime.current
+    self.rented     = false
+    self.rentedin   = DateTime.current
+    save!
+  end
+
+  def rent_reset!
+    self.rented     = false
+    self.rentedin   = nil
+    self.rentedout  = nil
     save!
   end
 

@@ -18,14 +18,17 @@ flatpickr(startDateInput, {
   dateFormat: "d/m/Y",
 });
 
-console.log('im in the file')
-
 startDateInput.addEventListener("change", (e) => {
+
   if (startDateInput != "") {
     endDateInput.disabled = false
   }
+
+  let dateParts = e.target.value.split("/");
+  let dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
   flatpickr(endDateInput, {
-    minDate: e.target.value,
+    minDate: dateObject,
     disable: unavailableDates,
     dateFormat: "d/m/Y"
     });
