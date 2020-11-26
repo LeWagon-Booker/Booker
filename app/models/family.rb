@@ -3,6 +3,7 @@ class Family < ApplicationRecord
   has_many :adhesions, dependent: :destroy
   has_many :users, through: :adhesions
   has_many :books, through: :users
+  has_one  :familyadmin
 
   after_save :upload_default_picture
 

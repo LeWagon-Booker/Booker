@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_105907) do
+ActiveRecord::Schema.define(version: 2020_11_26_083330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,6 +80,8 @@ ActiveRecord::Schema.define(version: 2020_11_19_105907) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.bigint "familyadmin_id"
+    t.index ["familyadmin_id"], name: "index_families_on_familyadmin_id"
   end
 
   create_table "pg_search_documents", force: :cascade do |t|
@@ -126,6 +128,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_105907) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
+    t.boolean "siteadmin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -146,6 +149,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_105907) do
   add_foreign_key "book_ownerships", "users"
   add_foreign_key "books", "categories"
   add_foreign_key "books", "users"
+  add_foreign_key "families", "users", column: "familyadmin_id"
   add_foreign_key "reservations", "book_ownerships"
   add_foreign_key "reservations", "users"
   add_foreign_key "reviews", "books"

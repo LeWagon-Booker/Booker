@@ -1,84 +1,84 @@
-<div class="container">
-  <div class="row">
-    <% if @book.reviews.empty? {size = "col-md-12"}%>
-      <% else size = "col-md-9"%>
-    <% end %>
-    <div class="col-12 <%= size %> ">
-      <div class="title-add d-flex justify-content-between align-items-start py-3">
-        <h1 class="pr-3"><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
-        <% unless @book.users.include?(current_user) || @book.users.empty? %>
-          <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal"> Book it</li>
-        <% else %>
-          <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">Block it</li>
-        <% end %>
-     </div>
-      <div class="picture-and-info d-flex justify-content-between">
-        <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
-        <div class="info flex-grow-1 px-4">
-          <h2>by <%= @book.author %></h2>
-          <p class="text-justify"><%= @book.description %></p>
-          <div class="owners-avatar d-flex align-items-center">
-            <p class ="mr-3">Owners:</p>
-            <div class="d-inline-block mb-3">
-              <% @book.users.each do |member| %>
-                <% member.avatar.attached? == true ? tag = member.avatar.key : tag = 'defaultavatar' %>
-                <%= cl_image_tag tag, class: "avatar-small" %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="book-actions d-flex justify-content-around">
-        <% if @wishlist&.empty? || @wishlist.nil? %>
-          <%= link_to "Wishlist", book_wishlists_path(@book), method: :post%>
-        <% else %>
-          <%= link_to "Remove from wishlist", wishlists_path(@wishlist), method: :delete%>
-        <% end %>
-        <% if @book.users.include?(current_user) %>
-          <%= link_to "Edit Book", "#", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
-          <%= link_to "Remove Book", book_path(@book), method: :delete %>
-        <% end %>
-        <% unless @book.users.include?(current_user)%>
-          <%= link_to "Add to my shelve", new_book_book_ownership_path(@book) %>
-        <% end %>
-      </div>
-      <br>
-      <h3>You read this book? Give a review! </h3>
-      <%= render "reviews/form", book: @book, review: @review %>
-    </div>
-
-    <div class="col-12 col-md-3 reviews">
-      <% unless @book.reviews.empty?%>
-        <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
-        <% @book.reviews.each do |review| %>
-        <div class="review">
-          <div class="avatar-rating d-flex justify-content-between align-items-center">
-            <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
-            <%= cl_image_tag tag, class: "avatar"%>
-                <% review.rating.times do %>
-                  <%= "<i style=\"color: #706897 \" class=\"fas fa-star\"></i>".html_safe %>
-                <% end %>
-                <% (5 - review.rating).times do %>
-                  <%= "<i style=\"color: #706897 \" class=\"far fa-star\"></i>".html_safe %>
-                <% end %>
-              by <strong><%= review.user.first_name %></strong></p>
-          </div>
-          <div class="d-flex justify-content-between">
-          <p class="flex-grow-1"><%= review.content %></p>
-            <% if review.user == current_user %>
-              <p class="text-center">
-                <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
-                <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 font-awesome " %>
-              </p>
+<div class="row">
+  <% if @book.reviews.empty? {size = "col-md-12"}%>
+    <% else size = "col-md-9"%>
+  <% end %>
+  <div class="col-12 <%= size %> ">
+    <div class="title-add d-flex justify-content-between align-items-start py-3">
+      <h1 class="pr-3"><%= @book.title %> <span class="year">(<%= @book.year %>)</span></h1>
+      <% unless @book.users.include?(current_user) || @book.users.empty? %>
+        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal"> Book it</li>
+      <% else %>
+        <li type="button" class="btn-booker" data-toggle="modal" data-target="#ReservationModal">Block it</li>
+      <% end %>
+   </div>
+    <div class="picture-and-info d-flex justify-content-between">
+      <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
+      <div class="info flex-grow-1 px-4">
+        <h2>by <%= @book.author %></h2>
+        <p class="text-justify"><%= @book.description %></p>
+        <div class="owners-avatar d-flex align-items-center">
+          <p class ="mr-3">Owners:</p>
+          <div class="d-inline-block mb-3">
+            <% @book.users.each do |member| %>
+              <% member.avatar.attached? == true ? tag = member.avatar.key : tag = 'defaultavatar' %>
+              <%= cl_image_tag tag, class: "avatar-small" %>
             <% end %>
           </div>
         </div>
-        <% end %>
+      </div>
+    </div>
+    <div class="book-actions d-flex justify-content-around">
+      <% if @wishlist&.empty? || @wishlist.nil? %>
+        <%= link_to "Wishlist", book_wishlists_path(@book), method: :post%>
+      <% else %>
+        <%= link_to "Remove from wishlist", wishlists_path(@wishlist), method: :delete%>
+      <% end %>
+      <% if (@book.users.include?(current_user)  || current_user.siteadmin?) %>
+        <%= link_to "Edit Book", "#", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
+        <%= link_to "Remove Book", book_path(@book), method: :delete %>
+      <% end %>
+      <% unless @book.users.include?(current_user)%>
+        <%= link_to "Add to my shelve", new_book_book_ownership_path(@book) %>
       <% end %>
     </div>
+    <br>
+    <h3>You read this book? Give a review! </h3>
+    <%= render "reviews/form", book: @book, review: @review %>
   </div>
 
-  <!-- Edit Modal -->
+  <div class="col-12 col-md-3 reviews">
+    <% unless @book.reviews.empty?%>
+      <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
+      <% @book.reviews.each do |review| %>
+      <div class="review">
+        <div class="avatar-rating d-flex justify-content-between align-items-center">
+          <% tag = review.user.avatar.key if review.user.avatar.attached? == true %>
+          <%= cl_image_tag tag, class: "avatar"%>
+              <% review.rating.times do %>
+                <%= "<i style=\"color: #706897 \" class=\"fas fa-star\"></i>".html_safe %>
+              <% end %>
+              <% (5 - review.rating).times do %>
+                <%= "<i style=\"color: #706897 \" class=\"far fa-star\"></i>".html_safe %>
+              <% end %>
+            by <strong><%= review.user.first_name %></strong></p>
+        </div>
+        <div class="d-flex justify-content-between">
+        <p class="flex-grow-1"><%= review.content %></p>
+          <% if (review.user == current_user || current_user.siteadmin?) %>
+            <p class="text-center">
+              <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+              <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 font-awesome " %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<% if (@book.users.include?(current_user)  || current_user.siteadmin?) %>
   <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -94,52 +94,54 @@
       </div>
     </div>
   </div>
+<% end %>
 
-  <!-- Reservation Modal -->
-  <% unless @book.users.empty? %>
-    <div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">
+<!-- Reservation Modal -->
+<% unless @book.users.empty? %>
+  <div class="modal fade" id="ReservationModal" tabindex="-1" role="dialog" aria-labelledby="ReservationModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ReservationModalLongTitle">Reservations</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label>Choose who you want to rent to:
+            <select class="name" name="name">
+              <option value="">Select One …</option>
+              <% @book_ownerships.each do |bo| %>
+              <option value="user-<%= bo.user_id %>"><%= bo.user.full_name %></option>
+              <% end %>
+            </select>
+          </label>
+          <% @book_ownerships.each do |bo| %>
+            <div id='user-<%= bo.user_id %>' class="hidden form-reservation-container">
+                <%= render "reservations/form", book_ownership: bo, reservation: @reservation %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- Edit Review Modal -->
+<% @book.reviews.select{|review| review.user == current_user}.each do |review| %>
+  <% if (review.user == current_user || current_user.siteadmin?) %>
+    <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="ReservationModalLongTitle">Reservations</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
           <div class="modal-body">
-            <label>Choose who you want to rent to:
-              <select class="name" name="name">
-                <option value="">Select One …</option>
-                <% @book_ownerships.each do |bo| %>
-                <option value="user-<%= bo.user_id %>"><%= bo.user.full_name %></option>
-                <% end %>
-              </select>
-            </label>
-            <% @book_ownerships.each do |bo| %>
-              <div id='user-<%= bo.user_id %>' class="hidden form-reservation-container">
-                  <%= render "reservations/form", book_ownership: bo, reservation: @reservation %>
-              </div>
-            <% end %>
+            <%= render "reviews/form", book: @book, review: review %>
           </div>
         </div>
       </div>
     </div>
   <% end %>
-</div>
-
-<!-- Edit Review Modal -->
-<% @book.reviews.select{|review| review.user == current_user}.each do |review| %>
-  <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-          <%= render "reviews/form", book: @book, review: review %>
-        </div>
-      </div>
-    </div>
-  </div>
 <% end %>
