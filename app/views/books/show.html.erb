@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <% if @book.reviews.empty? {size = "col-md-12"}%>
-      <% else size = "col-md-9"%>
+    <% if @book.reviews.empty? {size = "col-lg-12"}%>
+      <% else size = "col-lg-9"%>
     <% end %>
     <div class="col-12 <%= size %> ">
       <div class="title-add d-flex justify-content-between align-items-start py-3">
@@ -13,8 +13,8 @@
         <% end %>
      </div>
       <div class="picture-and-info d-flex justify-content-between">
-        <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show shadow rounded">
-        <div class="info flex-grow-1 px-4">
+        <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show" class>
+        <div class="info px-4">
           <h2>by <%= @book.author %></h2>
           <p class="text-justify"><%= @book.description %></p>
           <div class="owners-avatar d-flex align-items-center">
@@ -47,7 +47,7 @@
       <%= render "reviews/form", book: @book, review: @review %>
     </div>
 
-    <div class="col-12 col-md-3 reviews">
+    <div class="col-12 col-lg-3 reviews">
       <% unless @book.reviews.empty?%>
         <h3 class = "py-3 pr-3">Reviews <em class="avg-rating"><%= @avg_rating %>/5</em></h3>
         <% @book.reviews.each do |review| %>
