@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     @families = Adhesion.joins(:family).where(sql_query, query: @user.id).map(&:family)
     @my_reservations = Reservation.where(user: current_user)
     @my_rented = Reservation.where(book_ownership: current_user.book_ownerships, rented: true).where(rentedin: nil)
-    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships, rented: false)
+    @my_requests = Reservation.where(book_ownership: current_user.book_ownerships, rented: false, rentedin: nil)
     @my_previously_rented = Reservation.where(book_ownership: current_user.book_ownerships).where.not(rentedout: nil).where.not(rentedin: nil)
   end
 end
