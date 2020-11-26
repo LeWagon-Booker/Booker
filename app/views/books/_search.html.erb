@@ -1,7 +1,7 @@
 <h3>Go for a quick access</h3>
   <div class="book-search">
     <form id="searchbar" class="" action="/books" accept-charset="UTF-8" method="get">
-      <input class="form-control mr-sm-2" name="search[term]" placeholder="Search">
+      <input class="form-control" name="search[term]" placeholder="Search">
     </form>
     <%= simple_form_for :search, url: books_path, method: "get" do |f| %>
       <%= f.input :category, required: false, collection: Category.find(current_user.families.flat_map(&:books).map(&:category_id)), prompt: "Category", label: false, input_html: { class: 'select2' } %>

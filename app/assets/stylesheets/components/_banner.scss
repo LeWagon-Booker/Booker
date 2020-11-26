@@ -29,6 +29,15 @@
 .index-banner {
   background-size: cover;
   background-position: top;
-  background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://res.cloudinary.com/bestycame/image/upload/v1606313042/bookerindex.jpg');
-  height:30vh;
+  background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)), url('https://res.cloudinary.com/bestycame/image/upload/v1606313042/bookerindex.jpg');
+  height:320px;
+  color: white;
+  display:flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 50px;
+}
+.index-banner #index-title {
+  color: white;
 }
