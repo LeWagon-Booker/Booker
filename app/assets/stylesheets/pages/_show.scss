@@ -1,11 +1,16 @@
 .covers-show {
-  height: 400px;
-  width: 250px;
-  object-fit:cover;
+  height: 400px !important;
+  width: 250px !important;
+  background-size: cover;
+  border-radius: 4px;
+  flex-grow:0;
 }
 
 .info {
-  color:rgb(60,60,60)
+  color:rgb(60,60,60);
+  width: 600px;
+  flex-shrink: 1;
+  padding: 0px 20px;
 }
 
 .year {
@@ -22,3 +27,4 @@
   padding: 10px;
   opacity: 0.8;
 }
+
