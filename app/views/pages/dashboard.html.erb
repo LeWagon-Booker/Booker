@@ -4,9 +4,6 @@
   <h1><%= @user.full_name %></h1>
 <% end %>
 
-
-
-
 <div class="dashboard-card">
   <div class="family-headers d-flex justify-content-between align-items-center">
     <h2>Families</h2>
@@ -29,10 +26,14 @@
             </div>
           <% end %>
         </div>
-        <%= link_to "Add a member!", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"btn-booker add-member" %>
+          <% if family.familyadmin_id == current_user.id %>
+            <%= link_to "Add a member!", "#", "data-toggle"=>"modal",  "data-target"=>"#AddMember#{family.id}", class:"btn-booker add-member" %>
+          <% end %>
         <div class="family-action">
-          <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditFamily#{family.id}", class:"m-2 font-awesome" %>
-          <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, family_path(family), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+          <% if family.familyadmin_id == current_user.id %>
+            <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditFamily#{family.id}", class:"m-2 font-awesome" %>
+            <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, family_path(family), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
+          <% end %>
         </div>
       </div>
     <% end %>

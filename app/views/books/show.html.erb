@@ -33,7 +33,7 @@
       <% else %>
         <%= link_to "Remove from wishlist", wishlists_path(@wishlist), method: :delete%>
       <% end %>
-      <% if @book.users.include?(current_user) %>
+      <% if (@book.users.include?(current_user)  || current_user.siteadmin?) %>
         <%= link_to "Edit Book", "#", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
         <%= link_to "Remove Book", book_path(@book), method: :delete %>
       <% end %>
@@ -64,7 +64,7 @@
         </div>
         <div class="d-flex justify-content-between">
         <p class="flex-grow-1"><%= review.content %></p>
-          <% if review.user == current_user %>
+          <% if (review.user == current_user || current_user.siteadmin?) %>
             <p class="text-center">
               <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>
               <%= link_to "<i class=\"far fa-edit\"></i>".html_safe, "#", "data-toggle"=>"modal",  "data-target"=>"#EditReviewModal#{review.id}", class:"m-2 font-awesome " %>
@@ -78,21 +78,23 @@
 </div>
 
 <!-- Edit Modal -->
-<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= render 'form', book: @book %>
+<% if (@book.users.include?(current_user)  || current_user.siteadmin?) %>
+  <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render 'form', book: @book %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <!-- Reservation Modal -->
 <% unless @book.users.empty? %>
@@ -127,17 +129,19 @@
 
 <!-- Edit Review Modal -->
 <% @book.reviews.select{|review| review.user == current_user}.each do |review| %>
-  <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        </div>
-        <div class="modal-body">
-          <%= render "reviews/form", book: @book, review: review %>
+  <% if (review.user == current_user || current_user.siteadmin?) %>
+    <div class="modal fade" id="EditReviewModal<%= review.id %>" tabindex="-1" role="dialog" aria-labelledby="EditReviewModalTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="EditModalLongTitle">Edit this Book!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            <%= render "reviews/form", book: @book, review: review %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

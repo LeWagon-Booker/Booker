@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
   after_save :upload_default_avatar
+  has_many :familyadmin
 
   def full_name
     "#{first_name} #{last_name}"
