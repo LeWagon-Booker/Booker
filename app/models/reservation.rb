@@ -4,10 +4,24 @@ class Reservation < ApplicationRecord
 
   validates :start_date, :end_date, presence: true, availability: true
   validate :end_date_after_start_date
+  validate :rentedin_after_rentedout
 
   def toggle_confirmation
     confirmed? ? self.confirmed = false : self.confirmed = true
     save!(validate: false)
+  end
+
+  def rent_out!
+    self.rented = true
+    self.rentedin = nil
+    self.rentedout = DateTime.current
+    save!
+  end
+
+  def rent_in!
+    self.rented = false
+    self.rentedin = DateTime.current
+    save!
   end
 
   private
@@ -17,6 +31,14 @@ class Reservation < ApplicationRecord
 
     if end_date < start_date
       errors.add(:end_date, "must be after the start date")
+    end
+  end
+
+  def rentedin_after_rentedout
+    return if rentedout.blank? || rentedin.blank?
+
+    if rentedin < rentedout
+      errors.add(:rentedin, "must be after the rented out date")
     end
   end
 end
