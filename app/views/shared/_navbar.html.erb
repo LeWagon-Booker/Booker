@@ -1,4 +1,4 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon" id="navbar">
   <%= link_to books_path, class: "navbar-brand" do %>
     <%= cl_image_tag 'Booker_Logo' %>
   <% end %>
@@ -19,11 +19,8 @@
         <div class="nav-item dropdown">
           <%= cl_image_tag current_user.avatar.key, class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "My reservations", reservations_path, class: "dropdown-item" %>
-            <%= link_to "My wishlist", wishlists_path, class: "dropdown-item" %>
             <%= link_to "Edit my profile", edit_user_registration_path, class: "dropdown-item" %>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-
           </div>
         </div>
       <% else %>
