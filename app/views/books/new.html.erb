@@ -1,16 +1,18 @@
-<h1>Let's add a new book!</h1>
-<div class="row py-3">
-  <div class="col-12 col-md-8 px-5 br-2">
-    <h2>Manual input</h2>
-    <%= render 'form', book: @book %>
-  </div>
-  <div class="col-12 col-md-3">
-    <h2>Fast ISBN input</h2>
-    <%= simple_form_for @book, namespace: 'isbn_book' do |f| %>
-      <%= f.input :ISBN , label: "Look at the back of your book you will find a 9 digits number"%>
-      <%= f.association :category, input_html: { class: 'select2' } %>
-      <%= f.input :wishlist, :as => :boolean, input_html: {checked: false} %>
-      <%= f.button :submit, class: "btn-booker" %>
-    <% end %>
+<div class="container">
+  <h1>Let's add a new book!</h1>
+  <div class="row py-3">
+    <div class="col-12 col-md-8 px-5 br-2">
+      <h2>Manual input</h2>
+      <%= render 'form', book: @book %>
+    </div>
+    <div class="col-12 col-md-3">
+      <h2>Fast ISBN input</h2>
+      <%= simple_form_for @book, namespace: 'isbn_book' do |f| %>
+        <%= f.input :ISBN , label: "Look at the back of your book you will find a 9 digits number"%>
+        <%= f.association :category, input_html: { class: 'select2' } %>
+        <%= f.input :wishlist, :as => :boolean, input_html: {checked: false} %>
+        <%= f.button :submit, class: "btn-booker" %>
+      <% end %>
+    </div>
   </div>
 </div>

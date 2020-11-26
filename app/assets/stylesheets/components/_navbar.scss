@@ -1,6 +1,7 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: #f4f4f2;
+  background: $booker-gray;
+  z-index: 10;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -14,4 +15,15 @@
 
 .navbar {
   padding: 0.5rem 2rem;
+}
+
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .container {
+  padding-top: 60px;
 }
