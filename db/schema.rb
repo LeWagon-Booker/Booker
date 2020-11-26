@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_26_083330) do
+ActiveRecord::Schema.define(version: 2020_11_26_131120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,9 @@ ActiveRecord::Schema.define(version: 2020_11_26_083330) do
     t.date "end_date"
     t.text "message"
     t.bigint "book_ownership_id"
+    t.boolean "rented", default: false
+    t.datetime "rentedout"
+    t.datetime "rentedin"
     t.index ["book_ownership_id"], name: "index_reservations_on_book_ownership_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
