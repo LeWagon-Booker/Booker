@@ -2,11 +2,14 @@
   <div class="container">
     <%= image_tag("logo1.png", class: "logo") %>
     <br>
-    <h1><strong>INTRODUCING BOOKER</strong></h1>
+    <h1 class="mt-0.5"><strong>Spend Less, Read More</strong></h1>
     <br>
     <br>
-    <p>have a view in all your friends library at once!</p>
     <br>
-    <%= link_to "", dashboard_path(current_user), class: "far fa-arrow-alt-circle-down", id: "go" %>
+    <% if current_user %>
+      <%= link_to "", dashboard_path(current_user), class: "far fa-arrow-alt-circle-down", id: "go" %>
+    <% else %>
+      <%= link_to "", books_path, class: "far fa-arrow-alt-circle-down", id: "go"%>
+    <% end %>
   </div>
 </div>
