@@ -2,22 +2,22 @@
   <h1 id="index-title">Let's <i class="fas fa-search" style="color:$blue; font-size: 1.2em"></i> in your friends libraries!</h1>
 </div>
 <div id ="index-container">
-
-          <div class="row">
-            <div class="col-12 col-md-9" id="book-row">
-              <% if @no_result == true %>
-                <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!</div>
-              <% end %>
-              <% if @books.empty? %>
-                <h2>You have currently no books in your library!</h2>
-              <% else %>
-                <div class="cards">
-                  <%= render 'book', books: @books %>
-                </div>
-              <% end %>
-            </div>
-            <div class="col-12 col-md-3 ">
-              <%= render 'search' %>
-            </div>
+  <div class="row">
+    <div class="col-12 col-md-9" id="book-row">
+      <% if @no_result == true %>
+        <div class="p-3 mb-2 bg-warning text-dark"><strong>Hey you</strong> Your search gave no result!
         </div>
-   </div>
+      <% end %>
+      <% if @books.empty? %>
+        <h2>You have currently no books in your library!</h2>
+      <% else %>
+        <div class="cards">
+          <%= render 'book', books: @books %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-12 col-md-3 ">
+      <%= render 'search' %>
+    </div>
+  </div>
+</div>
