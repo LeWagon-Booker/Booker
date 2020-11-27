@@ -31,28 +31,8 @@ import { stickyNavbar }     from '../components/init_sticky_navbar';
 
 document.addEventListener('turbolinks:load', () => {
   toggleDateInputs();
-  initSelect2();
   reservationForm();
   stickyNavbar();
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+initSelect2();
