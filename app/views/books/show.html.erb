@@ -16,7 +16,9 @@
         <img src="<%= cl_image_path @book.cover.key %>" alt="" class="covers-show" class>
         <div class="info px-4">
           <h2>by <%= @book.author %></h2>
-          <p class="text-justify"><%= @book.description %></p>
+          <div class="book-description">
+            <p><%= @book.description %></p>
+          </div>
           <div class="owners-avatar d-flex align-items-center">
             <p class ="mr-3">Owners:</p>
             <div class="d-inline-block mb-3">
@@ -64,7 +66,7 @@
               by <strong><%= review.user.first_name %></strong></p>
           </div>
           <div class="d-flex justify-content-between">
-          <p class="flex-grow-1"><%= review.content %></p>
+          <p class="flex-grow-1 text-justify"><%= review.content %></p>
             <% if (review.user == current_user || current_user.siteadmin?) %>
               <p class="text-center">
                 <%= link_to "<i class=\"far fa-trash-alt\"></i>".html_safe, review_path(review), method: :delete, data: { confirm: "Are you sure?" }, class: "m-2 font-awesome" %>

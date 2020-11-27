@@ -3,8 +3,13 @@
   background-position: top;
   background-image: linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.25)), url('https://res.cloudinary.com/bestycame/image/upload/v1606313174/bookersignup.jpg');
   height:50vh;
+  position: relative
 }
-
+.login-banner-text {
+  position: absolute;
+  left: 50px;
+  bottom: 30px;
+}
 .login-banner h1 {
   margin: 0;
   color: white;
@@ -29,12 +34,12 @@
 .index-banner {
   background-size: cover;
   background-position: top;
-  background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35)), url('https://res.cloudinary.com/bestycame/image/upload/v1606313042/bookerindex.jpg');
+  background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.5)), url('https://res.cloudinary.com/bestycame/image/upload/v1606313042/bookerindex.jpg');
   height:320px;
   color: white;
   display:flex;
-  justify-content: start;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
   margin-bottom: 30px;
   padding: 50px;
 }

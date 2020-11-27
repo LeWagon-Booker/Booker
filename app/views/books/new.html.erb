@@ -10,7 +10,7 @@
     <div class="col-12 col-md-3">
       <h2>Fast ISBN input</h2>
       <%= simple_form_for @book, namespace: 'isbn_book' do |f| %>
-        <%= f.input :ISBN , label: "Look at the back of your book you will find a 9 digits number"%>
+        <%= f.input :ISBN , label: "Look at the back of your book you will find a 10 digits number"%>
         <%= f.association :category, input_html: { class: 'select2' } %>
         <%= f.input :wishlist, :as => :boolean, input_html: {checked: false} %>
         <%= f.button :submit, class: "btn-booker" %>
