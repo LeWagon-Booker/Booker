@@ -1,10 +1,23 @@
 <%= simple_form_for book do |f| %>
   <%= f.input :title %>
-  <%= f.input :author %>
-  <%= f.input :year %>
+  <div class="row">
+    <div class="col-9">
+      <%= f.input :author %>
+    </div>
+    <div class="col-3">
+      <%= f.input :year %>
+    </div>
+  </div>
+
   <%= f.association :category, input_html: { style: 'width: 466px', class: 'select2 form-control' } %>
-  <%= f.input :cover, as: :file%>
-  <%= f.input :ISBN %>
+  <div class="row">
+    <div class="col-6">
+      <%= f.input :cover, as: :file%>
+    </div>
+    <div class="col-6">
+      <%= f.input :ISBN %>
+    </div>
+  </div>
   <%= f.input :description %>
   <%= f.button :submit, class: "btn-booker" %>
 <% end %>
