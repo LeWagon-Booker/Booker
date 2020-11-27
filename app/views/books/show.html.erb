@@ -34,7 +34,7 @@
         <% if @wishlist&.empty? || @wishlist.nil? %>
           <%= link_to "Wishlist", book_wishlists_path(@book), method: :post%>
         <% else %>
-          <%= link_to "Remove from wishlist", wishlists_path(@wishlist), method: :delete%>
+          <%= link_to "Remove from wishlist", wishlist_path(@wishlist[0]), method: :delete%>
         <% end %>
         <% if (@book.users.include?(current_user)  || current_user.siteadmin?) %>
           <%= link_to "Edit Book", "#", "data-toggle"=>"modal",  "data-target"=>"#EditModal" %>
