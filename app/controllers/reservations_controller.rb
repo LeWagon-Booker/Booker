@@ -28,6 +28,7 @@ class ReservationsController < ApplicationController
   def toggle_confirmation
     @reservation = Reservation.find(params[:format])
     @reservation.toggle_confirmation
+    @reservation.rent_reset!
     redirect_to dashboard_path(current_user)
   end
 
