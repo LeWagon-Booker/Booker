@@ -9,7 +9,7 @@
         </div>
       <% end %>
       <% if @books.empty? %>
-        <h2>You have currently no books in your library!</h2>
+        <h2>You currently have no books in your library!</h2>
       <% else %>
         <div class="cards">
           <%= render 'book', books: @books %>

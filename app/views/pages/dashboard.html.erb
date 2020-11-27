@@ -79,6 +79,22 @@
   </div>
   <div class="col-12 col-lg-6">
     <div class="dashboard-card">
+      <h2>Lended books</h2>
+      <% @my_rented.each do |request| %>
+        <%= render 'reservation', request: request %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
+      <h2>Bookings history</h2>
+      <% @my_previously_rented.each do |request| %>
+        <%= render 'reservation', request: request %>
+      <% end %>
+    </div>
+  </div>
+  <div class="col-12 col-lg-6">
+    <div class="dashboard-card">
       <div class="d-flex justify-content-between align-items-center">
         <h2>Shelve</h2>
         <%= link_to new_book_path, class: "btn-add" do %>
@@ -121,23 +137,6 @@
       </div>
     </div>
   </div>
-  <div class="col-12 col-lg-6">
-    <div class="dashboard-card">
-      <h2>Rented books</h2>
-        <% @my_rented.each do |request| %>
-          <%= render 'reservation', request: request %>
-        <% end %>
-    </div>
-  </div>
-  <div class="col-12 col-lg-6">
-      <div class="dashboard-card">
-        <h2>Previously Rented books</h2>
-          <% @my_previously_rented.each do |request| %>
-            <%= render 'reservation', request: request %>
-          <% end %>
-      </div>
-    </div>
-  </div>
-
 </div>
+
 <%= render 'shared/family' %>
